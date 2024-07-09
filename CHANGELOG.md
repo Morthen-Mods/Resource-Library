@@ -1,3 +1,7 @@
+#### v2.0.2
+- update CoreServices
+- update internal querk
+
 #### v2.0.0
 - adding Model Render Helper
 - adding Block Model Generator Helper methods
