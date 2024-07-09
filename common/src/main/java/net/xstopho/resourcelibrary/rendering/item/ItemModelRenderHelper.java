@@ -18,11 +18,9 @@ public class ItemModelRenderHelper {
      * Register the item with the corresponding alternative Model.<br>
      * On Fabric, you can add this method into the onInitialize method.<br>
      * On NeoForge, you have to add this inside the FMLClientSetupEvent method.
-     * @param item
-     * @param itemTexturePath
      */
     public static void registerItemModel(Item item, ResourceLocation itemTexturePath) {
-        if (CoreServices.PLATFORM == IPlatformHelper.Platforms.FORGE) {
+        if (CoreServices.getPlatform() == IPlatformHelper.Platforms.FORGE) {
             LibConstants.LOG.error("Registering Custom Item Model isn't working in Forge");
         }
         ITEM_MODELS.putIfAbsent(item, location(itemTexturePath));

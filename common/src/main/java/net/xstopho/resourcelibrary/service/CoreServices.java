@@ -7,7 +7,13 @@ import java.util.ServiceLoader;
 
 public class CoreServices {
 
-    public static final IPlatformHelper.Platforms PLATFORM = load(IPlatformHelper.class).getPlatform();
+    public static IPlatformHelper.Platforms getPlatform() {
+        return load(IPlatformHelper.class).getPlatform();
+    }
+
+    public static boolean isModLoaded(String modId) {
+        return load(IPlatformHelper.class).isModLoaded(modId);
+    }
 
     public static <T> T load(Class<T> clazz) {
         final T loadedService = ServiceLoader.load(clazz)

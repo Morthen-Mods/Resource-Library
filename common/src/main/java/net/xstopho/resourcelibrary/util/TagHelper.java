@@ -40,7 +40,7 @@ public class TagHelper {
     }
 
     public static <T> TagKey<T> createPlatformTag(ResourceKey<? extends Registry<T>> registry, String id) {
-        return switch (CoreServices.PLATFORM) {
+        return switch (CoreServices.getPlatform()) {
             case FABRIC, NEOFORGE -> createTag(registry, "c", id);
             case FORGE -> createTag(registry, "forge", id);
             case NO_LOADER -> throw new IllegalStateException("No Mod Loader defined or you are in an non Mod Environment!");
