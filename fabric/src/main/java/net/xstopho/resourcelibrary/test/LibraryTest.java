@@ -11,11 +11,9 @@ public class LibraryTest {
         TestItems.init();
 
         TestCreativeTab.init();
-
-        initRendering();
     }
 
-    private static void initRendering() {
+    public static void initClient() {
         ItemModelRenderHelper.registerItemModel(TestItems.TEST_IN_HAND_ITEM.get(), ResourceLocation.fromNamespaceAndPath(LibConstants.MOD_ID, "in_hand/test_in_hand_item"));
     }
 }
