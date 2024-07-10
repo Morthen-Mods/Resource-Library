@@ -25,8 +25,4 @@ eclipse
 */runs/data/*
 !*/runs/client/options.txt
 
-
-/fabric/src/generated/
-/fabric-testmod/src/generated/
-/neoforge/src/generated/
-/neoforge-testmod/src/generated/
+*/src/testmod/generated

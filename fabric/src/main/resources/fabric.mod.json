@@ -16,9 +16,7 @@
     "icon": "icon_fabric.png",
     "environment": "*",
     "entrypoints": {
-        "main": [ "net.xstopho.resourcelibrary.ResourceLibrary" ],
-        "client": [ "net.xstopho.resourcelibrary.ResourceLibraryClient" ],
-        "fabric-datagen": [ "net.xstopho.resourcelibrary.test.TestDatagen" ]
+        "main": [ "net.xstopho.resourcelibrary.ResourceLibrary" ]
     },
     "mixins": [
         "${mod_id}.mixins.json",

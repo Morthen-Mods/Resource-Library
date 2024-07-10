@@ -1,4 +1,4 @@
-package net.xstopho.resourcelibrary.test.datagen;
+package net.xstopho.resourcelibrary_test.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -13,8 +13,7 @@ import net.xstopho.resourcelibrary.util.TagHelper;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TestTagProv {
-
+public class TagProv {
     public static class ItemTags extends FabricTagProvider.ItemTagProvider {
 
         public ItemTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
