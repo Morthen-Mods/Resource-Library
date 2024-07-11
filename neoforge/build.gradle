@@ -31,17 +31,18 @@ neoForge {
         configureEach {
             systemProperty('neoforge.enableGameTestNamespaces', mod_id)
             ideName = "NeoForge ${it.name.capitalize()} (${project.path})"
-            gameDirectory = project.file("runs/${it.name.toLowerCase()}")
         }
-        client {
+
+        testClient {
             client()
+            sourceSet = sourceSets.testmod
+            gameDirectory = project.file("runs/client")
         }
-        server {
-            server()
-            programArguments.add('nogui')
-        }
-        data {
+
+        testDatagen {
             data()
+            sourceSet = sourceSets.testmod
+            gameDirectory = project.file("runs/data")
             programArguments.addAll '--mod', 'resourcelibrary_test', '--all', '--output', file('src/testmod/generated/').getAbsolutePath(), '--existing', file('src/testmod/resources/').getAbsolutePath()
         }
     }
