@@ -1,23 +1,49 @@
 plugins {
     id 'ml-loader'
-    id 'net.neoforged.gradle.userdev' version '7.0.142'
+    id 'net.neoforged.moddev'
+    id 'me.modmuss50.mod-publish-plugin'
 }
 
-var at = file('src/main/resources/META-INF/accesstransformer.cfg')
-if (at.exists()) minecraft.accessTransformers.file at
-
-dependencies {
-    implementation "net.neoforged:neoforge:${neoforge_version}"
-}
-
-runs {
-    client {
-        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
-        modSource project.sourceSets.main
+sourceSets {
+    testmod {
+        runtimeClasspath += main.runtimeClasspath
+        compileClasspath += main.compileClasspath
+        resources { srcDir 'src/testmod/generated' }
     }
-    data {
-        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated').getAbsolutePath(), '--existing', project(':common').file('src/main/resources/').getAbsolutePath()
-        modSource project.sourceSets.main
+}
+
+neoForge {
+    version = neoforge_version
+
+    var at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) accessTransformers.add(at.absolutePath)
+
+    parchment {
+        minecraftVersion = minecraft_version
+        mappingsVersion = parchment_version
+    }
+
+    runs {
+        configureEach {
+            systemProperty('neoforge.enableGameTestNamespaces', mod_id)
+            ideName = "NeoForge ${it.name.capitalize()} (${project.path})"
+            gameDirectory = project.file("runs/${it.name.toLowerCase()}")
+        }
+        client {
+            client()
+        }
+        server {
+            server()
+            programArguments.add('nogui')
+        }
+        data {
+            data()
+            programArguments.addAll '--mod', 'resourcelibrary_test', '--all', '--output', file('src/testmod/generated/').getAbsolutePath(), '--existing', file('src/testmod/resources/').getAbsolutePath()
+        }
+    }
+    mods {
+        "${mod_id}" { sourceSet sourceSets.main }
+        "${mod_id}_test" { sourceSet sourceSets.testmod }
     }
 }
 
