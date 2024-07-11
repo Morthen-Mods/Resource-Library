@@ -6,10 +6,14 @@ plugins {
 
 sourceSets {
     testmod {
-        runtimeClasspath += main.runtimeClasspath
-        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath;
+        compileClasspath += main.compileClasspath;
         resources { srcDir 'src/testmod/generated' }
     }
+}
+
+dependencies {
+    testmodImplementation sourceSets.main.output
 }
 
 neoForge {
