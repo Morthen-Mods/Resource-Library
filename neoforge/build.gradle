@@ -19,9 +19,6 @@ dependencies {
 neoForge {
     version = neoforge_version
 
-    var at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
-    if (at.exists()) accessTransformers.add(at.absolutePath)
-
     parchment {
         minecraftVersion = minecraft_version
         mappingsVersion = parchment_version
@@ -55,16 +52,4 @@ neoForge {
 publishMods {
     file = jar.archiveFile
     modLoaders.add("neoforge")
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            pom.withXml {
-                asNode().dependencies.each { node ->
-                    node.replaceNode {}
-                }
-            }
-        }
-    }
 }

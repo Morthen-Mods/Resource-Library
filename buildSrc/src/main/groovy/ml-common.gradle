@@ -13,11 +13,7 @@ java {
     withJavadocJar()
 }
 
-dependencies {
-    implementation 'org.jetbrains:annotations:24.1.0'
-}
-
-tasks.withType(Javadoc).configureEach {
+tasks.named('javadoc', Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
 }
 

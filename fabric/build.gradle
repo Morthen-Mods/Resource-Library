@@ -14,7 +14,10 @@ sourceSets {
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings loom.officialMojangMappings()
+    mappings loom.layered {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${minecraft_version}:${parchment_version}@zip")
+    }
     testmodImplementation sourceSets.main.output;
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
@@ -22,9 +25,6 @@ dependencies {
 }
 
 loom {
-    var aw = project(":common").file("src/main/resources/${mod_id}.accesswidener")
-    if (aw.exists()) accessWidenerPath.set(aw)
-
     mixin {
         defaultRefmapName.set("${mod_id}.refmap.json")
     }
@@ -69,17 +69,5 @@ publishMods {
     }
     curseforge {
         requires('fabric-api')
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            pom.withXml {
-                asNode().dependencies.each { node ->
-                    node.replaceNode {}
-                }
-            }
-        }
     }
 }
