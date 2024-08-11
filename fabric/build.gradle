@@ -36,16 +36,8 @@ loom {
             runDir("runs/client")
         }
 
-        server {
-            server()
-            source sourceSets.testmod
-            setConfigName("Fabric Test Server")
-            ideConfigGenerated(true)
-            runDir("runs/server")
-        }
-
         datagen {
-            inherit server
+            inherit client
             source sourceSets.testmod
             name "Fabric Test Datagen"
             vmArg "-Dfabric-api.datagen"
