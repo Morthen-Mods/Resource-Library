@@ -5,31 +5,13 @@ plugins {
 
 neoForge {
     neoFormVersion = neoform_version
-    var at = file("src/main/resources/META-INF/accesstransformer.cfg")
-    if(at.exists()) accessTransformers.add(at.absolutePath)
 
     parchment {
-        minecraftVersion = '1.21'
+        minecraftVersion = parchment_mc_version
         mappingsVersion = parchment_version
     }
 }
 
 dependencies {
     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
-}
-
-configurations {
-    commonJava {
-        canBeResolved = false
-        canBeConsumed = true
-    }
-    commonResources {
-        canBeResolved = false
-        canBeConsumed = true
-    }
-}
-
-artifacts {
-    commonJava sourceSets.main.java.sourceDirectories.singleFile
-    commonResources sourceSets.main.resources.sourceDirectories.singleFile
 }

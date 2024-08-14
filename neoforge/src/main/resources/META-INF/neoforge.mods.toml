@@ -8,7 +8,7 @@ license = "${mod_license}"
     displayName = "${mod_name}"
     authors = "${mod_author}"
     description = '''${mod_description}'''
-    logoFile = "icon_neoforge.png"
+    logoFile = "icon_forge.png"
 
 [[mixins]]
     config = "${mod_id}.mixins.json"
@@ -18,7 +18,7 @@ license = "${mod_license}"
 [[dependencies.${mod_id}]]
     modId = "neoforge"
     required = true
-    versionRange = "${neoforge_loader_version_range}"
+    versionRange = "[${neoforge_version},)"
     ordering = "NONE"
     side = "BOTH"
 

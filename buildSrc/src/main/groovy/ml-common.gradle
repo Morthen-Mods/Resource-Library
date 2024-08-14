@@ -17,15 +17,8 @@ tasks.named('javadoc', Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
 }
 
-['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements'].each { variant ->
-    configurations."$variant".outgoing {
-        capability("$group:${base.archivesName.get()}:$version")
-        capability("$group:$mod_id-${project.name}-${minecraft_version}:$version")
-        capability("$group:$mod_id:$version")
-    }
-    publishing.publications.configureEach {
-        suppressPomMetadataWarningsFor(variant)
-    }
+tasks.withType(GenerateModuleMetadata).configureEach {
+    enabled = false
 }
 
 jar {
