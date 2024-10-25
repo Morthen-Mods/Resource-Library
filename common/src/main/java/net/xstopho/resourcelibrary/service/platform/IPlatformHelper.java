@@ -1,4 +1,4 @@
-package net.xstopho.resourcelibrary.platform;
+package net.xstopho.resourcelibrary.service.platform;
 
 public interface IPlatformHelper {
 

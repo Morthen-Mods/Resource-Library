@@ -1,6 +1,7 @@
 package net.xstopho.resourcelibrary.platform;
 
 import net.neoforged.fml.ModList;
+import net.xstopho.resourcelibrary.service.platform.IPlatformHelper;
 
 public class NeoForgePlatformHelper implements IPlatformHelper {
     @Override
