@@ -1,84 +1,64 @@
 package net.xstopho.resourcelibrary.registration;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.function.Supplier;
 
+@SuppressWarnings("unchecked")
 public class FabricRegistryFactory implements RegistryProvider.Factory {
     @Override
-    public <T> RegistryProvider<T> create(ResourceKey<? extends Registry<T>> resourceKey, String modId) {
-        return new Provider<>(resourceKey, modId);
-    }
-
-    @Override
-    public <T> RegistryProvider<T> create(Registry<T> registry, String modId) {
-        return new Provider<>(registry, modId);
+    public <T> RegistryProvider<T> create(String modId, Registry<T> registry) {
+        return new Provider<>(modId, registry);
     }
 
     private static class Provider<T> implements RegistryProvider<T> {
         private final String modId;
         private final Registry<T> registry;
 
-        private final Set<RegistryObject<T>> entries = new LinkedHashSet<>();
-        private final Set<RegistryObject<T>> entriesView = Collections.unmodifiableSet(entries);
+        private final Collection<RegistryObject<T>> entries = new ArrayList<>();
 
-        @SuppressWarnings({"unchecked"})
-        private Provider(ResourceKey<? extends Registry<T>> key, String modId) {
+        private Provider(String modId, Registry<T> registry) {
             this.modId = modId;
-
-            final var reg = BuiltInRegistries.REGISTRY.get(key.location());
-            if (reg == null) throw new RuntimeException("Registry with name " + key.location() + " was not found!");
-            registry = (Registry<T>) reg;
-        }
-
-        private Provider(Registry<T> registry, String modId) {
             this.registry = registry;
-            this.modId = modId;
         }
 
         @Override
-        @SuppressWarnings("unchecked")
-        public <I extends T> RegistryObject<I> register(String name, Supplier<? extends I> supplier) {
-            final var resourceLocation = ResourceLocation.fromNamespaceAndPath(modId, name);
-            final var object = Registry.register(registry, resourceLocation, supplier.get());
-            final var registryObject = new RegistryObject<I>() {
-                final ResourceKey<I> key = ResourceKey.create((ResourceKey<? extends Registry<I>>) registry.key(), resourceLocation);
+        public <U extends T> RegistryObject<U> register(String objectId, Supplier<? extends U> objectSupplier) {
+            final ResourceLocation objectLocation = ResourceLocation.fromNamespaceAndPath(modId, objectId);
+            final U object = Registry.register(registry, objectLocation, objectSupplier.get());
+
+            final RegistryObject<U> registryObject = new RegistryObject<>() {
+                final ResourceKey<U> resourceKey = ResourceKey.create((ResourceKey<? extends Registry<U>>) registry.key(), objectLocation);
 
                 @Override
-                public ResourceKey<I> getResourceKey() {
-                    return key;
+                public ResourceKey<U> getResourceKey() {
+
+                    return resourceKey;
                 }
 
                 @Override
                 public ResourceLocation getId() {
-                    return resourceLocation;
+
+                    return objectLocation;
                 }
 
                 @Override
-                public I get() {
+                public U get() {
                     return object;
                 }
-
-                @Override
-                public Holder<I> asHolder() {
-                    return (Holder<I>) registry.getHolderOrThrow((ResourceKey<T>) this.key);
-                }
             };
+
             entries.add((RegistryObject<T>) registryObject);
             return registryObject;
         }
 
         @Override
         public Collection<RegistryObject<T>> getEntries() {
-            return entriesView;
+            return entries;
         }
 
         @Override

@@ -9,7 +9,7 @@ import net.xstopho.resourcelibrary.registration.RegistryProvider;
 import net.xstopho.resourcelibrary_test.ResourceLibraryTest;
 
 public class CreativeTabRegistry {
-    private static final RegistryProvider<CreativeModeTab> CREATIVE_MODE_TABS = RegistryProvider.get(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLibraryTest.MOD_ID);
+    private static final RegistryProvider<CreativeModeTab> CREATIVE_MODE_TABS = RegistryProvider.get(ResourceLibraryTest.MOD_ID, BuiltInRegistries.CREATIVE_MODE_TAB);
 
     public static final RegistryObject<CreativeModeTab> RESOURCE_LIBRARY_TEST = CREATIVE_MODE_TABS.register("item_group", () ->
             CreativeModeTab.builder(null, -1).title(Component.translatable("resourcelibrary_test.item_group"))
