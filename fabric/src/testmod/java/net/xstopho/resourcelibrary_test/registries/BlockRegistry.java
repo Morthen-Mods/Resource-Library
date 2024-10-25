@@ -18,7 +18,9 @@ import java.util.function.Supplier;
 public class BlockRegistry {
     public static final RegistryProvider<Block> BLOCKS = RegistryProvider.get(ResourceLibraryTest.MOD_ID, BuiltInRegistries.BLOCK);
 
-    public static final RegistryObject<Block> TEST_FURNACE_LIKE_BLOCK = register("furnace_like_block", () -> new FurnaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
+    public static final RegistryObject<Block> TEST_FURNACE_LIKE_BLOCK = register("furnace_like_block",
+            () -> new FurnaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)
+                    .setId(ResourceKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.fromNamespaceAndPath(ResourceLibraryTest.MOD_ID, "furnace_like_block")))));
 
     public static RegistryObject<Block> register(String id, Supplier<Block> block) {
         RegistryObject<Block> toReturn = BLOCKS.register(id, block);
@@ -27,7 +29,7 @@ public class BlockRegistry {
     }
 
     public static RegistryObject<Block> register(String id) {
-        return register(id, () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
+        return register(id, () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).setId(ResourceKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.fromNamespaceAndPath(ResourceLibraryTest.MOD_ID, id)))));
     }
 
     public static void init() {}
