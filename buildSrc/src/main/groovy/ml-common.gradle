@@ -68,10 +68,15 @@ processResources {
 
             // NeoForge Keys
             "neoforge_version": neoforge_version,
-            "neoforge_loader_version_range": neoforge_loader_version_range
+            "neoforge_loader_version_range": neoforge_loader_version_range,
+
+            // Forge Keys
+            "forge_version": forge_version,
+            "forge_loader_version_range": forge_loader_version_range,
+            "forge_version_range": forge_version_range,
     ]
 
-    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
+    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/neoforge.mods.toml', 'META-INF/mods.toml', '*.mixins.json']) {
         expand expandProps
     }
     inputs.properties(expandProps)
