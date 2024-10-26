@@ -36,17 +36,6 @@ loom {
             programArgs('--username', 'Dev')
             runDir("runs/client")
         }
-
-        datagen {
-            inherit client
-            source sourceSets.testmod
-            name "Fabric Test Datagen"
-            vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.output-dir=${file("src/testmod/generated")}"
-            vmArg "-Dfabric-api.datagen.modid=resourcelibrary_test"
-
-            runDir "build/datagen"
-        }
     }
 }
 

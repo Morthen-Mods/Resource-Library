@@ -38,14 +38,7 @@ neoForge {
         testClient {
             client()
             sourceSet = sourceSets.testmod
-            gameDirectory = project.file("runs/client")
-        }
-
-        testDatagen {
-            data()
-            sourceSet = sourceSets.testmod
-            gameDirectory = project.file("runs/data")
-            programArguments.addAll '--mod', 'resourcelibrary_test', '--all', '--output', file('src/testmod/generated/').getAbsolutePath(), '--existing', file('src/testmod/resources/').getAbsolutePath()
+            gameDirectory = file("../common/runs/client")
         }
     }
     mods {
