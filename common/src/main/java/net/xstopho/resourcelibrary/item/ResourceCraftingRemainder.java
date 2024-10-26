@@ -20,9 +20,4 @@ public abstract class ResourceCraftingRemainder extends Item implements IResourc
     public ItemStack getCraftingRemainder(ItemStack stack) {
         return getRemainingItem(stack);
     }
-
-    @Override
-    public ItemStack getCraftingRemainingItem(ItemStack stack) {
-        return getRemainingItem(stack);
-    }
 }

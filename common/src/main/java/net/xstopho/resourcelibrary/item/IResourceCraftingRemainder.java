@@ -9,9 +9,6 @@ public interface IResourceCraftingRemainder {
     // Fabric implementation
     ItemStack getRecipeRemainder(ItemStack stack);
 
-    // NeoForge implementation
+    // Neo-/Forge implementation
     ItemStack getCraftingRemainder(ItemStack stack);
-
-    // Forge implementation
-    ItemStack getCraftingRemainingItem(ItemStack stack);
 }
