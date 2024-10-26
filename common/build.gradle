@@ -16,9 +16,6 @@ sourceSets {
     testmod {
         runtimeClasspath += main.runtimeClasspath
         compileClasspath += main.compileClasspath
-        resources {
-            srcDir 'src/testmod/resources'
-        }
     }
 }
 
@@ -26,8 +23,4 @@ dependencies {
     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
 
     testmodCompileOnly sourceSets.main.output
-}
-
-processTestmodResources {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

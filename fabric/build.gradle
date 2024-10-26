@@ -8,9 +8,6 @@ sourceSets {
     testmod {
         runtimeClasspath += main.runtimeClasspath;
         compileClasspath += main.compileClasspath;
-        resources {
-            srcDir project(':common').file('src/testmod/resources')
-        }
     }
 }
 
@@ -51,6 +48,11 @@ loom {
             runDir "build/datagen"
         }
     }
+}
+
+processTestmodResources {
+    from project(':common').sourceSets.testmod.resources
+    from file('src/generated/resources')
 }
 
 // Loader Specific Settings

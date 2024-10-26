@@ -6,12 +6,13 @@ plugins {
 
 sourceSets {
     testmod {
-        runtimeClasspath += main.runtimeClasspath;
-        compileClasspath += main.compileClasspath;
-        resources {
-            srcDir project(':common').file('src/testmod/resources')
-        }
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
     }
+}
+
+configurations {
+    includeLibs
 }
 
 dependencies {
@@ -51,6 +52,14 @@ neoForge {
         "${mod_id}" { sourceSet sourceSets.main }
         "${mod_id}_test" { sourceSet sourceSets.testmod }
     }
+}
+
+compileTestmodJava {
+    source(project(':common').sourceSets.testmod.allSource)
+}
+processTestmodResources {
+    from project(':common').sourceSets.testmod.resources
+    from file('src/generated/resources')
 }
 
 publishMods {
