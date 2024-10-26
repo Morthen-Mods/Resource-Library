@@ -5,8 +5,8 @@ import net.xstopho.resourcelibrary.item.ResourceCraftingRemainder;
 
 public class TestCraftingRemainder extends  ResourceCraftingRemainder {
 
-    public TestCraftingRemainder(Properties properties) {
-        super(properties);
+    public TestCraftingRemainder(Properties properties, int durability) {
+        super(properties.durability(durability));
     }
 
     @Override

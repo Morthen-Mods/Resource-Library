@@ -1,29 +1,35 @@
 package net.xstopho.resourcelibrary_test.registries;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.xstopho.resourcelibrary.registration.RegistryObject;
 import net.xstopho.resourcelibrary.registration.RegistryProvider;
 import net.xstopho.resourcelibrary_test.RLibTestConstants;
 import net.xstopho.resourcelibrary_test.items.TestCraftingRemainder;
 
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 public class ItemRegistry {
 
-    public static final RegistryProvider<Item> ITEMS = RegistryProvider.get(RLibTestConstants.MOD_ID, BuiltInRegistries.ITEM);
+    private static final RegistryProvider<Item> ITEMS = RegistryProvider.get(RLibTestConstants.MOD_ID, BuiltInRegistries.ITEM);
 
-    public static final RegistryObject<Item> TEST_ITEM = register("test_item");
-    public static final RegistryObject<Item> TEST_RECIPE_REMAINDER = register("test_recipe_remainder",
-            () -> new TestCraftingRemainder(RLibTestConstants.baseItemProperties("test_recipe_remainder").durability(100)));
+    public static final RegistryObject<Item> TEST_ITEM = register("test_item", Item::new);
+    public static final RegistryObject<Item> TEST_RECIPE_REMAINDER = register("test_recipe_remainder", properties -> new TestCraftingRemainder(properties, 100));
 
-    private static RegistryObject<Item> register(String id, Supplier<Item> item) {
-        return ITEMS.register(id, item);
+    public static RegistryObject<Item> register(String id, Function<Item.Properties, Item> function, Item.Properties properties) {
+        Item item = function.apply(properties.setId(createKey(id)));
+        return ITEMS.register(id, () -> item);
     }
 
-    private static RegistryObject<Item> register(String id) {
-        Item.Properties base = RLibTestConstants.baseItemProperties(id);
-        return register(id, () -> new Item(base));
+    public static RegistryObject<Item> register(String id, Function<Item.Properties, Item> function) {
+        return register(id, function, new Item.Properties());
+    }
+
+    private static ResourceKey<Item> createKey(String id) {
+        return ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ITEMS.getModId(), id));
     }
 
     public static void init() {}
