@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked")
 public class FabricRegistryFactory implements RegistryProvider.Factory {
+
     @Override
     public <T> RegistryProvider<T> create(String modId, Registry<T> registry) {
         return new Provider<>(modId, registry);
