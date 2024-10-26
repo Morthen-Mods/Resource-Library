@@ -7,11 +7,11 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.xstopho.resourcelibrary_test.ResourceLibraryTest;
+import net.xstopho.resourcelibrary_test.RLibTestConstants;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = ResourceLibraryTest.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = RLibTestConstants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModHandler {
     @SubscribeEvent
     public static void data(GatherDataEvent event) {

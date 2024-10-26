@@ -8,12 +8,16 @@ sourceSets {
     testmod {
         runtimeClasspath += main.runtimeClasspath;
         compileClasspath += main.compileClasspath;
-        resources { srcDir 'src/testmod/generated' }
+        resources {
+            srcDir project(':common').file('src/testmod/resources')
+        }
     }
 }
 
 dependencies {
     testmodImplementation sourceSets.main.output
+
+    testmodImplementation project(':common').sourceSets.testmod.output
 }
 
 neoForge {
