@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "resourcelibrary_test:item/test_recipe_remainder"
+  }
+}

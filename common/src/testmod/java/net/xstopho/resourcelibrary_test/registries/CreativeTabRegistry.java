@@ -16,6 +16,7 @@ public class CreativeTabRegistry {
             .title(Component.translatable("resourcelibrary_test.item_group")).icon(() -> new ItemStack(ItemRegistry.TEST_ITEM.get()))
             .displayItems((itemDisplayParameters, output) -> {
                 output.accept(ItemRegistry.TEST_ITEM.get());
+                output.accept(ItemRegistry.TEST_RECIPE_REMAINDER.get());
 
                 output.accept(BlockRegistry.TEST_BLOCK.get());
             }).build());
