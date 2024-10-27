@@ -38,6 +38,19 @@ minecraft {
     }
 }
 
+mixin {
+    config("${mod_id}.mixins.json")
+}
+
+jar {
+    manifest {
+        attributes([
+                'FMLCorePluginContainsFMLMod': 'true',
+                'MixinConfigs': "${mod_id}.mixins.json"
+        ])
+    }
+}
+
 sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
@@ -51,10 +64,6 @@ compileTestmodJava {
 processTestmodResources {
     from project(':common').sourceSets.testmod.resources
     from file('src/generated/resources')
-}
-
-processResources {
-    exclude 'resourcelibrary.mixin.json'
 }
 
 // Loader Specific Settings
