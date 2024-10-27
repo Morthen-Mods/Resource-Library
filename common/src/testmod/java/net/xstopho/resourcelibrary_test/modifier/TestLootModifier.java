@@ -5,6 +5,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.xstopho.resourcelibrary.modifier.LootTableModifier;
+import net.xstopho.resourcelibrary.modifier.loot_tables.ChestLootTables;
+import net.xstopho.resourcelibrary.modifier.loot_tables.EntityLootTables;
 import net.xstopho.resourcelibrary_test.registries.ItemRegistry;
 
 public class TestLootModifier {
@@ -16,7 +18,8 @@ public class TestLootModifier {
     }
 
     public static void init() {
-        modifier.addLoot(ItemRegistry.TEST_ITEM, 1f, 1f, key("entities/cow"));
-        modifier.addLoot(ItemRegistry.TEST_RECIPE_REMAINDER, 1f, 1f, key("entities/cow"));
+        modifier.addLoot(ItemRegistry.TEST_ITEM, 1f, 1f,
+                ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.COW);
+        modifier.addLoot(ItemRegistry.TEST_RECIPE_REMAINDER, 1f, 1f, EntityLootTables.COW);
     }
 }
