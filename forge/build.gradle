@@ -19,6 +19,10 @@ dependencies {
     testmodCompileOnly project(':common').sourceSets.testmod.output
 }
 
+mixin {
+    config("${mod_id}.mixins.json")
+}
+
 minecraft {
     mappings channel: 'official', version: minecraft_version
     copyIdeResources = true
@@ -51,6 +55,15 @@ compileTestmodJava {
 processTestmodResources {
     from project(':common').sourceSets.testmod.resources
     from file('src/generated/resources')
+}
+
+jar {
+    manifest {
+        attributes([
+                'FMLCorePluginContainsFMLMod': 'true',
+                'MixinConfigs': "${mod_id}.mixins.json"
+        ])
+    }
 }
 
 // Loader Specific Settings
