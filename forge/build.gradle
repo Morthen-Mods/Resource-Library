@@ -38,19 +38,6 @@ minecraft {
     }
 }
 
-mixin {
-    config("${mod_id}.mixins.json")
-}
-
-jar {
-    manifest {
-        attributes([
-                'FMLCorePluginContainsFMLMod': 'true',
-                'MixinConfigs': "${mod_id}.mixins.json"
-        ])
-    }
-}
-
 sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
