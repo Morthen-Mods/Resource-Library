@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.xstopho.resourcelibrary.rendering.ItemModelRenderer;
 import net.xstopho.resourcelibrary_test.modifier.TestLootModifier;
 import net.xstopho.resourcelibrary_test.registries.BlockRegistry;
 import net.xstopho.resourcelibrary_test.registries.CreativeTabRegistry;
@@ -26,6 +27,12 @@ public class RLibTestConstants {
         CreativeTabRegistry.init();
 
         TestLootModifier.init();
+    }
+
+    public static void clientInit() {
+        ItemModelRenderer renderer = ItemModelRenderer.getInstance();
+
+        renderer.registerItemModel(ItemRegistry.TEST_ITEM.get(), ResourceLocation.fromNamespaceAndPath(MOD_ID, "in_hand/test_item"));
     }
 
     public static Item.Properties baseItemProperties(String id) {
