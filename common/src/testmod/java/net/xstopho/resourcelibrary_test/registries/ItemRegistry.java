@@ -20,8 +20,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> TEST_RECIPE_REMAINDER = register("test_recipe_remainder", properties -> new TestCraftingRemainder(properties, 100));
 
     public static RegistryObject<Item> register(String id, Function<Item.Properties, Item> function, Item.Properties properties) {
-        Item item = function.apply(properties.setId(createKey(id)));
-        return ITEMS.register(id, () -> item);
+        return ITEMS.register(id, () -> function.apply(properties.setId(createKey(id))));
     }
 
     public static RegistryObject<Item> register(String id, Function<Item.Properties, Item> function) {
