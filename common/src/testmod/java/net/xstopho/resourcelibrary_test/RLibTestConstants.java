@@ -30,9 +30,7 @@ public class RLibTestConstants {
     }
 
     public static void clientInit() {
-        ItemModelRenderer renderer = ItemModelRenderer.getInstance();
-
-        renderer.registerItemModel(ItemRegistry.TEST_ITEM.get(), ResourceLocation.fromNamespaceAndPath(MOD_ID, "in_hand/test_item"));
+        ItemModelRenderer.registerItemModel(ItemRegistry.TEST_ITEM.get(), ResourceLocation.fromNamespaceAndPath(MOD_ID, "in_hand/test_item"));
     }
 
     public static Item.Properties baseItemProperties(String id) {
