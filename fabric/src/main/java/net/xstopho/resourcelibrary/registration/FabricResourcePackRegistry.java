@@ -25,10 +25,7 @@ public class FabricResourcePackRegistry implements ResourcePackRegistry {
 
     @Override
     public void register(@NotNull ResourceLocation packLocation, @NotNull String packDisplayName) {
-        if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
-            LibConstants.LOG.info("Resource Pack was not registered! Please check if you call the ResourcePackRegistry only on Client side!\nLocation: {}\nName: {}", packLocation, packDisplayName);
-            return;
-        }
+        if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) return;
 
         if (!RESOURCE_PACKS.contains(packLocation)) {
             RESOURCE_PACKS.add(packLocation);

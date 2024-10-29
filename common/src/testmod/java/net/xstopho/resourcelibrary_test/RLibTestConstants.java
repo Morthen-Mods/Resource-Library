@@ -1,6 +1,5 @@
 package net.xstopho.resourcelibrary_test;
 
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.xstopho.resourcelibrary.registration.ResourcePackRegistry;
 import net.xstopho.resourcelibrary.rendering.ItemModelRenderer;
