@@ -40,6 +40,13 @@ neoForge {
             sourceSet = sourceSets.testmod
             gameDirectory = file("../common/runs/client")
         }
+        testServer {
+            server()
+            sourceSet = sourceSets.testmod
+            programArguments.add('nogui')
+            ideName = "NeoForge Test Server (${project.path})"
+            gameDirectory = file("../common/runs/server")
+        }
     }
     mods {
         "${mod_id}" { sourceSet sourceSets.main }

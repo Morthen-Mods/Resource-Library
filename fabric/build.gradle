@@ -36,6 +36,14 @@ loom {
             programArgs('--username', 'Dev')
             runDir("runs/client")
         }
+
+        server {
+            server()
+            source sourceSets.testmod
+            setConfigName("Fabric Test Server")
+            ideConfigGenerated(true)
+            runDir("runs/server")
+        }
     }
 }
 
