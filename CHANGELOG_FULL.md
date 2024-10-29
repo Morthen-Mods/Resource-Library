@@ -1,3 +1,7 @@
+#### v2.3.2
+- adding ``ResourcePackRegistry``
+  - register Built-in resourcepacks from common
+
 #### v2.3.0
 - Update to 1.21.3
 - small rework for ``RegistryProvider``
