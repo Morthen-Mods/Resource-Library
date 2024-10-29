@@ -1,9 +1,3 @@
-#### v2.3.2
-- adding ``ResourcePackRegistry``
-  - register Built-in resourcepacks from common
-- added more methods to ``ItemModelRenderer``
-  - ``#registerInHandModel``
-  - ``#registerHeadModel``
-  - ``#registerGuiModel``
-  - ``#registerGroundModel``
-  - ``#registerFixedModel``
+#### v2.3.3
+- remove Log message for Fabric when ``ResourcePackRegistry`` 
+    is called in the Main init method
