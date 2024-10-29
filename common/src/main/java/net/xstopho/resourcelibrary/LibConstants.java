@@ -13,5 +13,10 @@ public class LibConstants {
     public static final String MOD_NAME = "Resource Library";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
-    public static final Map<Item, ResourceLocation> ITEM_MODEL_RENDERER_ENTRIES = new HashMap<>();
+    // ItemModelRenderer Maps
+    public static final Map<Item, ResourceLocation> IN_HAND_MODELS = new HashMap<>();
+    public static final Map<Item, ResourceLocation> GUI_MODELS = new HashMap<>();
+    public static final Map<Item, ResourceLocation> HEAD_MODELS = new HashMap<>();
+    public static final Map<Item, ResourceLocation> FIXED_MODELS = new HashMap<>();
+    public static final Map<Item, ResourceLocation> GROUND_MODELS = new HashMap<>();
 }

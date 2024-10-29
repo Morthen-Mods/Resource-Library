@@ -30,7 +30,10 @@ public class RLibTestConstants {
     }
 
     public static void clientInit() {
-        ItemModelRenderer renderer = new ItemModelRenderer();
-        renderer.registerItemModel(ItemRegistry.TEST_ITEM.get(), ResourceLocation.fromNamespaceAndPath(MOD_ID, "in_hand/test_item"));
+        ItemModelRenderer renderer = new ItemModelRenderer(MOD_ID);
+        renderer.registerInHandModel(ItemRegistry.TEST_ITEM.get(), "test_item");
+        renderer.registerGroundModel(ItemRegistry.TEST_ITEM.get(), "test_item");
+        renderer.registerGuiModel(ItemRegistry.TEST_ITEM.get(), "test_item");
+        renderer.registerFixedModel(ItemRegistry.TEST_ITEM.get(), "test_item");
     }
 }

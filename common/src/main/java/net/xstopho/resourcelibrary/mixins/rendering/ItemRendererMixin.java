@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Mixin(ItemRenderer.class)
@@ -20,17 +22,36 @@ public class ItemRendererMixin {
 
     @ModifyVariable(method = "render", at = @At("HEAD"), argsOnly = true)
     public BakedModel useInHandModel(BakedModel model, ItemStack stack, ItemDisplayContext displayContext, boolean leftHanded, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay) {
-        Map<Item, ResourceLocation> map = LibConstants.ITEM_MODEL_RENDERER_ENTRIES;
 
-        if (map.containsKey(stack.getItem()) && isInHand(displayContext)) {
-            return getModel(map.get(stack.getItem()));
+        switch(displayContext) {
+            case THIRD_PERSON_LEFT_HAND, THIRD_PERSON_RIGHT_HAND, FIRST_PERSON_LEFT_HAND, FIRST_PERSON_RIGHT_HAND -> {
+                if (LibConstants.IN_HAND_MODELS.containsKey(stack.getItem())) {
+                    return getModel(LibConstants.IN_HAND_MODELS.get(stack.getItem()));
+                }
+            }
+            case GUI -> {
+                if (LibConstants.GUI_MODELS.containsKey(stack.getItem())) {
+                    return getModel(LibConstants.GUI_MODELS.get(stack.getItem()));
+                }
+            }
+            case HEAD -> {
+                if (LibConstants.HEAD_MODELS.containsKey(stack.getItem())) {
+                    return getModel(LibConstants.HEAD_MODELS.get(stack.getItem()));
+                }
+            }
+            case FIXED -> {
+                if (LibConstants.FIXED_MODELS.containsKey(stack.getItem())) {
+                    return getModel(LibConstants.FIXED_MODELS.get(stack.getItem()));
+                }
+            }
+            case GROUND -> {
+                if (LibConstants.GROUND_MODELS.containsKey(stack.getItem())) {
+                    return getModel(LibConstants.GROUND_MODELS.get(stack.getItem()));
+                }
+            }
         }
 
         return model;
-    }
-
-    private boolean isInHand(ItemDisplayContext context) {
-        return context.firstPerson() || context == ItemDisplayContext.THIRD_PERSON_LEFT_HAND || context == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
     }
 
     private BakedModel getModel(ResourceLocation location) {
