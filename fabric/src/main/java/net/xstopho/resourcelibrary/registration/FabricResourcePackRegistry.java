@@ -34,7 +34,8 @@ public class FabricResourcePackRegistry implements ResourcePackRegistry {
             RESOURCE_PACKS.add(packLocation);
             FabricLoader.getInstance().getModContainer(this.modId).ifPresent(modContainer -> {
                 ResourceManagerHelper.registerBuiltinResourcePack(packLocation, modContainer, Component.literal(packDisplayName), ResourcePackActivationType.NORMAL);
+                LibConstants.LOG.info("Registered Built-In Resourcepack: {}", packDisplayName);
             });
-        } else throw new IllegalStateException("You try to register the resource pack '" + packLocation + "' twice!");
+        } else LibConstants.LOG.error("Resourcepack '{}' with location '{}' is already registered!", packDisplayName, packLocation);
     }
 }
