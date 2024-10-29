@@ -12,9 +12,9 @@
 - Update to 1.21.3
 - small rework for ``RegistryProvider``
 - small changes on ``LootTableModifier``
-  - renames ``addPool`` to ``lootPool``
+  - renamed ``addPool`` to ``lootPool``
 - updating loot table helper classes
-- renamed ``RecipeRemainde`` to ``ResourceCraftingRemainder``
+- renamed ``RecipeRemainder`` to ``ResourceCraftingRemainder``
   - only to reduce the possibility of conflicts with other Mods
 - renamed ``ItemModelRenderHelper`` to ``ItemModelRenderer``
   - can now be used in any Loader, so initialize it in common
