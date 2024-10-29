@@ -1,11 +1,8 @@
 package net.xstopho.resourcelibrary_test;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.xstopho.resourcelibrary.registration.ResourcePackRegistry;
 import net.xstopho.resourcelibrary.rendering.ItemModelRenderer;
 import net.xstopho.resourcelibrary_test.modifier.TestLootModifier;
 import net.xstopho.resourcelibrary_test.registries.BlockRegistry;
@@ -27,21 +24,13 @@ public class RLibTestConstants {
         CreativeTabRegistry.init();
 
         TestLootModifier.init();
+        ResourcePackRegistry resourcePackRegistry = ResourcePackRegistry.getInstance(MOD_ID);
+        resourcePackRegistry.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "resource_nether_ores_x32"), "Resource Nether Ores x32");
+        resourcePackRegistry.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "resource_nether_ores_x64"), "Resource Nether Ores x64");
     }
 
     public static void clientInit() {
         ItemModelRenderer renderer = new ItemModelRenderer();
-
         renderer.registerItemModel(ItemRegistry.TEST_ITEM.get(), ResourceLocation.fromNamespaceAndPath(MOD_ID, "in_hand/test_item"));
-    }
-
-    public static Item.Properties baseItemProperties(String id) {
-        return new Item.Properties()
-                .setId(ResourceKey.create(BuiltInRegistries.ITEM.key(), ResourceLocation.fromNamespaceAndPath(MOD_ID, id)));
-    }
-
-    public static BlockBehaviour.Properties baseBlockProperties(String id) {
-        return BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)
-                .setId(ResourceKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.fromNamespaceAndPath(MOD_ID, id)));
     }
 }
