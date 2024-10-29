@@ -40,7 +40,7 @@ public class ForgeResourcePackRegistry implements ResourcePackRegistry {
 
         if (!RESOURCE_PACKS.containsKey(packPath)) {
             RESOURCE_PACKS.put(packPath, Component.literal(packDisplayName));
-        }  else throw new IllegalStateException("You try to register the resource pack '" + packLocation + "' twice!");
+        } else LibConstants.LOG.error("Resourcepack '{}' with location '{}' is already registered!", packDisplayName, packLocation);
     }
 
     @SubscribeEvent
@@ -57,6 +57,7 @@ public class ForgeResourcePackRegistry implements ResourcePackRegistry {
                         fromName(packLocationInfo -> new PathPackResources(packLocationInfo, resourcePath)), PackType.CLIENT_RESOURCES, new PackSelectionConfig(false, Pack.Position.TOP, false));
 
                 event.addRepositorySource(consumer -> consumer.accept(pack));
+                LibConstants.LOG.info("Registered Built-In Resourcepack: {}", component.getString());
             });
         }
     }

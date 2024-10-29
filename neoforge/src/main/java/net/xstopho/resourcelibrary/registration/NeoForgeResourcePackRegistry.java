@@ -33,7 +33,7 @@ public class NeoForgeResourcePackRegistry implements ResourcePackRegistry {
 
         if (!RESOURCE_PACKS.containsKey(packPath)) {
             RESOURCE_PACKS.put(packPath, Component.literal(packDisplayName));
-        }  else throw new IllegalStateException("You try to register the resource pack '" + packLocation + "' twice!");
+        } else LibConstants.LOG.error("Resourcepack '{}' with location '{}' is already registered!", packDisplayName, packLocation);
     }
 
     @SubscribeEvent
@@ -41,6 +41,8 @@ public class NeoForgeResourcePackRegistry implements ResourcePackRegistry {
         RESOURCE_PACKS.forEach((location, component) -> {
             event.addPackFinders(location, PackType.CLIENT_RESOURCES, component,
                     PackSource.BUILT_IN, false, Pack.Position.TOP);
+
+            LibConstants.LOG.info("Registered Built-In Resourcepack: {}", component.getString());
         });
     }
 }
