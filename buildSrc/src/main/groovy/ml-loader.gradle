@@ -21,5 +21,4 @@ tasks.named('sourcesJar', Jar) {
 
 processResources {
     from project(':common').sourceSets.main.resources
-    from file('src/generated/resources')
 }

@@ -24,6 +24,9 @@ dependencies {
 neoForge {
     version = neoforge_version
 
+    def at = file('../common/src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) accessTransformers = [at]
+
     parchment {
         minecraftVersion = parchment_mc_version
         mappingsVersion = parchment_version
@@ -46,6 +49,12 @@ neoForge {
             programArguments.add('nogui')
             ideName = "NeoForge Test Server (${project.path})"
             gameDirectory = file("../common/runs/server")
+        }
+        testDatagen {
+            server()
+            sourceSet = sourceSets.testmod
+            programArguments.addAll '--mod', "resourcelibrary_test", '--all', '--output', file('src/generated/').getAbsolutePath(), '--existing', file('../common/src/main/resources').getAbsolutePath()
+
         }
     }
     mods {

@@ -28,6 +28,9 @@ minecraft {
     copyIdeResources = true
     reobf = false
 
+    def at = file('../common/src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) accessTransformers = [at]
+
     runs {
         client {
             workingDirectory file("../common/runs/client")
@@ -47,6 +50,18 @@ minecraft {
             args '--nogui'
             mods {
                 modServerRun {
+                    source sourceSets.testmod
+                }
+            }
+        }
+
+        data {
+            workingDirectory file("../common/runs/data")
+            ideaModule "${rootProject.name}.${project.name}.main"
+            args '--mod', mod_id, '--all', '--output', file('src/generated/'), '--existing', file("../common/src/main/resources/").getAbsolutePath()
+            taskName 'Data'
+            mods {
+                modDataRun {
                     source sourceSets.testmod
                 }
             }

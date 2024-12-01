@@ -27,6 +27,9 @@ loom {
         defaultRefmapName.set("${mod_id}.refmap.json")
     }
 
+    def aw = file("src/main/resources/resourcelibrary.accesswidener")
+    if (aw.exists()) accessWidenerPath.set(aw)
+
     runs {
         client {
             client()
@@ -44,12 +47,22 @@ loom {
             ideConfigGenerated(true)
             runDir("runs/server")
         }
+
+        datagen {
+            inherit server
+            name "Fabric Test Datagen"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=${mod_id}"
+
+            runDir "build/datagen"
+        }
     }
 }
 
 processTestmodResources {
     from project(':common').sourceSets.testmod.resources
-    from file('src/generated/resources')
+    from file('src/generated/')
 }
 
 // Loader Specific Settings
