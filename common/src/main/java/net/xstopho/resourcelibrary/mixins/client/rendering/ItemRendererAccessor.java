@@ -1,4 +1,4 @@
-package net.xstopho.resourcelibrary.mixins.rendering;
+package net.xstopho.resourcelibrary.mixins.client.rendering;
 
 import net.minecraft.client.renderer.ItemModelShaper;
 import net.minecraft.client.renderer.entity.ItemRenderer;

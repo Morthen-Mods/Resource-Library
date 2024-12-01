@@ -6,8 +6,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [],
   "client": [
-    "rendering.ItemRendererAccessor",
-    "rendering.ItemRendererMixin"
+    "client.rendering.ItemRendererAccessor",
+    "client.rendering.ItemRendererMixin"
   ],
   "server": [],
   "injectors": {
