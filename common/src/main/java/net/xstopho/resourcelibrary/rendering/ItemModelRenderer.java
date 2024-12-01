@@ -2,12 +2,8 @@ package net.xstopho.resourcelibrary.rendering;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.xstopho.resourcelibrary.LibConstants;
-import net.xstopho.resourcelibrary.mixins.rendering.ItemRendererMixin;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ItemModelRenderer {
