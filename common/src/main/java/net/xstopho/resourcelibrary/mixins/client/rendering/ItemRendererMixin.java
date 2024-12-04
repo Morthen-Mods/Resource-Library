@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -50,6 +51,6 @@ public class ItemRendererMixin {
     }
 
     private BakedModel getModel(ResourceLocation location) {
-        return ((ItemRendererAccessor) this).rLib_getItemModelShaper().getItemModel(location);
+        return ((ItemRendererAccessor) this).rLib_getItemModelShaper().getModelManager().getModel(ModelResourceLocation.inventory(location));
     }
 }
