@@ -11,6 +11,6 @@ public class ModClientHandler {
 
     @SubscribeEvent
     public static void onClientInit(FMLClientSetupEvent event) {
-        RLibTestConstants.clientInit();
+
     }
 }

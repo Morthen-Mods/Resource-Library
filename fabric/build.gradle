@@ -49,7 +49,7 @@ loom {
         }
 
         datagen {
-            inherit server
+            inherit client
             name "Fabric Test Datagen"
             vmArg "-Dfabric-api.datagen"
             vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated")}"
