@@ -3,10 +3,13 @@ package net.xstopho.resourcelibrary_test.modifier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.xstopho.resourcelibrary.modifier.LootTableModifier;
 import net.xstopho.resourcelibrary.modifier.loot_tables.ChestLootTables;
 import net.xstopho.resourcelibrary.modifier.loot_tables.EntityLootTables;
+import net.xstopho.resourcelibrary_test.registries.BlockRegistry;
 import net.xstopho.resourcelibrary_test.registries.ItemRegistry;
 
 public class TestLootModifier {
@@ -18,8 +21,16 @@ public class TestLootModifier {
     }
 
     public static void init() {
-        modifier.addLoot(ItemRegistry.TEST_ITEM, 1f, 1f,
+        modifier.addItems(ItemRegistry.TEST_ITEM, 1f, 1f,
                 ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.COW);
-        modifier.addLoot(ItemRegistry.TEST_RECIPE_REMAINDER, 1f, 1f, EntityLootTables.COW);
+
+        modifier.addBlocks(BlockRegistry.TEST_BLOCK, 1f, 1f,
+                ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.COW);
+
+        modifier.addItems(Items.DIAMOND, 1f, 1f,
+                ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.COW);
+
+        modifier.addItems(Blocks.DIAMOND_BLOCK, 1f, 1f,
+                ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.COW);
     }
 }

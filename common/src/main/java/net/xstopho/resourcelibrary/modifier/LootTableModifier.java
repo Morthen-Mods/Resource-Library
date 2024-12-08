@@ -3,6 +3,7 @@ package net.xstopho.resourcelibrary.modifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -19,8 +20,14 @@ public interface LootTableModifier {
         return CoreServices.load(LootTableModifier.class);
     }
 
-    void addLoot(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable>... lootTables);
-    void addLoot(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables);
+    void addItems(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable>... lootTables);
+    void addItems(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables);
+
+    void addBlocks(RegistryObject<Block> block, float amount, float chance, ResourceKey<LootTable>... lootTables);
+    void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables);
+
+    void addItems(ItemLike item, float amount, float chance, ResourceKey<LootTable>... lootTables);
+    void addItems(ItemLike item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables);
 
     static LootPool.Builder lootPool(ItemLike item, float chance, float amount) {
         return LootPool.lootPool()
