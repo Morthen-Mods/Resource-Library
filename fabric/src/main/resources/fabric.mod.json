@@ -15,7 +15,6 @@
     "license": "${mod_license}",
     "icon": "icon_fabric.png",
     "environment": "*",
-    "accesswidener": "resourcelibrary.accesswidener",
     "entrypoints": {
         "main": [ "net.xstopho.resourcelibrary.ResourceLibrary" ]
     },
