@@ -11,27 +11,32 @@ import net.xstopho.resourcelibrary.registration.RegistryObject;
 public class FabricLootTableModifier implements LootTableModifier {
 
     @Override
-    public void addItems(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable>... lootTables) {
+    @SafeVarargs
+    public final void addItems(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable>... lootTables) {
         addItems(item.get(), amount, chance, lootTables);
     }
 
     @Override
-    public void addItems(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
+    @SafeVarargs
+    public final void addItems(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
         addItems(item.get(), minAmount, maxAmount, chance, lootTables);
     }
 
     @Override
-    public void addBlocks(RegistryObject<Block> block, float amount, float chance, ResourceKey<LootTable>... lootTables) {
+    @SafeVarargs
+    public final void addBlocks(RegistryObject<Block> block, float amount, float chance, ResourceKey<LootTable>... lootTables) {
         addItems(block.get(), amount, chance, lootTables);
     }
 
     @Override
-    public void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
+    @SafeVarargs
+    public final void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
         addItems(block.get(), minAmount, maxAmount, chance, lootTables);
     }
 
     @Override
-    public void addItems(ItemLike item, float amount, float chance, ResourceKey<LootTable>... lootTables) {
+    @SafeVarargs
+    public final void addItems(ItemLike item, float amount, float chance, ResourceKey<LootTable>... lootTables) {
         LootTableEvents.MODIFY.register((resourceKey, builder, lootTableSource, provider) -> {
             for (ResourceKey<LootTable> lootTable : lootTables) {
                 if (resourceKey.equals(lootTable)) {
@@ -42,7 +47,8 @@ public class FabricLootTableModifier implements LootTableModifier {
     }
 
     @Override
-    public void addItems(ItemLike item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
+    @SafeVarargs
+    public final void addItems(ItemLike item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
         LootTableEvents.MODIFY.register((resourceKey, builder, lootTableSource, provider) -> {
             for (ResourceKey<LootTable> lootTable : lootTables) {
                 if (resourceKey.equals(lootTable)) {
