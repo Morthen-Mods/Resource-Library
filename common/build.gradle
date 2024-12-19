@@ -7,7 +7,7 @@ neoForge {
     neoFormVersion = neoform_version
 
     parchment {
-        minecraftVersion = parchment_mc_version
+        minecraftVersion = minecraft_version
         mappingsVersion = parchment_version
     }
 }
