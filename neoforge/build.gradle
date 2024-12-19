@@ -66,6 +66,7 @@ neoForge {
 compileTestmodJava {
     source(project(':common').sourceSets.testmod.allSource)
 }
+
 processTestmodResources {
     from project(':common').sourceSets.testmod.resources
     from file('src/generated/resources')
