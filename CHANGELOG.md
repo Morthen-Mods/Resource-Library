@@ -1,2 +1,2 @@
-#### v2.0.3
-- internal fix with no effect on gameplay
+#### v2.1.5
+- update LootTableModifier to be more flexible
