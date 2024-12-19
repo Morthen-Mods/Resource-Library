@@ -26,35 +26,41 @@ public class ForgeLootTableModifier implements LootTableModifier {
 
 
     @Override
-    public void addItems(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable>... lootTables) {
+    @SafeVarargs
+    public final void addItems(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable>... lootTables) {
         addItems(item, amount, amount, chance, lootTables);
     }
 
     @Override
-    public void addItems(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
+    @SafeVarargs
+    public final void addItems(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
         for (ResourceKey<LootTable> table : lootTables) {
             modModifier.add(new ModifierHolder(item, minAmount, maxAmount, chance, table));
         }
     }
 
     @Override
-    public void addBlocks(RegistryObject<Block> block, float amount, float chance, ResourceKey<LootTable>... lootTables) {
+    @SafeVarargs
+    public final void addBlocks(RegistryObject<Block> block, float amount, float chance, ResourceKey<LootTable>... lootTables) {
         addBlocks(block, amount, amount, chance, lootTables);
     }
 
     @Override
-    public void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
+    @SafeVarargs
+    public final void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
         for (ResourceKey<LootTable> table : lootTables) {
             modModifier.add(new ModifierHolder(block, minAmount, maxAmount, chance, table));
         }
     }
 
     @Override
-    public void addItems(ItemLike itemLike, float amount, float chance, ResourceKey<LootTable>... lootTables) {
+    @SafeVarargs
+    public final void addItems(ItemLike itemLike, float amount, float chance, ResourceKey<LootTable>... lootTables) {
         addItems(itemLike, amount, amount, chance, lootTables);
     }
 
     @Override
+    @SafeVarargs
     public final void addItems(ItemLike itemLike, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
         for (ResourceKey<LootTable> table : lootTables) {
             vanillaModifier.add(new VanillaModifierHolder(itemLike, minAmount, maxAmount, chance, table));
