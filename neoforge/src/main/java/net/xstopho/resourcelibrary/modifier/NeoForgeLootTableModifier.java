@@ -2,6 +2,8 @@ package net.xstopho.resourcelibrary.modifier;
 
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -15,39 +17,67 @@ import java.util.List;
 @EventBusSubscriber(modid = LibConstants.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class NeoForgeLootTableModifier implements LootTableModifier {
 
-    private static final List<Modifier> modifiers = new ArrayList<>();
-    private static final List<RangedModifier> rangedModifiers = new ArrayList<>();
+    private static final List<ModifierHolder> modModifier = new ArrayList<>();
+    private static final List<VanillaModifierHolder> vanillaModifier = new ArrayList<>();
 
-    private record Modifier(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable> lootTable) {}
-    private record RangedModifier(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable> lootTable) {}
+    private record ModifierHolder(RegistryObject<?> object, float minAmount, float maxAmount, float chance, ResourceKey<LootTable> lootTable) {}
+    private record VanillaModifierHolder(ItemLike itemLike, float minAmount, float maxAmount, float chance, ResourceKey<LootTable> lootTable) {}
+
 
     @Override
-    public void addLoot(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable>... lootTables) {
-        for (ResourceKey<LootTable> lootTable : lootTables) {
-            modifiers.add(new Modifier(item, amount, chance, lootTable));
+    @SafeVarargs
+    public final void addItems(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable>... lootTables) {
+        addItems(item, amount, amount, chance, lootTables);
+    }
+
+    @Override
+    @SafeVarargs
+    public final void addItems(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
+        for (ResourceKey<LootTable> table : lootTables) {
+            modModifier.add(new ModifierHolder(item, minAmount, maxAmount, chance, table));
         }
     }
 
     @Override
-    public final void addLoot(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
-        for (ResourceKey<LootTable> lootTable : lootTables) {
-            rangedModifiers.add(new RangedModifier(item, minAmount, maxAmount, chance, lootTable));
+    @SafeVarargs
+    public final void addBlocks(RegistryObject<Block> block, float amount, float chance, ResourceKey<LootTable>... lootTables) {
+        addBlocks(block, amount, amount, chance, lootTables);
+    }
+
+    @Override
+    @SafeVarargs
+    public final void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
+        for (ResourceKey<LootTable> table : lootTables) {
+            modModifier.add(new ModifierHolder(block, minAmount, maxAmount, chance, table));
+        }
+    }
+
+    @Override
+    @SafeVarargs
+    public final void addItems(ItemLike itemLike, float amount, float chance, ResourceKey<LootTable>... lootTables) {
+        addItems(itemLike, amount, amount, chance, lootTables);
+    }
+
+    @Override
+    @SafeVarargs
+    public final void addItems(ItemLike itemLike, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables) {
+        for (ResourceKey<LootTable> table : lootTables) {
+            vanillaModifier.add(new VanillaModifierHolder(itemLike, minAmount, maxAmount, chance, table));
         }
     }
 
     @SubscribeEvent
     public static void loadTables(LootTableLoadEvent event) {
-        modifiers.forEach(modifier -> {
-            if (event.getName().equals(modifier.lootTable.location())) {
-                event.getTable().addPool(LootTableModifier.lootPool(modifier.item.get(), modifier.chance, modifier.amount).build());
+        modModifier.forEach(modifier -> {
+            if (event.getName().equals(modifier.lootTable().location())) {
+                event.getTable().addPool(LootTableModifier.lootPool((ItemLike) modifier.object().get(), modifier.chance(), modifier.minAmount(), modifier.maxAmount()).build());
             }
         });
 
-        rangedModifiers.forEach(modifier -> {
-            if (event.getName().equals(modifier.lootTable.location())) {
-                event.getTable().addPool(LootTableModifier.lootPool(modifier.item.get(), modifier.chance, modifier.minAmount, modifier.maxAmount).build());
+        vanillaModifier.forEach(modifier -> {
+            if (event.getName().equals(modifier.lootTable().location())) {
+                event.getTable().addPool(LootTableModifier.lootPool(modifier.itemLike(), modifier.chance(), modifier.minAmount(), modifier.maxAmount()).build());
             }
         });
     }
-
 }

@@ -1,3 +1,2 @@
-#### v2.3.3
-- remove Log message for Fabric when ``ResourcePackRegistry`` 
-    is called in the Main init method
+#### v2.3.5
+- update LootTableModifier to be more flexible
