@@ -3,6 +3,7 @@ package net.xstopho.resourcelibrary.modifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -15,15 +16,20 @@ import net.xstopho.resourcelibrary.registration.RegistryObject;
 
 public interface LootTableModifier {
 
-    static LootTableModifier get() {
+    static LootTableModifier getInstance() {
         return CoreServices.load(LootTableModifier.class);
     }
 
-    void addToPool(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable>... lootTables);
+    void addItems(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable>... lootTables);
+    void addItems(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables);
 
-    void addToPool(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables);
+    void addBlocks(RegistryObject<Block> block, float amount, float chance, ResourceKey<LootTable>... lootTables);
+    void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables);
 
-    static LootPool.Builder createLootPool(ItemLike item, float chance, float amount) {
+    void addItems(ItemLike item, float amount, float chance, ResourceKey<LootTable>... lootTables);
+    void addItems(ItemLike item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables);
+
+    static LootPool.Builder lootPool(ItemLike item, float chance, float amount) {
         return LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1f))
                 .when(LootItemRandomChanceCondition.randomChance(value(chance)))
@@ -31,7 +37,7 @@ public interface LootTableModifier {
                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(amount)));
     }
 
-    static LootPool.Builder createLootPool(ItemLike item, float chance, float minAmount, float maxAmount) {
+    static LootPool.Builder lootPool(ItemLike item, float chance, float minAmount, float maxAmount) {
         return LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1f))
                 .when(LootItemRandomChanceCondition.randomChance(value(chance)))
