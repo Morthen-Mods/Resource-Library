@@ -21,16 +21,6 @@ public class TestLootModifier {
     }
 
     public static void init() {
-        modifier.addItems(ItemRegistry.TEST_ITEM, 1f, 1f,
-                ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.COW);
-
-        modifier.addBlocks(BlockRegistry.TEST_BLOCK, 1f, 1f,
-                ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.COW);
-
-        modifier.addItems(Items.DIAMOND, 1f, 1f,
-                ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.COW);
-
-        modifier.addItems(Blocks.DIAMOND_BLOCK, 1f, 1f,
-                ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.COW);
+        modifier.addItems(Blocks.DIAMOND_BLOCK, 1f, () ->1f, ChestLootTables.SPAWN_BONUS_CHEST);
     }
 }
