@@ -24,6 +24,6 @@ public class ResourceLibraryTest implements ModInitializer {
         CreativeTabRegistry.init();
 
         LootTableModifier modifier = LootTableModifier.getInstance();
-        modifier.addItems(Items.DIAMOND_BLOCK, 1f, 1f, ChestLootTables.SPAWN_BONUS_CHEST);
+        modifier.addItems(Items.DIAMOND_BLOCK, 1f, () -> 1f, ChestLootTables.SPAWN_BONUS_CHEST);
     }
 }

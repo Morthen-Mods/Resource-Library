@@ -1,3 +1,6 @@
+#### v2.1.6
+- update LootTableModifier, uses now an Supplier instead of a fixed value
+
 #### v2.1.5
 - update LootTableModifier to be more flexible
 
