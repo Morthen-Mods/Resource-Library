@@ -1,2 +1,2 @@
-#### v2.3.5
-- update LootTableModifier to be more flexible
+#### v2.3.7
+- fixing loot tables for trial chambers

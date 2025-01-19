@@ -14,20 +14,22 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.xstopho.resourcelibrary.registration.RegistryObject;
 import net.xstopho.resourcelibrary.service.CoreServices;
 
+import java.util.function.Supplier;
+
 public interface LootTableModifier {
 
     static LootTableModifier getInstance() {
         return CoreServices.load(LootTableModifier.class);
     }
 
-    void addItems(RegistryObject<Item> item, float amount, float chance, ResourceKey<LootTable>... lootTables);
-    void addItems(RegistryObject<Item> item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables);
+    void addItems(RegistryObject<Item> item, float amount, Supplier<Float> chance, ResourceKey<LootTable>... lootTables);
+    void addItems(RegistryObject<Item> item, float minAmount, float maxAmount, Supplier<Float> chance, ResourceKey<LootTable>... lootTables);
 
-    void addBlocks(RegistryObject<Block> block, float amount, float chance, ResourceKey<LootTable>... lootTables);
-    void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables);
+    void addBlocks(RegistryObject<Block> block, float amount, Supplier<Float> chance, ResourceKey<LootTable>... lootTables);
+    void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, Supplier<Float> chance, ResourceKey<LootTable>... lootTables);
 
-    void addItems(ItemLike item, float amount, float chance, ResourceKey<LootTable>... lootTables);
-    void addItems(ItemLike item, float minAmount, float maxAmount, float chance, ResourceKey<LootTable>... lootTables);
+    void addItems(ItemLike item, float amount, Supplier<Float> chance, ResourceKey<LootTable>... lootTables);
+    void addItems(ItemLike item, float minAmount, float maxAmount, Supplier<Float> chance, ResourceKey<LootTable>... lootTables);
 
     static LootPool.Builder lootPool(ItemLike item, float chance, float amount) {
         return LootPool.lootPool()

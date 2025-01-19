@@ -18,8 +18,6 @@ public class TestLootModifier {
     }
 
     public static void init() {
-        modifier.addLoot(ItemRegistry.TEST_ITEM, 1f, 1f,
-                ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.COW);
-        modifier.addLoot(ItemRegistry.TEST_RECIPE_REMAINDER, 1f, 1f, EntityLootTables.COW);
+        modifier.addItems(ItemRegistry.TEST_ITEM, 1f, () -> 1f, ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.COW);
     }
 }
