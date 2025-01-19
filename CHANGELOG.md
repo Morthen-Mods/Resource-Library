@@ -1,2 +1,2 @@
-#### v2.4.6
-- update LootTableModifier to use Supplier instead of fixed values
+#### v2.4.7
+- fix trial chamber loot tables

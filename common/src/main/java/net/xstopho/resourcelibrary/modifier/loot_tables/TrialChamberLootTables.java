@@ -14,10 +14,10 @@ public class TrialChamberLootTables {
     public static final ResourceKey<LootTable> CHEST_REWARD_COMMON = createKey("chests/trial_chambers/reward_common");
     public static final ResourceKey<LootTable> CHEST_REWARD_RARE = createKey("chests/trial_chambers/reward_rare");
     public static final ResourceKey<LootTable> CHEST_REWARD_UNIQUE = createKey("chests/trial_chambers/reward_unique");
-    public static final ResourceKey<LootTable> CHEST_OMINOUS = createKey("chests/trial_chambers/ominous");
-    public static final ResourceKey<LootTable> CHEST_OMINOUS_COMMON = createKey("chests/trial_chambers/ominous_common");
-    public static final ResourceKey<LootTable> CHEST_OMINOUS_RARE = createKey("chests/trial_chambers/ominous_rare");
-    public static final ResourceKey<LootTable> CHEST_OMINOUS_UNIQUE = createKey("chests/trial_chambers/ominous_unique");
+    public static final ResourceKey<LootTable> CHEST_OMINOUS = createKey("chests/trial_chambers/reward_ominous");
+    public static final ResourceKey<LootTable> CHEST_OMINOUS_COMMON = createKey("chests/trial_chambers/reward_ominous_common");
+    public static final ResourceKey<LootTable> CHEST_OMINOUS_RARE = createKey("chests/trial_chambers/reward_ominous_rare");
+    public static final ResourceKey<LootTable> CHEST_OMINOUS_UNIQUE = createKey("chests/trial_chambers/reward_ominous_unique");
     public static final ResourceKey<LootTable> CHEST_SUPPLY = createKey("chests/trial_chambers/supply");
 
     public static final ResourceKey<LootTable> DISPENSER_CHAMBER = createKey("dispensers/trial_chambers/chamber");
