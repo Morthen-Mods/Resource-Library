@@ -1,0 +1,14 @@
+package net.xstopho.resourcelibrary.service.platform;
+
+public interface IPlatformHelper {
+
+    default Platforms getPlatform() {
+        return Platforms.NO_LOADER;
+    }
+
+    boolean isModLoaded(String modId);
+
+    enum Platforms {
+        FABRIC, FORGE, NEOFORGE, NO_LOADER
+    }
+}

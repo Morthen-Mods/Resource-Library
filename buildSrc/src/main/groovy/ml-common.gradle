@@ -1,6 +1,5 @@
 plugins {
     id 'java-library'
-    id 'ml-common-publish'
 }
 
 base {
@@ -9,16 +8,6 @@ base {
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(java_version)
-    withSourcesJar()
-    withJavadocJar()
-}
-
-tasks.named('javadoc', Javadoc) {
-    options.addStringOption('Xdoclint:none', '-quiet')
-}
-
-tasks.withType(GenerateModuleMetadata).configureEach {
-    enabled = false
 }
 
 jar {
@@ -36,12 +25,6 @@ jar {
                 'Implementation-Vendor' : mod_author,
                 'Built-On-Minecraft'    : minecraft_version
         ])
-    }
-}
-
-sourcesJar {
-    from(rootProject.file("LICENSE")) {
-        rename { "${it}_${mod_name}" }
     }
 }
 
@@ -64,7 +47,6 @@ processResources {
             // Fabric Keys
             "fabric_loader_version": fabric_loader_version,
             "fabric_api_version": fabric_api_version,
-            "fabric_minecraft_version": fabric_minecraft_version,
 
             // NeoForge Keys
             "neoforge_version": neoforge_version,
@@ -72,7 +54,6 @@ processResources {
 
             // Forge Keys
             "forge_version": forge_version,
-            "forge_loader_version_range": forge_loader_version_range,
             "forge_version_range": forge_version_range,
     ]
 
