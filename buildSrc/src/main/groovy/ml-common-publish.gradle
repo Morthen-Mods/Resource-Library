@@ -1,0 +1,27 @@
+plugins {
+    id 'maven-publish'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = "${mod_id}-${project.name}"
+            from components.java
+
+            pom.withXml {
+                asNode().dependencies.each { it.replaceNode {} }
+            }
+        }
+    }
+
+    repositories {
+        maven { url = MAVEN_REPOSITORY_TEST }
+    }
+
+    publish.doLast {
+        exec {
+            workingDir MAVEN_REPOSITORY_TEST
+            commandLine 'cmd', '/c', 'git add . && git commit -m "' + "${mod_id}-${project.name} ${version}" + '" && git push'
+        }
+    }
+}

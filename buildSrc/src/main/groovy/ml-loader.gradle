@@ -1,6 +1,6 @@
 plugins {
     id 'ml-common'
-    id 'ml-mod-publish'
+    id 'ml-loader-publish'
     id 'java-library'
 }
 

@@ -1,13 +1,23 @@
 plugins {
     id 'java-library'
+    id 'ml-common-publish'
 }
 
 base {
     archivesName = "$mod_id-$project.name"
+    version = "$minecraft_version-$mod_version"
 }
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+}
+
+tasks.named('javadoc', Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+tasks.withType(GenerateModuleMetadata).configureEach {
+    enabled = false
 }
 
 jar {
