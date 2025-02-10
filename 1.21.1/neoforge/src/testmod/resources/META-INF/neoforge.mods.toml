@@ -1,0 +1,11 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+license = "MIT"
+
+[[mods]]
+    modId = "resourcelibrary_test"
+    version = "1.0-TEST"
+    displayName = "Resource Library Testmod"
+    authors = "xStopho"
+    description = "Testmod for Resource Library"
+    logoFile = "icon_forge.png"

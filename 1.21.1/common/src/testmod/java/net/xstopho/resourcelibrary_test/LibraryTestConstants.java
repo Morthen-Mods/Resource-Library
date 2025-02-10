@@ -1,8 +1,10 @@
 package net.xstopho.resourcelibrary_test;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.xstopho.resourcelibrary.modifier.LootTableModifier;
 import net.xstopho.resourcelibrary.modifier.loot_tables.ChestLootTables;
+import net.xstopho.resourcelibrary.rendering.item.ItemModelRenderHelper;
 import net.xstopho.resourcelibrary_test.registries.BlockRegistry;
 import net.xstopho.resourcelibrary_test.registries.CreativeTabRegistry;
 import net.xstopho.resourcelibrary_test.registries.ItemRegistry;
@@ -28,6 +30,7 @@ public class LibraryTestConstants {
     }
 
     public static void clientInit() {
-
+        ItemModelRenderHelper.registerItemModel(ItemRegistry.TEST_IN_HAND_ITEM.get(),
+                ResourceLocation.fromNamespaceAndPath(MOD_ID, "in_hand/in_hand_item"));
     }
 }
