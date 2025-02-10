@@ -6,6 +6,7 @@ plugins {
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
+    testmodImplementation project(':1.21.1:common').sourceSets.testmod.output
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}+${minecraft_version}"
@@ -22,18 +23,17 @@ loom {
     runs {
         client {
             client()
-            setConfigName("Fabric Client")
+            source sourceSets.testmod
+            setConfigName("Fabric Test Client")
             ideConfigGenerated(true)
             programArgs('--username', 'Dev')
             runDir("runs/client")
         }
-        server {
-            server()
-            setConfigName("Fabric Server")
-            ideConfigGenerated(true)
-            runDir("runs/server")
-        }
     }
+}
+
+processTestmodResources {
+    from file('../common/src/testmod/resources')
 }
 
 publishMods {

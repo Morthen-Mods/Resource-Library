@@ -3,6 +3,12 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+dependencies {
+    testmodImplementation sourceSets.main.output
+
+    testmodImplementation project(':1.21.3:common').sourceSets.testmod.output
+}
+
 neoForge {
     version = neoforge_version
 
@@ -17,20 +23,28 @@ neoForge {
     runs {
         configureEach {
             systemProperty('neoforge.enableGameTestNamespaces', mod_id)
-            ideName = "NeoForge ${it.name.capitalize()} (${project.path})"
-            gameDirectory = file("../common/runs/${it.name.toLowerCase()}")
+            ideName = "NeoForge Test ${it.name.capitalize()} (${project.path})"
         }
-        client {
+
+        testClient {
             client()
-        }
-        server {
-            server()
-            programArguments.add('nogui')
+            sourceSet = sourceSets.testmod
+            gameDirectory = project.file("../common/runs/client")
         }
     }
     mods {
         "${mod_id}" { sourceSet sourceSets.main }
+        "${mod_id}_test" { sourceSet sourceSets.testmod }
     }
+
+}
+
+compileTestmodJava {
+    source(project(':1.21.3:common').sourceSets.testmod.allSource)
+}
+
+processTestmodResources {
+    from file('../common/src/testmod/resources')
 }
 
 publishMods {

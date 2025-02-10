@@ -20,6 +20,13 @@ tasks.withType(GenerateModuleMetadata).configureEach {
     enabled = false
 }
 
+sourceSets {
+    testmod {
+        runtimeClasspath += main.runtimeClasspath
+        compileClasspath += main.compileClasspath
+    }
+}
+
 jar {
     from(rootProject.file("LICENSE")) {
         rename { "${it}_${mod_name}" }
