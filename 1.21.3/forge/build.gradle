@@ -59,6 +59,10 @@ compileTestmodJava {
     source(project(':1.21.3:common').sourceSets.testmod.allSource)
 }
 
+processTestmodResources {
+    from project(':1.21.3:common').sourceSets.testmod.resources
+}
+
 publishMods {
     file = jar.archiveFile
     modLoaders.addAll("forge")
