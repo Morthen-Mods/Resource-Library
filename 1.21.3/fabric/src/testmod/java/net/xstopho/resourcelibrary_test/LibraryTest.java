@@ -2,10 +2,10 @@ package net.xstopho.resourcelibrary_test;
 
 import net.fabricmc.api.ModInitializer;
 
-public class ResourceLibraryTest implements ModInitializer {
+public class LibraryTest implements ModInitializer {
     
     @Override
     public void onInitialize() {
-        RLibTestConstants.commonInit();
+        TestConstants.commonInit();
     }
 }

@@ -10,14 +10,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.xstopho.resourcelibrary.registration.RegistryObject;
 import net.xstopho.resourcelibrary.registration.RegistryProvider;
-import net.xstopho.resourcelibrary_test.RLibTestConstants;
+import net.xstopho.resourcelibrary_test.TestConstants;
 import net.xstopho.resourcelibrary_test.blocks.TestCropBlock;
 
 import java.util.function.Function;
 
 public class BlockRegistry {
 
-    private static final RegistryProvider<Block> BLOCKS = RegistryProvider.get(RLibTestConstants.MOD_ID, BuiltInRegistries.BLOCK);
+    private static final RegistryProvider<Block> BLOCKS = RegistryProvider.get(TestConstants.MOD_ID, BuiltInRegistries.BLOCK);
 
     public static final RegistryObject<Block> TEST_BLOCK = register("test_block", TestCropBlock::new);
 

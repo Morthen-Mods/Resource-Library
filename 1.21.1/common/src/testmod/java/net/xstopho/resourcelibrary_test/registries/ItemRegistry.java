@@ -6,12 +6,12 @@ import net.minecraft.world.item.ItemStack;
 import net.xstopho.resourcelibrary.items.RecipeRemainder;
 import net.xstopho.resourcelibrary.registration.RegistryObject;
 import net.xstopho.resourcelibrary.registration.RegistryProvider;
-import net.xstopho.resourcelibrary_test.LibraryTestConstants;
+import net.xstopho.resourcelibrary_test.TestConstants;
 
 import java.util.function.Supplier;
 
 public class ItemRegistry {
-    public static final RegistryProvider<Item> ITEMS = RegistryProvider.get(BuiltInRegistries.ITEM, LibraryTestConstants.MOD_ID);
+    public static final RegistryProvider<Item> ITEMS = RegistryProvider.get(BuiltInRegistries.ITEM, TestConstants.MOD_ID);
 
     public static final RegistryObject<Item> TEST_RECIPE_REMAINDER = register("recipe_remainder", () -> new TestRecipeRemainingItem(new Item.Properties()));
     public static final RegistryObject<Item> TEST_IN_HAND_ITEM = register("in_hand_item");

@@ -6,11 +6,11 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.xstopho.resourcelibrary.registration.RegistryObject;
 import net.xstopho.resourcelibrary.registration.RegistryProvider;
-import net.xstopho.resourcelibrary_test.RLibTestConstants;
+import net.xstopho.resourcelibrary_test.TestConstants;
 
 public class CreativeTabRegistry {
 
-    private static final RegistryProvider<CreativeModeTab> CREATIVE_MODE_TABS = RegistryProvider.get(RLibTestConstants.MOD_ID, BuiltInRegistries.CREATIVE_MODE_TAB);
+    private static final RegistryProvider<CreativeModeTab> CREATIVE_MODE_TABS = RegistryProvider.get(TestConstants.MOD_ID, BuiltInRegistries.CREATIVE_MODE_TAB);
 
     public static final RegistryObject<CreativeModeTab> RESOURCE_LIBRARY_TEST = CREATIVE_MODE_TABS.register("item_group", () -> CreativeModeTab.builder(null, -1)
             .title(Component.translatable("resourcelibrary_test.item_group")).icon(() -> new ItemStack(ItemRegistry.TEST_ITEM.get()))

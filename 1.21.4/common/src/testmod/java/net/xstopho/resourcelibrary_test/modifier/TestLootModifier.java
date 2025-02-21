@@ -12,6 +12,8 @@ import net.xstopho.resourcelibrary.modifier.loot_tables.EntityLootTables;
 import net.xstopho.resourcelibrary_test.registries.BlockRegistry;
 import net.xstopho.resourcelibrary_test.registries.ItemRegistry;
 
+import java.util.List;
+
 public class TestLootModifier {
 
     private static final LootTableModifier modifier = LootTableModifier.getInstance();
@@ -21,6 +23,6 @@ public class TestLootModifier {
     }
 
     public static void init() {
-        modifier.addItems(Blocks.DIAMOND_BLOCK, 1f, () ->1f, ChestLootTables.SPAWN_BONUS_CHEST);
+        modifier.addItems(Blocks.DIAMOND_BLOCK, 1f, () ->1f, List.of(ChestLootTables.SPAWN_BONUS_CHEST));
     }
 }
