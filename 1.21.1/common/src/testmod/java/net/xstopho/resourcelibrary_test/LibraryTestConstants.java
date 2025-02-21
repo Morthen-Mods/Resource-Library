@@ -1,6 +1,7 @@
 package net.xstopho.resourcelibrary_test;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.xstopho.resourcelibrary.modifier.LootTableModifier;
 import net.xstopho.resourcelibrary.modifier.loot_tables.ChestLootTables;
@@ -32,5 +33,9 @@ public class LibraryTestConstants {
     public static void clientInit() {
         ItemModelRenderHelper.registerItemModel(ItemRegistry.TEST_IN_HAND_ITEM.get(),
                 ResourceLocation.fromNamespaceAndPath(MOD_ID, "in_hand/in_hand_item"));
+    }
+
+    public interface Join {
+        void onJoin(Player player);
     }
 }
