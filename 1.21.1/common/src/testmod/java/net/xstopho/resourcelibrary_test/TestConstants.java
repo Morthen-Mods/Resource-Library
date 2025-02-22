@@ -23,8 +23,10 @@ public class TestConstants {
     public static final String MOD_NAME = "Resource Library Test";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
-    public static final ResourceEvent<Join> TEST_JOIN_EVENT = ResourceEventFactory.createListBackedEvent(
+    public static final ResourceEvent<Join> TEST_LIST_EVENT = ResourceEventFactory.createListBackedEvent(
             joins -> player -> joins.forEach(join -> join.onJoin(player)));
+
+    public static final ResourceEvent<Join> TEST_SIMPLE_EVENT = ResourceEventFactory.createSimpleEvent();
 
     public interface Join {
         void onJoin(Player player);
@@ -39,9 +41,12 @@ public class TestConstants {
         LootTableModifier modifier = LootTableModifier.getInstance();
         modifier.addItems(Items.DIAMOND_BLOCK, 1f, () -> 1f, List.of(ChestLootTables.SPAWN_BONUS_CHEST));
 
-        TEST_JOIN_EVENT.register(player -> player.sendSystemMessage(Component.literal("Simple Event Test")));
-        TEST_JOIN_EVENT.register(player -> player.sendSystemMessage(Component.literal("Simple Test, to test if multiple registered Events get triggered correctly")));
-        TEST_JOIN_EVENT.register(player -> player.sendSystemMessage(Component.literal("Only for fun")));
+        TEST_LIST_EVENT.register(player -> player.sendSystemMessage(Component.literal("Simple Event Test")));
+        TEST_LIST_EVENT.register(player -> player.sendSystemMessage(Component.literal("Simple Test, to test if multiple registered Events get triggered correctly")));
+        TEST_LIST_EVENT.register(player -> player.sendSystemMessage(Component.literal("Only for fun")));
+
+        TEST_SIMPLE_EVENT.register(player -> player.sendSystemMessage(Component.literal("This is the first invoker")));
+        TEST_SIMPLE_EVENT.register(player -> player.sendSystemMessage(Component.literal("This should overwrite the first invoker")));
     }
 
     public static void clientInit() {

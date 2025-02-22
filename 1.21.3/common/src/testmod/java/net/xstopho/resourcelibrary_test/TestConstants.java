@@ -20,8 +20,10 @@ public class TestConstants {
     public static final String MOD_NAME = "Resource Library Test";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
-    public static final ResourceEvent<Join> TEST_JOIN_EVENT = ResourceEventFactory.createListBackedEvent(
+    public static final ResourceEvent<Join> TEST_LIST_EVENT = ResourceEventFactory.createListBackedEvent(
             joins -> player -> joins.forEach(join -> join.onJoin(player)));
+
+    public static final ResourceEvent<Join> TEST_SIMPLE_EVENT = ResourceEventFactory.createSimpleEvent();
 
     public interface Join {
         void onJoin(Player player);
@@ -38,9 +40,12 @@ public class TestConstants {
         resourcePackRegistry.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "resource_nether_ores_x32"), "Resource Nether Ores x32");
         resourcePackRegistry.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "resource_nether_ores_x64"), "Resource Nether Ores x64");
 
-        TEST_JOIN_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Event Test"), false));
-        TEST_JOIN_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Test, to test if multiple registered Events get triggered correctly"), false));
-        TEST_JOIN_EVENT.register(player -> player.displayClientMessage(Component.literal("Test Actionbar Message"), true));
+        TEST_LIST_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Event Test"), false));
+        TEST_LIST_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Test, to test if multiple registered Events get triggered correctly"), false));
+        TEST_LIST_EVENT.register(player -> player.displayClientMessage(Component.literal("Test Actionbar Message"), true));
+
+        TEST_SIMPLE_EVENT.register(player -> player.displayClientMessage(Component.literal("This is the first invoker"), false));
+        TEST_SIMPLE_EVENT.register(player -> player.displayClientMessage(Component.literal("This should overwrite the first invoker"), false));
     }
 
     public static void clientInit() {

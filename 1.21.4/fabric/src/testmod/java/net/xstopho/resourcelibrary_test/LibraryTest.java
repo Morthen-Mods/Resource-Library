@@ -15,5 +15,8 @@ public class LibraryTest implements ModInitializer {
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server)
                 -> TestConstants.TEST_JOIN_EVENT.invoker().onJoin(handler.getPlayer()));
+
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server)
+                -> TestConstants.TEST_SIMPLE_EVENT.invoker().onJoin(handler.getPlayer()));
     }
 }

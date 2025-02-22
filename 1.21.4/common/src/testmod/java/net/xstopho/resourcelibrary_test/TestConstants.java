@@ -22,6 +22,8 @@ public class TestConstants {
     public static final ResourceEvent<Join> TEST_JOIN_EVENT = ResourceEventFactory.createListBackedEvent(
             joins -> player -> joins.forEach(join -> join.onJoin(player)));
 
+    public static final ResourceEvent<Join> TEST_SIMPLE_EVENT = ResourceEventFactory.createSimpleEvent();
+
     public interface Join {
         void onJoin(Player player);
     }
@@ -40,5 +42,8 @@ public class TestConstants {
         TEST_JOIN_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Event Test"), false));
         TEST_JOIN_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Test, to test if multiple registered Events get triggered correctly"), false));
         TEST_JOIN_EVENT.register(player -> player.displayClientMessage(Component.literal("Test Actionbar Message"), true));
+
+        TEST_SIMPLE_EVENT.register(player -> player.displayClientMessage(Component.literal("This is the first invoker"), false));
+        TEST_SIMPLE_EVENT.register(player -> player.displayClientMessage(Component.literal("This should overwrite the first invoker"), false));
     }
 }
