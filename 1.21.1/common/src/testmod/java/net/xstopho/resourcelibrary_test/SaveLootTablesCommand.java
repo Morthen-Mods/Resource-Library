@@ -64,8 +64,7 @@ public class SaveLootTablesCommand {
     }
 
     private static void addEntityLootTable(EntityType<?> type) {
-        ResourceLocation loot = type.getDefaultLootTable().location();
-        loot_tables.add(String.format("%s:%s", loot.getNamespace(), loot.getPath()));
+        addLootTable(type.getDefaultLootTable());
     }
 
     private static void buildFields(String string) {
