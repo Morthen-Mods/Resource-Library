@@ -17,7 +17,7 @@ public class ItemRegistry {
     private static final RegistryProvider<Item> ITEMS = RegistryProvider.get(TestConstants.MOD_ID, BuiltInRegistries.ITEM);
 
     public static final RegistryObject<Item> TEST_ITEM = register("test_item", Item::new);
-    public static final RegistryObject<Item> TEST_RECIPE_REMAINDER = register("test_recipe_remainder", properties -> new TestCraftingRemainder(properties, 100));
+    public static final RegistryObject<Item> TEST_RECIPE_REMAINDER = register("recipe_remainder", properties -> new TestCraftingRemainder(properties, 100));
 
     public static RegistryObject<Item> register(String id, Function<Item.Properties, Item> function, Item.Properties properties) {
         return ITEMS.register(id, () -> function.apply(properties.setId(createKey(id))));

@@ -1,7 +1,6 @@
 package net.xstopho.resourcelibrary_test.items;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.xstopho.resourcelibrary.item.ResourceCraftingRemainder;
 
 public class TestCraftingRemainder extends  ResourceCraftingRemainder {
