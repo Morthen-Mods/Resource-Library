@@ -22,8 +22,8 @@ tasks.withType(GenerateModuleMetadata).configureEach {
 
 sourceSets {
     testmod {
-        runtimeClasspath += main.runtimeClasspath
-        compileClasspath += main.compileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+        compileClasspath += sourceSets.main.compileClasspath
     }
 }
 

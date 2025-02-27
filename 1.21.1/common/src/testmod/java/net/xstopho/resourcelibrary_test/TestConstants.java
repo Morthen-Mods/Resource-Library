@@ -5,7 +5,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.xstopho.resourcelibrary.event.ResourceEvent;
-import net.xstopho.resourcelibrary.event.ResourceEventFactory;
 import net.xstopho.resourcelibrary.modifier.LootTableModifier;
 import net.xstopho.resourcelibrary.modifier.loot_tables.ChestLootTables;
 import net.xstopho.resourcelibrary.rendering.item.ItemModelRenderHelper;
@@ -23,10 +22,8 @@ public class TestConstants {
     public static final String MOD_NAME = "Resource Library Test";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
-    public static final ResourceEvent<Join> TEST_LIST_EVENT = ResourceEventFactory.createListBackedEvent(
+    public static final ResourceEvent<Join> TEST_EVENT = new ResourceEvent<>(
             joins -> player -> joins.forEach(join -> join.onJoin(player)));
-
-    public static final ResourceEvent<Join> TEST_SIMPLE_EVENT = ResourceEventFactory.createSimpleEvent();
 
     public interface Join {
         void onJoin(Player player);
@@ -41,12 +38,9 @@ public class TestConstants {
         LootTableModifier modifier = LootTableModifier.getInstance();
         modifier.addItems(Items.DIAMOND_BLOCK, 1f, () -> 1f, List.of(ChestLootTables.SPAWN_BONUS_CHEST));
 
-        TEST_LIST_EVENT.register(player -> player.sendSystemMessage(Component.literal("Simple Event Test")));
-        TEST_LIST_EVENT.register(player -> player.sendSystemMessage(Component.literal("Simple Test, to test if multiple registered Events get triggered correctly")));
-        TEST_LIST_EVENT.register(player -> player.sendSystemMessage(Component.literal("Only for fun")));
-
-        TEST_SIMPLE_EVENT.register(player -> player.sendSystemMessage(Component.literal("This is the first invoker")));
-        TEST_SIMPLE_EVENT.register(player -> player.sendSystemMessage(Component.literal("This should overwrite the first invoker")));
+        TEST_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Event Test"), false));
+        TEST_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Test, to test if multiple registered Events get triggered correctly"), false));
+        TEST_EVENT.register(player -> player.displayClientMessage(Component.literal("Test Actionbar Message"), true));
     }
 
     public static void clientInit() {

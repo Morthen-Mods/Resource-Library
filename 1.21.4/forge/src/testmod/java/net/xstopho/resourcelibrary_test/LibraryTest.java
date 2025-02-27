@@ -17,8 +17,7 @@ public class LibraryTest {
 
         @SubscribeEvent
         public static void onJoin(PlayerEvent.PlayerLoggedInEvent event) {
-            TestConstants.TEST_JOIN_EVENT.invoker().onJoin(event.getEntity());
-            TestConstants.TEST_SIMPLE_EVENT.invoker().onJoin(event.getEntity());
+            TestConstants.TEST_EVENT.invoker().onJoin(event.getEntity());
         }
     }
 }

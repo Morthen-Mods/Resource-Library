@@ -4,7 +4,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.xstopho.resourcelibrary.event.ResourceEvent;
-import net.xstopho.resourcelibrary.event.ResourceEventFactory;
 import net.xstopho.resourcelibrary.registration.ResourcePackRegistry;
 import net.xstopho.resourcelibrary_test.modifier.TestLootModifier;
 import net.xstopho.resourcelibrary_test.registries.BlockRegistry;
@@ -19,10 +18,8 @@ public class TestConstants {
     public static final String MOD_NAME = "Resource Library Test";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
-    public static final ResourceEvent<Join> TEST_JOIN_EVENT = ResourceEventFactory.createListBackedEvent(
+    public static final ResourceEvent<Join> TEST_EVENT = new ResourceEvent<>(
             joins -> player -> joins.forEach(join -> join.onJoin(player)));
-
-    public static final ResourceEvent<Join> TEST_SIMPLE_EVENT = ResourceEventFactory.createSimpleEvent();
 
     public interface Join {
         void onJoin(Player player);
@@ -39,11 +36,8 @@ public class TestConstants {
         resourcePackRegistry.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "resource_nether_ores_x32"), "Resource Nether Ores x32");
         resourcePackRegistry.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "resource_nether_ores_x64"), "Resource Nether Ores x64");
 
-        TEST_JOIN_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Event Test"), false));
-        TEST_JOIN_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Test, to test if multiple registered Events get triggered correctly"), false));
-        TEST_JOIN_EVENT.register(player -> player.displayClientMessage(Component.literal("Test Actionbar Message"), true));
-
-        TEST_SIMPLE_EVENT.register(player -> player.displayClientMessage(Component.literal("This is the first invoker"), false));
-        TEST_SIMPLE_EVENT.register(player -> player.displayClientMessage(Component.literal("This should overwrite the first invoker"), false));
+        TEST_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Event Test"), false));
+        TEST_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Test, to test if multiple registered Events get triggered correctly"), false));
+        TEST_EVENT.register(player -> player.displayClientMessage(Component.literal("Test Actionbar Message"), true));
     }
 }
