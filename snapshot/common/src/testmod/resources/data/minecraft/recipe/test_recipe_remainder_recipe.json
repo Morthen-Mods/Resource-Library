@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:diamond",
+    "resourcelibrary_test:recipe_remainder"
+  ],
+  "result": {
+    "id": "minecraft:diamond",
+    "count": 2
+  }
+}

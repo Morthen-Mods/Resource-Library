@@ -1,3 +1,8 @@
+#### v2.5.0
+- internal cleanup and unification
+- adding a common Event class
+  - functions like the Fabric Event System
+
 #### v2.4.7
 - fix trial chamber loot tables
 
