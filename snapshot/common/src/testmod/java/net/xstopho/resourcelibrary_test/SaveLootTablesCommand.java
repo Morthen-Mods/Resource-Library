@@ -83,13 +83,13 @@ public class SaveLootTablesCommand {
 
     private static String getValueString(String[] path) {
         String field_string = "public static final ResourceKey<LootTable> %s = createKey(\"%s\");";
-        List<String> specials = List.of("sheep", "mooshroom", "fishing", "dispenser", "pots", "ominous");
+        List<String> specials = List.of("sheep", "mooshroom", "fishing", "dispensers", "pots", "ominous");
         String[] field = path[1].split("/");
 
         String value = String.format(field_string, field[field.length - 1].toUpperCase(), path[1].toLowerCase());;
 
         for (String special : specials) {
-            if (path[1].contains(special) && path[1].split("/").length > 2) {
+            if (path[1].contains(special) && field.length > 2) {
                 value = String.format(field_string, special.toUpperCase() + "_" + field[field.length - 1].toUpperCase(), path[1].toLowerCase());
             }
         }
