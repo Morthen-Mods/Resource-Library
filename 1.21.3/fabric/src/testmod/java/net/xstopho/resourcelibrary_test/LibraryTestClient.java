@@ -11,8 +11,5 @@ public class LibraryTestClient implements ClientModInitializer {
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment)
                 -> SaveLootTablesCommand.saveCommand(dispatcher));
-
-        ServerPlayConnectionEvents.JOIN.register((handler, sender, server)
-                -> TestConstants.TEST_LIST_EVENT.invoker().onJoin(handler.getPlayer()));
     }
 }
