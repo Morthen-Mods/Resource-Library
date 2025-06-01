@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "${neoforge_loader_version_range}"
+loaderVersion = "[2,)"
 license = "${mod_license}"
 
 [[mods]]
@@ -18,7 +18,7 @@ license = "${mod_license}"
 [[dependencies.${mod_id}]]
     modId = "neoforge"
     required = true
-    versionRange = "[${neoforge_version},)"
+    versionRange = "[21.3,)"
     ordering = "NONE"
     side = "BOTH"
 
