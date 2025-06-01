@@ -6,10 +6,6 @@
     "compatibilityLevel": "JAVA_21",
     "mixins": [],
     "client": [
-        "rendering.items.ItemRendererAccessor",
-        "rendering.items.ItemRendererMixin",
-        "rendering.items.ModelBakeryMixin",
-
         "loot.LootTableMixin"
     ],
     "server": [],
