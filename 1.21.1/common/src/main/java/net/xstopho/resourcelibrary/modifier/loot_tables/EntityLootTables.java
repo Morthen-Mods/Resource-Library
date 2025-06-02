@@ -80,7 +80,7 @@ public class EntityLootTables {
     public static final ResourceKey<LootTable> MOOSHROOM = createKey("entities/mooshroom");
     public static final ResourceKey<LootTable> MULE = createKey("entities/mule");
     public static final ResourceKey<LootTable> OCELOT = createKey("entities/ocelot");
-    public static final ResourceKey<LootTable> OMINOUS_OMINOUS_ITEM_SPAWNER = createKey("entities/ominous_item_spawner");
+    public static final ResourceKey<LootTable> OMINOUS_ITEM_SPAWNER = createKey("entities/ominous_item_spawner");
     public static final ResourceKey<LootTable> PAINTING = createKey("entities/painting");
     public static final ResourceKey<LootTable> PANDA = createKey("entities/panda");
     public static final ResourceKey<LootTable> PARROT = createKey("entities/parrot");
