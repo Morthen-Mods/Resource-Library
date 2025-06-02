@@ -4,13 +4,13 @@
     "package": "net.xstopho.resourcelibrary.mixin",
     "refmap": "${mod_id}.refmap.json",
     "compatibilityLevel": "JAVA_21",
-    "mixins": [],
+    "mixins": [
+        "common.loot.LootTableMixin"
+    ],
     "client": [
         "rendering.items.ItemRendererAccessor",
         "rendering.items.ItemRendererMixin",
-        "rendering.items.ModelBakeryMixin",
-
-        "loot.LootTableMixin"
+        "rendering.items.ModelBakeryMixin"
     ],
     "server": [],
     "injectors": {

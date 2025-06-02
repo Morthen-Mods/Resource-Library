@@ -1,4 +1,4 @@
-package net.xstopho.resourcelibrary.mixin.loot;
+package net.xstopho.resourcelibrary.mixin.common.loot;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.ItemStack;
