@@ -4,10 +4,10 @@
     "package": "net.xstopho.resourcelibrary.mixin",
     "refmap": "${mod_id}.refmap.json",
     "compatibilityLevel": "JAVA_21",
-    "mixins": [],
-    "client": [
-        "loot.LootTableMixin"
+    "mixins": [
+        "common.loot.LootTableMixin"
     ],
+    "client": [],
     "server": [],
     "injectors": {
         "defaultRequire": 1

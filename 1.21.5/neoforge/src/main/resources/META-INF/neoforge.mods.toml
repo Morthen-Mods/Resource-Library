@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "${neoforge_loader_version_range}"
+loaderVersion = "[2,)"
 license = "${mod_license}"
 
 [[mods]]
@@ -12,13 +12,11 @@ license = "${mod_license}"
 
 [[mixins]]
     config = "${mod_id}.mixins.json"
-[[mixins]]
-    config = "${mod_id}.neoforge.mixins.json"
 
 [[dependencies.${mod_id}]]
     modId = "neoforge"
     required = true
-    versionRange = "[${neoforge_version},)"
+    versionRange = "[21.5,)"
     ordering = "NONE"
     side = "BOTH"
 
