@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-@EventBusSubscriber(modid = LibConstants.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = LibConstants.MOD_ID)
 public class NeoForgeLootTableModifier implements LootTableModifier {
 
     private static final List<ModifierHolder> modModifier = new ArrayList<>();

@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-@EventBusSubscriber(modid = LibConstants.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = LibConstants.MOD_ID, value = Dist.CLIENT)
 public class NeoForgeResourcePackRegistry implements ResourcePackRegistry {
 
     private String modId;

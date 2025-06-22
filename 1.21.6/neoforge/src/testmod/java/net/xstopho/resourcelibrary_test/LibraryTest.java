@@ -13,7 +13,7 @@ public class LibraryTest {
         TestConstants.commonInit();
     }
 
-    @EventBusSubscriber(modid = TestConstants.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+    @EventBusSubscriber(modid = TestConstants.MOD_ID)
     public static class NeoforgeHandler {
 
         @SubscribeEvent
