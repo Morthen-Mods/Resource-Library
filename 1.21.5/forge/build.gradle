@@ -1,6 +1,7 @@
 plugins {
     id 'ml-loader'
     id 'net.minecraftforge.gradle'
+    id 'me.modmuss50.mod-publish-plugin'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
@@ -9,7 +10,7 @@ dependencies {
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 
     testmodImplementation sourceSets.main.output
-    testmodCompileOnly project(':1.21.4:common').sourceSets.testmod.output
+    testmodCompileOnly project(':1.21.5:common').sourceSets.testmod.output
 }
 
 mixin {
@@ -56,11 +57,11 @@ sourceSets.each {
 }
 
 compileTestmodJava {
-    source(project(':1.21.4:common').sourceSets.testmod.allSource)
+    source(project(':1.21.5:common').sourceSets.testmod.allSource)
 }
 
 processTestmodResources {
-    from project(':1.21.4:common').sourceSets.testmod.resources
+    from project(':1.21.5:common').sourceSets.testmod.resources
 }
 
 publishMods {

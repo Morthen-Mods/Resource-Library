@@ -20,7 +20,7 @@ public abstract class LootTableMixin {
         return stacks;
     }
 
-    @ModifyVariable(at = @At(value = "INVOKE", ordinal = 1),
+    @ModifyVariable(at = @At(value = "INVOKE", ordinal = 0),
             method = "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItemsRaw(Lnet/minecraft/world/level/storage/loot/LootContext;Ljava/util/function/Consumer;)V")
     private Consumer<ItemStack> resource_library$getRandomItemsRaw(Consumer<ItemStack> output) {
         return output.andThen(stack -> LootTableModifierCallback.MODIFY.invoker().modifyItemStack(stack));

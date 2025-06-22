@@ -12,6 +12,10 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(java_version)
 }
 
+repositories {
+    maven { url 'https://api.modrinth.com/maven' }
+}
+
 tasks.named('javadoc', Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
 }

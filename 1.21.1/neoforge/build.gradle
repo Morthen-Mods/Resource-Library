@@ -1,12 +1,14 @@
 plugins {
     id 'ml-loader'
     id 'net.neoforged.moddev'
+    id 'me.modmuss50.mod-publish-plugin'
 }
 
 dependencies {
     testmodImplementation sourceSets.main.output
 
-    testmodImplementation project(':1.21.1:common').sourceSets.testmod.output
+    testmodImplementation(project(':1.21.1:common').sourceSets.testmod.output)
+    runtimeOnly("maven.modrinth:crafttweaker:21.0.27-neoforge")
 }
 
 neoForge {
