@@ -27,7 +27,7 @@ minecraft {
     def at = file('../common/src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) accessTransformers = [at]
 
-    runs {
+/*    runs {
         client {
             workingDirectory project.file('../common/runs/client')
             ideaModule "${rootProject.name}.${directory}.${project.name}.testmod"
@@ -38,7 +38,7 @@ minecraft {
                 }
             }
         }
-    }
+    }*/
 }
 
 jar {

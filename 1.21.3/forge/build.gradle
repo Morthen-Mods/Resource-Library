@@ -21,7 +21,7 @@ minecraft {
     mappings channel: 'official', version: minecraft_version
     copyIdeResources = true //Calls processResources when in dev
     reobf = false
-
+/*
     def directory = project.projectDir.parent.split("\\\\").last()
 
     def at = file('../common/src/main/resources/META-INF/accesstransformer.cfg')
@@ -39,6 +39,7 @@ minecraft {
             }
         }
     }
+*/
 }
 
 jar {

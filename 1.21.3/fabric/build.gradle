@@ -12,7 +12,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_21_3}"
     modApi "net.fabricmc.fabric-api:fabric-api:${fabric_21_3}+${minecraft_version}"
 }
-
+/*
 loom {
     mixin {
         defaultRefmapName.set("${mod_id}.refmap.json")
@@ -32,7 +32,7 @@ loom {
         }
     }
 }
-
+*/
 processTestmodResources {
     from file('../common/src/testmod/resources')
 }
