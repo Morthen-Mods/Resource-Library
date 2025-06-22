@@ -11,6 +11,8 @@ dependencies {
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_21_1}"
     modApi "net.fabricmc.fabric-api:fabric-api:${fabric_21_1}+${minecraft_version}"
+
+    modRuntimeOnly('com.blamejared.crafttweaker:CraftTweaker-fabric-1.21.1:21.0.27')
 }
 
 loom {

@@ -9,6 +9,8 @@ dependencies {
 
     testmodImplementation(project(':1.21.1:common').sourceSets.testmod.output)
     runtimeOnly("maven.modrinth:crafttweaker:21.0.27-neoforge")
+
+    runtimeOnly('com.blamejared.crafttweaker:CraftTweaker-neoforge-1.21.1:21.0.27')
 }
 
 neoForge {

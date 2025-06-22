@@ -14,14 +14,14 @@ import java.util.function.Consumer;
 public abstract class LootTableMixin {
 
     @ModifyVariable(at = @At(value = "RETURN"),
-            method = "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItems(Lnet/minecraft/world/level/storage/loot/LootContext;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;")
+            method = "getRandomItems(Lnet/minecraft/world/level/storage/loot/LootContext;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;")
     private ObjectArrayList<ItemStack> resource_library$getRandomItems(ObjectArrayList<ItemStack> stacks) {
         stacks.forEach(stack -> LootTableModifierCallback.MODIFY.invoker().modifyItemStack(stack));
         return stacks;
     }
 
-    @ModifyVariable(at = @At(value = "INVOKE", ordinal = 0),
-            method = "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItemsRaw(Lnet/minecraft/world/level/storage/loot/LootContext;Ljava/util/function/Consumer;)V")
+    @ModifyVariable(at = @At(value = "HEAD", args = "HEAD", ordinal = 0),
+            method = "getRandomItemsRaw(Lnet/minecraft/world/level/storage/loot/LootContext;Ljava/util/function/Consumer;)V")
     private Consumer<ItemStack> resource_library$getRandomItemsRaw(Consumer<ItemStack> output) {
         return output.andThen(stack -> LootTableModifierCallback.MODIFY.invoker().modifyItemStack(stack));
     }
