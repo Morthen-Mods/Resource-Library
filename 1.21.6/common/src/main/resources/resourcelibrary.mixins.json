@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.xstopho.resourcelibrary.mixins",
+  "refmap": "${mod_id}.refmap.json",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "common.loot.LootTableMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
