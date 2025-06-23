@@ -5,8 +5,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootTable;
 
-import java.util.List;
-
 public class ArchaeologyLootTables {
 
     //TODO: Auf multiversion umstellen und LootModifier änderungen übernehmen 

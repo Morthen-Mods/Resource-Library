@@ -11,8 +11,8 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.xstopho.resourcelibrary.service.CoreServices;
 import net.xstopho.resourcelibrary.registration.RegistryObject;
+import net.xstopho.resourcelibrary.service.CoreServices;
 
 import java.util.List;
 import java.util.function.Supplier;

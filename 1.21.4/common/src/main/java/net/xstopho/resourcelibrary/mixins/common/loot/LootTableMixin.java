@@ -8,8 +8,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-import java.util.function.Consumer;
-
 @Mixin(LootTable.class)
 public abstract class LootTableMixin {
 
