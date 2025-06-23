@@ -1,3 +1,11 @@
+#### v2.6.1
+- Fix Bug where Chests still be empty
+
+#### v2.6.0
+- Fixing an incompatibility with CraftTweaker
+  - caused empty Chests
+- port to 1.21.6
+
 #### v2.5.2
 - allow any neo/forge version
 - adding an event and mixin to modify ItemStack
