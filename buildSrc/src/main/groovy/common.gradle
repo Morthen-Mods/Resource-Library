@@ -4,7 +4,8 @@ plugins {
 }
 
 base {
-    archivesName = "${mod_id}-${project.name}-${project.minecraft_version}"
+    archivesName = "${mod_id}-${project.name}"
+    version = "${minecraft_version}-${version}"
 }
 
 java {
@@ -15,6 +16,14 @@ java {
 repositories {
     mavenCentral()
     maven { url 'https://raw.githubusercontent.com/Stein-N/resources/main/maven' }
+}
+
+tasks.named('javadoc', Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+tasks.withType(GenerateModuleMetadata).configureEach {
+    enabled = false
 }
 
 sourceSets {
