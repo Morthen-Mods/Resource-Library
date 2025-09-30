@@ -1,3 +1,9 @@
+### v2.8.2
+- update ResourcePackRegistry
+
+### v2.8.1
+- fix neoforge crash
+
 #### v2.8.0
 - backport ResourcePackRegistry
 
