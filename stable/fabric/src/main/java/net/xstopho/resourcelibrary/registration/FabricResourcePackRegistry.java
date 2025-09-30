@@ -24,6 +24,11 @@ public class FabricResourcePackRegistry implements ResourcePackRegistry {
     }
 
     @Override
+    public String getModId() {
+        return modId;
+    }
+
+    @Override
     public void register(@NotNull ResourceLocation packLocation, @NotNull String packDisplayName) {
         if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) return;
 

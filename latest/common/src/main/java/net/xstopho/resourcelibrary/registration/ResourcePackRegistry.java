@@ -12,5 +12,11 @@ public interface ResourcePackRegistry {
 
     ResourcePackRegistry setModId(String modId);
 
-    void register(@NotNull ResourceLocation packLocation, @NotNull String packDisplayName);
+    String getModId();
+
+    default void register(@NotNull String packName, @NotNull String displayName) {
+        register(ResourceLocation.fromNamespaceAndPath(this.getModId(), packName), displayName);
+    }
+
+    void register(@NotNull ResourceLocation packLocation, @NotNull String displayName);
 }

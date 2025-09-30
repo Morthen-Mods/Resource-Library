@@ -45,7 +45,7 @@ public class TestConstants {
         modifier.addItems(Items.DIAMOND_BLOCK, 1f, () -> 1f, List.of(ChestLootTables.SPAWN_BONUS_CHEST, EntityLootTables.ZOMBIE));
 
         ResourcePackRegistry resourcePackRegistry = ResourcePackRegistry.getInstance(MOD_ID);
-        resourcePackRegistry.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "resource_nether_ores_x32"), "Resource Nether Ores x32");
+        resourcePackRegistry.register("resource_nether_ores_x32", "Resource Nether Ores x32");
         resourcePackRegistry.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "resource_nether_ores_x64"), "Resource Nether Ores x64");
 
         TEST_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Event Test"), false));

@@ -48,7 +48,7 @@ mouseSensitivity:0.3028169014084507
 damageTiltStrength:1.0
 highContrast:false
 narratorHotkey:true
-resourcePacks:["mod_resources","vanilla"]
+resourcePacks:["vanilla","fabric"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us

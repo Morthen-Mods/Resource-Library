@@ -28,6 +28,11 @@ public class NeoForgeResourcePackRegistry implements ResourcePackRegistry {
     }
 
     @Override
+    public String getModId() {
+        return modId;
+    }
+
+    @Override
     public void register(@NotNull ResourceLocation packLocation, @NotNull String packDisplayName) {
         ResourceLocation packPath = ResourceLocation.fromNamespaceAndPath(packLocation.getNamespace(), "resourcepacks/" + packLocation.getPath());
 
