@@ -1,8 +1,12 @@
 package net.xstopho.resourcelibrary_test;
 
+import com.google.gson.JsonObject;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
+import net.xstopho.resourcelibrary.util.ResourcePackUtils;
 
 public class LibraryTest implements ModInitializer {
     @Override
@@ -11,6 +15,16 @@ public class LibraryTest implements ModInitializer {
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment)
                 -> SaveLootTablesCommand.saveCommand(dispatcher));
+
+        CommandRegistrationCallback.EVENT.register((commandDispatcher, commandBuildContext, commandSelection) -> {
+            commandDispatcher.register(Commands.literal("readMetaData").executes(commandContext -> {
+                JsonObject meta = ResourcePackUtils.readMetaData("backpack");
+                if(meta != null) {
+                    commandContext.getSource().sendSystemMessage(Component.literal(meta.toString()));
+                }
+                return 0;
+            }));
+        });
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server)
                 -> TestConstants.TEST_EVENT.invoker().onJoin(handler.getPlayer()));
