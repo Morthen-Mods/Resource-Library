@@ -48,8 +48,8 @@ mouseSensitivity:0.3028169014084507
 damageTiltStrength:1.0
 highContrast:false
 narratorHotkey:true
-resourcePacks:["vanilla","mod_resources"]
-incompatibleResourcePacks:[]
+resourcePacks:["vanilla","fabric","resourcelibrary_test:resource_nether_ores_x64","resourcelibrary_test:resource_nether_ores_x32"]
+incompatibleResourcePacks:["resourcelibrary","resourcelibrary_test","resourcelibrary_test:resource_nether_ores_x64","resourcelibrary_test:resource_nether_ores_x32"]
 lastServer:
 lang:en_us
 chatVisibility:0
