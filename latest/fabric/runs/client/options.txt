@@ -57,7 +57,7 @@ highContrast:false
 highContrastBlockOutline:false
 narratorHotkey:true
 resourcePacks:["vanilla","fabric","resourcelibrary_test:resource_nether_ores_x32","resourcelibrary_test:resource_nether_ores_x64"]
-incompatibleResourcePacks:["resourcelibrary_test","resourcelibrary_test:resource_nether_ores_x32","resourcelibrary_test:resource_nether_ores_x64"]
+incompatibleResourcePacks:["resourcelibrary_test:resource_nether_ores_x32","resourcelibrary_test:resource_nether_ores_x64"]
 lastServer:
 lang:en_us
 chatVisibility:0

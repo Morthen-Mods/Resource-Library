@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.xstopho.resourcelibrary.util.ResourcePackUtils;
+import net.xstopho.resourcelibrary_test.metadatatypes.BackpackMetadata;
 
 import java.util.LinkedList;
 
@@ -30,6 +31,13 @@ public class LibraryTest implements ModInitializer {
                 if(!allMeta.isEmpty()) {
                     commandContext.getSource().sendSystemMessage(Component.literal("Alle Ergebnise: " + allMeta));
                 }
+
+                BackpackMetadata backpackMetadata = ResourcePackUtils.readMetaData(BackpackMetadata.TYPE);
+                if (backpackMetadata != null) commandContext.getSource().sendSystemMessage(Component.literal("SectionType Ergebnis: " + backpackMetadata));
+
+                LinkedList<BackpackMetadata> allSectionData = ResourcePackUtils.readAllMetaData(BackpackMetadata.TYPE);
+                if (!allSectionData.isEmpty()) commandContext.getSource().sendSystemMessage(Component.literal("SectionType Ergebnise: " + allSectionData));
+
                 return 0;
             }));
         });
