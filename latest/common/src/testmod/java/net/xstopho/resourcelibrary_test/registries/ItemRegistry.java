@@ -2,8 +2,8 @@ package net.xstopho.resourcelibrary_test.registries;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.xstopho.resourcelibrary.registration.RegistryObject;
 import net.xstopho.resourcelibrary.registration.RegistryProvider;
@@ -28,7 +28,7 @@ public class ItemRegistry {
     }
 
     private static ResourceKey<Item> createKey(String id) {
-        return ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ITEMS.getModId(), id));
+        return ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(ITEMS.getModId(), id));
     }
 
     public static void init() {}

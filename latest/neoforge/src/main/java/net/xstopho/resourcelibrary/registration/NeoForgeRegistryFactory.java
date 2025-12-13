@@ -1,8 +1,8 @@
 package net.xstopho.resourcelibrary.registration;
 
 import net.minecraft.core.Registry;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.javafmlmod.FMLModContainer;
@@ -52,7 +52,7 @@ public class NeoForgeRegistryFactory implements RegistryProvider.Factory {
                 }
 
                 @Override
-                public ResourceLocation getId() {
+                public Identifier getId() {
                     return object.getId();
                 }
 

@@ -1,7 +1,7 @@
 package net.xstopho.resourcelibrary.registration;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.*;
 import net.minecraft.server.packs.repository.KnownPack;
 import net.minecraft.server.packs.repository.Pack;
@@ -22,11 +22,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-@Mod.EventBusSubscriber(modid = LibConstants.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = LibConstants.MOD_ID, value = Dist.CLIENT)
 public class ForgeResourcePackRegistry implements ResourcePackRegistry {
 
     private String modId;
-    private static final Map<ResourceLocation, Component> RESOURCE_PACKS = new HashMap<>();
+    private static final Map<Identifier, Component> RESOURCE_PACKS = new HashMap<>();
 
     @Override
     public ResourcePackRegistry setModId(String modId) {
@@ -40,8 +40,8 @@ public class ForgeResourcePackRegistry implements ResourcePackRegistry {
     }
 
     @Override
-    public void register(@NotNull ResourceLocation packLocation, @NotNull String packDisplayName) {
-        ResourceLocation packPath = ResourceLocation.fromNamespaceAndPath(packLocation.getNamespace(), "resourcepacks/" + packLocation.getPath());
+    public void register(@NotNull Identifier packLocation, @NotNull String packDisplayName) {
+        Identifier packPath = Identifier.fromNamespaceAndPath(packLocation.getNamespace(), "resourcepacks/" + packLocation.getPath());
 
         if (!RESOURCE_PACKS.containsKey(packPath)) {
             RESOURCE_PACKS.put(packPath, Component.literal(packDisplayName));

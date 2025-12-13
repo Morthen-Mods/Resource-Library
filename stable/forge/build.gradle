@@ -6,7 +6,6 @@ plugins {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge}"
-    implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 
     testmodImplementation sourceSets.main.output
     testmodCompileOnly project(':stable:common').sourceSets.testmod.output
@@ -38,7 +37,7 @@ minecraft {
 
     runs {
         client {
-            workingDirectory project.file('../fabric/runs/client')
+            workingDirectory project.file('../common/runs/client')
             ideaModule "${rootProject.name}.${directory}.${project.name}.testmod"
             property 'eventbus.api.strictRuntimeChecks', 'true'
             taskName 'TestClient'

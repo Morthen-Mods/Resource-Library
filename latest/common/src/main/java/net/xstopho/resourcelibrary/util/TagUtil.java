@@ -2,8 +2,8 @@ package net.xstopho.resourcelibrary.util;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -38,6 +38,6 @@ public class TagUtil {
     }
 
     static <T> TagKey<T> createTag(ResourceKey<? extends Registry<T>> registry, String id) {
-        return TagKey.create(registry, ResourceLocation.fromNamespaceAndPath("c", id));
+        return TagKey.create(registry, Identifier.fromNamespaceAndPath("c", id));
     }
 }

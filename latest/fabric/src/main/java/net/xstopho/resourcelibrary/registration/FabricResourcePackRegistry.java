@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.xstopho.resourcelibrary.LibConstants;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class FabricResourcePackRegistry implements ResourcePackRegistry {
 
     private String modId;
-    private final List<ResourceLocation> RESOURCE_PACKS = new ArrayList<>();
+    private final List<Identifier> RESOURCE_PACKS = new ArrayList<>();
 
     @Override
     public ResourcePackRegistry setModId(String modId) {
@@ -29,7 +29,7 @@ public class FabricResourcePackRegistry implements ResourcePackRegistry {
     }
 
     @Override
-    public void register(@NotNull ResourceLocation packLocation, @NotNull String packDisplayName) {
+    public void register(@NotNull Identifier packLocation, @NotNull String packDisplayName) {
         if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) return;
 
         if (!RESOURCE_PACKS.contains(packLocation)) {

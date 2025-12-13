@@ -2,7 +2,7 @@ package net.xstopho.resourcelibrary_test;
 
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.level.block.Blocks;
@@ -43,7 +43,7 @@ public class TestConstants {
 
         ResourcePackRegistry resourcePackRegistry = ResourcePackRegistry.getInstance(MOD_ID);
         resourcePackRegistry.register("resource_nether_ores_x32", "Resource Nether Ores x32");
-        resourcePackRegistry.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "resource_nether_ores_x64"), "Resource Nether Ores x64");
+        resourcePackRegistry.register(Identifier.fromNamespaceAndPath(MOD_ID, "resource_nether_ores_x64"), "Resource Nether Ores x64");
 
         TEST_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Event Test"), false));
         TEST_EVENT.register(player -> player.displayClientMessage(Component.literal("Simple Test, to test if multiple registered Events get triggered correctly"), false));

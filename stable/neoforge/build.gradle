@@ -23,7 +23,7 @@ neoForge {
         testClient {
             client()
             sourceSet = sourceSets.testmod
-            gameDirectory = project.file("../fabric/runs/client")
+            gameDirectory = project.file("../common/runs/client")
         }
     }
     mods {

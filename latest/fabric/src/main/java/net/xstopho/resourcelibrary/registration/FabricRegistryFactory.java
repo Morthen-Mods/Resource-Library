@@ -1,8 +1,8 @@
 package net.xstopho.resourcelibrary.registration;
 
 import net.minecraft.core.Registry;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,7 +29,7 @@ public class FabricRegistryFactory implements RegistryProvider.Factory {
 
         @Override
         public <U extends T> RegistryObject<U> register(String objectId, Supplier<? extends U> objectSupplier) {
-            final ResourceLocation objectLocation = ResourceLocation.fromNamespaceAndPath(modId, objectId);
+            final Identifier objectLocation = Identifier.fromNamespaceAndPath(modId, objectId);
             final U object = Registry.register(registry, objectLocation, objectSupplier.get());
 
             final RegistryObject<U> registryObject = new RegistryObject<>() {
@@ -42,7 +42,7 @@ public class FabricRegistryFactory implements RegistryProvider.Factory {
                 }
 
                 @Override
-                public ResourceLocation getId() {
+                public Identifier getId() {
 
                     return objectLocation;
                 }

@@ -64,13 +64,13 @@ public class NeoForgeLootTableModifier implements LootTableModifier {
     @SubscribeEvent
     public static void loadTables(LootTableLoadEvent event) {
         modModifier.forEach(modifier -> {
-            if (event.getName().equals(modifier.lootTable().location())) {
+            if (event.getName().equals(modifier.lootTable().identifier())) {
                 event.getTable().addPool(LootTableModifier.lootPool((ItemLike) modifier.object().get(), modifier.chance().get(), modifier.minAmount(), modifier.maxAmount()).build());
             }
         });
 
         vanillaModifier.forEach(modifier -> {
-            if (event.getName().equals(modifier.lootTable().location())) {
+            if (event.getName().equals(modifier.lootTable().identifier())) {
                 event.getTable().addPool(LootTableModifier.lootPool(modifier.itemLike(), modifier.chance().get(), modifier.minAmount(), modifier.maxAmount()).build());
             }
         });

@@ -38,7 +38,7 @@ minecraft {
 
     runs {
         client {
-            workingDirectory project.file('../fabric/runs/client')
+            workingDirectory project.file('../common/runs/client')
             ideaModule "${rootProject.name}.${directory}.${project.name}.testmod"
             property 'eventbus.api.strictRuntimeChecks', 'true'
             taskName 'TestClient'

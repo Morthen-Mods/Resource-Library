@@ -28,7 +28,7 @@ loom {
             setConfigName("Fabric Test Client")
             ideConfigGenerated(true)
             programArgs('--username', 'Dev')
-            runDir("runs/client")
+            runDir("../common/runs/client")
         }
     }
 }

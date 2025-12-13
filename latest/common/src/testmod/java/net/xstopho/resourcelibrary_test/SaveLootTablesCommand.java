@@ -5,8 +5,8 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -58,7 +58,7 @@ public class SaveLootTablesCommand {
     }
 
     private static void addLootTable(ResourceKey<LootTable> key) {
-        ResourceLocation loot = key.location();
+        Identifier loot = key.identifier();
         loot_tables.add(String.format("%s:%s", loot.getNamespace(), loot.getPath()));
     }
 
@@ -85,7 +85,7 @@ public class SaveLootTablesCommand {
     }
 
     private static String getValueString(String[] path) {
-        String field_string = "public static final ResourceKey<LootTable> %s = createKey(\"%s\");";
+        String field_string = "public static final ResourceKey<LootTable> %s = LibConstants.createLootTableKey(\"%s\");";
         String[] field = path[1].split("/");
 
         String value;
