@@ -1,40 +1,35 @@
 package net.xstopho.resourcelibrary_test.registries;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.xstopho.resourcelibrary.items.RecipeRemainder;
 import net.xstopho.resourcelibrary.registration.RegistryObject;
 import net.xstopho.resourcelibrary.registration.RegistryProvider;
 import net.xstopho.resourcelibrary_test.TestConstants;
+import net.xstopho.resourcelibrary_test.items.TestCraftingRemainder;
 
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 public class ItemRegistry {
-    public static final RegistryProvider<Item> ITEMS = RegistryProvider.get(BuiltInRegistries.ITEM, TestConstants.MOD_ID);
 
-    public static final RegistryObject<Item> TEST_RECIPE_REMAINDER = register("recipe_remainder", () -> new TestRecipeRemainingItem(new Item.Properties()));
-    public static final RegistryObject<Item> TEST_IN_HAND_ITEM = register("in_hand_item");
+    private static final RegistryProvider<Item> ITEMS = RegistryProvider.get(TestConstants.MOD_ID, BuiltInRegistries.ITEM);
 
-    public static RegistryObject<Item> register(String id, Supplier<Item> item) {
-        return ITEMS.register(id, item);
+    public static final RegistryObject<Item> TEST_ITEM = register("test_item", Item::new);
+    public static final RegistryObject<Item> TEST_RECIPE_REMAINDER = register("recipe_remainder", properties -> new TestCraftingRemainder(properties, 100));
+
+    public static RegistryObject<Item> register(String id, Function<Item.Properties, Item> function, Item.Properties properties) {
+        return ITEMS.register(id, () -> function.apply(properties.setId(createKey(id))));
     }
 
-    public static RegistryObject<Item> register(String id) {
-        return register(id, () -> new Item(new Item.Properties()));
+    public static RegistryObject<Item> register(String id, Function<Item.Properties, Item> function) {
+        return register(id, function, new Item.Properties());
+    }
+
+    private static ResourceKey<Item> createKey(String id) {
+        return ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(ITEMS.getModId(), id));
     }
 
     public static void init() {}
-
-    private static class TestRecipeRemainingItem extends RecipeRemainder {
-
-        public TestRecipeRemainingItem(Properties properties) {
-            super(properties);
-        }
-
-        @Override
-        public ItemStack getRemainingItem(ItemStack itemStack) {
-            return null;
-        }
-    }
 }

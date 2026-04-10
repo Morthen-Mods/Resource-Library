@@ -23,7 +23,6 @@ public class FabricLootTableModifier implements LootTableModifier {
         addItems(item.get(), minAmount, maxAmount, chance, lootTables);
     }
 
-
     @Override
     public final void addBlocks(RegistryObject<Block> block, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         addItems(block.get(), amount, chance, lootTables);

@@ -1,7 +1,7 @@
 package net.xstopho.resourcelibrary.service;
 
 import net.xstopho.resourcelibrary.LibConstants;
-import net.xstopho.resourcelibrary.platform.IPlatformHelper;
+import net.xstopho.resourcelibrary.service.platform.IPlatformHelper;
 
 import java.nio.file.Path;
 import java.util.ServiceLoader;

@@ -6,10 +6,9 @@
     "description": "Testmod",
     "authors": [ "xStopho" ],
     "license": "MIT",
-    "icon": "icon.png",
+    "icon": "icon_fabric.png",
     "environment": "*",
     "entrypoints": {
-        "main": [ "net.xstopho.resourcelibrary_test.LibraryTest" ],
-        "client": [ "net.xstopho.resourcelibrary_test.LibraryTestClient" ]
+        "main": [ "net.xstopho.resourcelibrary_test.LibraryTest" ]
     }
 }

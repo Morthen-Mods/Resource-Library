@@ -1,4 +1,4 @@
-version:4671
+version:4790
 ao:true
 biomeBlendRadius:2
 chunkSectionFadeInTime:0.75
@@ -16,6 +16,7 @@ glintStrength:0.75
 graphicsPreset:"custom"
 prioritizeChunkUpdates:0
 fullscreen:false
+exclusiveFullscreen:false
 gamma:0.5
 guiScale:2
 maxAnisotropyBit:2
@@ -63,7 +64,7 @@ damageTiltStrength:1.0
 highContrast:false
 highContrastBlockOutline:false
 narratorHotkey:true
-resourcePacks:["vanilla","resourcelibrary_test:resource_nether_ores_x32","resourcelibrary_test:resource_nether_ores_x64"]
+resourcePacks:["vanilla"]
 incompatibleResourcePacks:["resourcelibrary_test:resource_nether_ores_x32","resourcelibrary_test:resource_nether_ores_x64"]
 lastServer:
 lang:en_us
@@ -73,7 +74,7 @@ chatLineSpacing:0.0
 textBackgroundOpacity:0.5
 backgroundForChatOnly:true
 hideServerAddress:false
-advancedItemTooltips:false
+advancedItemTooltips:true
 pauseOnLostFocus:true
 overrideWidth:0
 overrideHeight:0
@@ -86,7 +87,7 @@ notificationDisplayTime:1.0
 useNativeTransport:true
 mainHand:"right"
 attackIndicator:1
-tutorialStep:find_tree
+tutorialStep:none
 mouseWheelSensitivity:1.0
 rawMouseInput:true
 allowCursorChanges:true
@@ -165,6 +166,7 @@ key_key.debug.dumpVersion:key.keyboard.v
 key_key.debug.profilingChart:key.keyboard.1
 key_key.debug.fpsCharts:key.keyboard.2
 key_key.debug.networkCharts:key.keyboard.3
+key_key.debug.lightmapTexture:key.keyboard.4
 soundCategory_master:0.25662251655629137
 soundCategory_music:0.20774647887323944
 soundCategory_record:1.0

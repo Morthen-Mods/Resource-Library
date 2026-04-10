@@ -1,6 +1,7 @@
 package net.xstopho.resourcelibrary.platform;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.xstopho.resourcelibrary.service.platform.IPlatformHelper;
 
 import java.nio.file.Path;
 

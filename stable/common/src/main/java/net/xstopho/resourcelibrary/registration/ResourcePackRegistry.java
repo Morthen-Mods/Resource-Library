@@ -1,6 +1,6 @@
 package net.xstopho.resourcelibrary.registration;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.xstopho.resourcelibrary.service.CoreServices;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,8 +15,8 @@ public interface ResourcePackRegistry {
     String getModId();
 
     default void register(@NotNull String packName, @NotNull String displayName) {
-        register(ResourceLocation.fromNamespaceAndPath(this.getModId(), packName), displayName);
+        register(Identifier.fromNamespaceAndPath(this.getModId(), packName), displayName);
     }
 
-    void register(@NotNull ResourceLocation packLocation, @NotNull String displayName);
+    void register(@NotNull Identifier packLocation, @NotNull String displayName);
 }

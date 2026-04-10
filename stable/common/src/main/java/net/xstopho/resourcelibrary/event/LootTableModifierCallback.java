@@ -9,9 +9,9 @@ public interface LootTableModifierCallback {
      * At this stage you can add additional DataComponents.
      */
     ResourceEvent<LootTableModifierCallback> MODIFY = new ResourceEvent<>(callbacks -> stack -> {
-       for (LootTableModifierCallback callback : callbacks) {
-           callback.modifyItemStack(stack);
-       }
+        for (LootTableModifierCallback callback : callbacks) {
+            callback.modifyItemStack(stack);
+        }
     });
 
     void modifyItemStack(ItemStack stack);

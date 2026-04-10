@@ -2,6 +2,7 @@ package net.xstopho.resourcelibrary.platform;
 
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLPaths;
+import net.xstopho.resourcelibrary.service.platform.IPlatformHelper;
 
 import java.nio.file.Path;
 

@@ -7,8 +7,12 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.xstopho.resourcelibrary.util.ResourcePackUtils;
+import net.xstopho.resourcelibrary_test.metadatatypes.BackpackMetadata;
+
+import java.util.LinkedList;
 
 public class LibraryTest implements ModInitializer {
+    
     @Override
     public void onInitialize() {
         TestConstants.commonInit();
@@ -20,8 +24,20 @@ public class LibraryTest implements ModInitializer {
             commandDispatcher.register(Commands.literal("readMetaData").executes(commandContext -> {
                 JsonObject meta = ResourcePackUtils.readMetaData("backpack");
                 if(meta != null) {
-                    commandContext.getSource().sendSystemMessage(Component.literal(meta.toString()));
+                    commandContext.getSource().sendSystemMessage(Component.literal("Erstes Ergebnis: " + meta));
                 }
+
+                LinkedList<JsonObject> allMeta = ResourcePackUtils.readAllMetaData("backpack");
+                if(!allMeta.isEmpty()) {
+                    commandContext.getSource().sendSystemMessage(Component.literal("Alle Ergebnise: " + allMeta));
+                }
+
+                BackpackMetadata backpackMetadata = ResourcePackUtils.readMetaData(BackpackMetadata.TYPE);
+                if (backpackMetadata != null) commandContext.getSource().sendSystemMessage(Component.literal("SectionType Ergebnis: " + backpackMetadata));
+
+                LinkedList<BackpackMetadata> allSectionData = ResourcePackUtils.readAllMetaData(BackpackMetadata.TYPE);
+                if (!allSectionData.isEmpty()) commandContext.getSource().sendSystemMessage(Component.literal("SectionType Ergebnise: " + allSectionData));
+
                 return 0;
             }));
         });

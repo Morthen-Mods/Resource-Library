@@ -1,30 +1,33 @@
 package net.xstopho.resourcelibrary.registration;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.javafmlmod.FMLModContainer;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.Collections;
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
-import java.util.Set;
+import java.util.Optional;
 import java.util.function.Supplier;
 
+@SuppressWarnings("unchecked")
 public class NeoForgeRegistryFactory implements RegistryProvider.Factory {
     @Override
-    public <T> RegistryProvider<T> create(ResourceKey<? extends Registry<T>> resourceKey, String modId) {
-        final var modContainer = ModList.get().getModContainerById(modId);
-        if (modContainer.isEmpty()) throw new NullPointerException("Cannot find Mod Container for " + modId);
+    public <T> RegistryProvider<T> create(String modId, Registry<T> registry) {
+        final Optional<? extends ModContainer> optionalModContainer = ModList.get().getModContainerById(modId);
 
-        final var container = modContainer.get();
-        if (container instanceof FMLModContainer fmlModContainer) {
-            final var register = DeferredRegister.create(resourceKey, modId);
+        if (optionalModContainer.isEmpty()) throw new NullPointerException("Cannot find ModContainer for id: " + modId);
+
+        final ModContainer modContainer = optionalModContainer.get();
+        if (modContainer instanceof FMLModContainer fmlModContainer) {
+            final DeferredRegister<T> register = DeferredRegister.create(registry.key(), modId);
             register.register(Objects.requireNonNull(fmlModContainer.getEventBus()));
-            return new Provider<>(register, modId);
+            return new Provider<>(modId, register);
+
         } else throw new ClassCastException("The Container of the Mod " + modId + " is not a NeoForge one!");
     }
 
@@ -32,52 +35,45 @@ public class NeoForgeRegistryFactory implements RegistryProvider.Factory {
         private final String modId;
         private final DeferredRegister<T> registry;
 
-        private final Set<RegistryObject<T>> entries = new LinkedHashSet<>();
-        private final Set<RegistryObject<T>> entriesView = Collections.unmodifiableSet(entries);
+        private final Collection<RegistryObject<T>> entries = new ArrayList<>();
 
-        private Provider(DeferredRegister<T> registry, String modId) {
+        public Provider(String modId, DeferredRegister<T> registry) {
             this.registry = registry;
             this.modId = modId;
         }
 
         @Override
-        public String getModId() {
-            return modId;
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        public <I extends T> RegistryObject<I> register(String name, Supplier<? extends I> supplier) {
-            final var object = registry.<I>register(name, supplier);
-            final var registryObject = new RegistryObject<I>() {
-
+        public <U extends T> RegistryObject<U> register(String objectId, Supplier<? extends U> objectSupplier) {
+            final var object = registry.<U>register(objectId, objectSupplier);
+            final RegistryObject<U> registryObject = new RegistryObject<>() {
                 @Override
-                public ResourceKey<I> getResourceKey() {
-                    return (ResourceKey<I>) object.getKey();
+                public ResourceKey<U> getResourceKey() {
+                    return (ResourceKey<U>) object.getKey();
                 }
 
                 @Override
-                public ResourceLocation getId() {
+                public Identifier getId() {
                     return object.getId();
                 }
 
                 @Override
-                public I get() {
+                public U get() {
                     return object.get();
                 }
-
-                @Override
-                public Holder<I> asHolder() {
-                    return (Holder<I>) object;
-                }
             };
+
             entries.add((RegistryObject<T>) registryObject);
             return registryObject;
         }
 
         @Override
-        public Set<RegistryObject<T>> getEntries() {
-            return entriesView;
+        public Collection<RegistryObject<T>> getEntries() {
+            return entries;
+        }
+
+        @Override
+        public String getModId() {
+            return modId;
         }
     }
 }
