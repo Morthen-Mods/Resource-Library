@@ -1,3 +1,6 @@
+### v3.0.0
+- port to 26.1
+
 ### v2.10.0
 - update to 1.21.11
 - update LottTables

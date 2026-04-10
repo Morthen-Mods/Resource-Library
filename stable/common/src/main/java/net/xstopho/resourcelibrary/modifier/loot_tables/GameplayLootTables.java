@@ -4,7 +4,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.xstopho.resourcelibrary.LibConstants;
 
-public class GamePlayLootTables {
+public class GameplayLootTables {
     public static final ResourceKey<LootTable> ARMADILLO_SHED = LibConstants.createLootTableKey("gameplay/armadillo_shed");
     public static final ResourceKey<LootTable> CAT_MORNING_GIFT = LibConstants.createLootTableKey("gameplay/cat_morning_gift");
     public static final ResourceKey<LootTable> CHICKEN_LAY = LibConstants.createLootTableKey("gameplay/chicken_lay");
