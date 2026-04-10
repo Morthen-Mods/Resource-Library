@@ -1,2 +1,2 @@
-### v3.0.1
-  - fix supported versions
+### v3.0.2
+  - finally fix supported versions, sry it's late
