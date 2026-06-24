@@ -1,2 +1,3 @@
-### v3.0.2
-  - finally fix supported versions, sry it's late
+### v3.1.0
+ - update internal structure
+ - add back forge
