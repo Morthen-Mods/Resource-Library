@@ -10,12 +10,22 @@ base {
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+    withSourcesJar()
+    withJavadocJar()
 }
 
+idea.module {
+    downloadJavadoc = true
+    downloadSources = true
+}
 
 repositories {
     mavenCentral()
+    mavenLocal()
+
     maven { url 'https://raw.githubusercontent.com/Stein-N/resources/main/maven' }
+    maven { url "https://repo.spongepowered.org/maven" }
+    maven { url "https://maven.terraformersmc.com/" }
 }
 
 tasks.named('javadoc', Javadoc) {
@@ -51,6 +61,12 @@ jar {
     }
 }
 
+sourcesJar {
+    from(rootProject.file('LICENSE')) {
+        rename { "${it}_${mod_name}" }
+    }
+}
+
 processResources {
     var expandProps = [
             // Project related Keys
@@ -65,13 +81,12 @@ processResources {
             "mod_id": mod_id,
             "mod_license": mod_license,
             "mod_description": mod_description,
-            "mod_credits": mod_credits,
 
             // Loader Keys
             "fabric_api": fabric_api,
             "fabric_loader": fabric_loader,
-            "neoforge": neoforge
-
+            "neoforge": neoforge,
+            "forge": forge
     ]
 
     filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/neoforge.mods.toml', 'META-INF/mods.toml', '*.mixins.json']) {

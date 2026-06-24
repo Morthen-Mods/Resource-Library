@@ -1,0 +1,45 @@
+plugins {
+    id 'loader'
+    id 'net.fabricmc.fabric-loom'
+}
+
+def commonProject = project(':common')
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+
+    implementation "net.fabricmc:fabric-loader:${fabric_loader}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api}+${minecraft_version}"
+
+    implementation "com.terraformersmc:modmenu:${mod_menu}"
+
+    testmodImplementation commonProject.sourceSets.testmod.output
+}
+
+loom {
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
+
+    def aw = file("src/main/resources/${mod_id}.accesswidener")
+    if (aw.exists()) accessWidenerPath.set(aw)
+
+    runs {
+        client {
+            client()
+            source sourceSets.testmod
+            setConfigName("Fabric Test Client")
+            ideConfigGenerated(true)
+            programArgs('--username', 'Dev')
+            runDir("../common/runs/client")
+        }
+    }
+}
+
+processTestmodResources {
+    from file('../common/src/testmod/resources')
+}
+
+publishMods {
+    file = jar.archiveFile
+    modLoaders.addAll("fabric", "quilt")
+}
