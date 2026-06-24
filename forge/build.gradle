@@ -10,12 +10,18 @@ repositories {
     mavenCentral()
 }
 
+def commonProject = project(':common')
 dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge}")
     annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
+
+    testImplementation sourceSets.main.output
+    testCompileOnly commonProject.sourceSets.testmod.output
 }
 
 minecraft {
+    mappings channel: 'official', version: minecraft_version
+
     accessTransformer = true
     def at = file('../Common/src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
@@ -27,11 +33,18 @@ minecraft {
             workingDir.convention layout.projectDirectory.dir("../common/runs/${it.name.toLowerCase()}")
             args "--mixin.config=${mod_id}.mixins.json"
         }
-
         register('client') {
             systemProperty 'forge.enabledGameTestNamespaces', mod_id
         }
     }
+}
+
+compileTestJava {
+    source(project(':common').sourceSets.testmod.allSource)
+}
+
+processTestResources {
+    from project(':common').sourceSets.testmod.resources
 }
 
 tasks.named('jar', Jar) {
@@ -45,4 +58,9 @@ sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
+}
+
+publishMods {
+    file = jar.archiveFile
+    modLoaders.addAll("forge")
 }

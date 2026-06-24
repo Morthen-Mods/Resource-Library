@@ -4,11 +4,11 @@
     "version": "1.0-TEST",
     "name": "Resource Library Test",
     "description": "Testmod",
-    "authors": [ "xStopho" ],
+    "authors": [ "Morthen" ],
     "license": "MIT",
     "icon": "icon_fabric.png",
     "environment": "*",
     "entrypoints": {
-        "main": [ "net.xstopho.resourcelibrary_test.LibraryTest" ]
+        "main": [ "net.morthen.resourcelibrary_test.LibraryTest" ]
     }
 }

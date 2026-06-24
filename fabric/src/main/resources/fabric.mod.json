@@ -16,7 +16,7 @@
     "icon": "icon_fabric.png",
     "environment": "*",
     "entrypoints": {
-        "main": [ "net.xstopho.resourcelibrary.ResourceLibrary" ]
+        "main": [ "net.morthen.resourcelibrary.ResourceLibrary" ]
     },
     "mixins": [
         "${mod_id}.mixins.json",
