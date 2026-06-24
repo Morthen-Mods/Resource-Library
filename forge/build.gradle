@@ -15,8 +15,8 @@ dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge}")
     annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
 
-    testmodImplementation sourceSets.main.output
-    testmodCompileOnly commonProject.sourceSets.testmod.output
+    testImplementation sourceSets.main.output
+    testCompileOnly commonProject.sourceSets.testmod.output
 }
 
 minecraft {
@@ -35,16 +35,19 @@ minecraft {
         }
         register('client') {
             systemProperty 'forge.enabledGameTestNamespaces', mod_id
-            with(sourceSets.testmod) {}
         }
     }
 }
 
-compileTestmodJava {
+test {
+    failOnNoDiscoveredTests = false
+}
+
+compileTestJava {
     source(project(':common').sourceSets.testmod.allSource)
 }
 
-processTestmodResources {
+processTestResources {
     from project(':common').sourceSets.testmod.resources
 }
 
