@@ -11,7 +11,7 @@ neoForge {
 }
 
 dependencies {
-    compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.7'
+    compileOnly "org.spongepowered:mixin:${mixin_version}"
 
     testmodCompileOnly sourceSets.main.output
 }
