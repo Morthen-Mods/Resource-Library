@@ -1,45 +1,59 @@
 plugins {
-    id 'loader'
+    id 'multiloader-loader'
     id 'net.fabricmc.fabric-loom'
 }
-
-def commonProject = project(':common')
 dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version}"
-
-    implementation "net.fabricmc:fabric-loader:${fabric_loader}"
-    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api}+${minecraft_version}"
-
-    implementation "com.terraformersmc:modmenu:${mod_menu}"
-
-    testmodImplementation commonProject.sourceSets.testmod.output
+    minecraft("com.mojang:minecraft:${minecraft_version}")
+    implementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
+    implementation("net.fabricmc.fabric-api:fabric-api:${fabric_version}+${minecraft_version}")
 }
 
 loom {
-    mixin {
-        defaultRefmapName.set("${mod_id}.refmap.json")
-    }
-
-    def aw = file("src/main/resources/${mod_id}.accesswidener")
+    def aw = project(':common').file("src/main/resources/${mod_id}.accesswidener")
     if (aw.exists()) accessWidenerPath.set(aw)
 
     runs {
         client {
             client()
-            source sourceSets.testmod
-            setConfigName("Fabric Test Client")
-            ideConfigGenerated(true)
-            programArgs('--username', 'Dev')
-            runDir("../common/runs/client")
+            setDisplayName('Fabric Client')
+            setGenerateRunConfig(true)
+            setRunDirectory(file('../common/runs/client'))
+        }
+        server {
+            server()
+            setDisplayName('Fabric Server')
+            setGenerateRunConfig(true)
+            setRunDirectory(file('../common/runs/server'))
         }
     }
 }
 
-processTestmodResources {
-    from file('../common/src/testmod/resources')
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = mod_id
+        eula = true
+    }
 }
 
-publishMods {
-    file = jar.archiveFile
-    modLoaders.addAll("fabric", "quilt")
+sourceSets.main.resources { srcDir '../common/src/generated' }
+
+// Implement mcgradleconventions loader attribute
+def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
+['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements', 'includeInternal', 'modCompileClasspath'].each { variant ->
+    configurations.named(variant) {
+        attributes {
+            attribute(loaderAttribute, 'fabric')
+        }
+    }
+}
+
+sourceSets.configureEach {
+    [it.compileClasspathConfigurationName, it.runtimeClasspathConfigurationName].each { variant->
+        configurations.named(variant) {
+            attributes {
+                attribute(loaderAttribute, 'fabric')
+            }
+        }
+    }
 }
