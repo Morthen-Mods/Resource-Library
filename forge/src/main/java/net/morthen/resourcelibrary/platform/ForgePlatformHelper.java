@@ -1,6 +1,7 @@
 package net.morthen.resourcelibrary.platform;
 
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.morthen.resourcelibrary.service.platform.IPlatformHelper;
 
@@ -20,5 +21,10 @@ public class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public boolean isModLoaded(String modId) {
         return ModList.isLoaded(modId);
+    }
+
+    @Override
+    public boolean isDev() {
+        return !FMLLoader.isProduction();
     }
 }

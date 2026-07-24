@@ -5,11 +5,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.morthen.resourcelibrary.LibConstants;
+import net.morthen.resourcelibrary.registration.RegistryObject;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.LootTableLoadEvent;
-import net.morthen.resourcelibrary.LibConstants;
-import net.morthen.resourcelibrary.registration.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;

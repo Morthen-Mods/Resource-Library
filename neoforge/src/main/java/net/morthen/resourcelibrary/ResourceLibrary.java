@@ -6,7 +6,5 @@ import net.neoforged.fml.common.Mod;
 @Mod(LibConstants.MOD_ID)
 public class ResourceLibrary {
 
-    public ResourceLibrary(IEventBus eventBus) {
-
-    }
+    public ResourceLibrary(IEventBus eventBus) {}
 }

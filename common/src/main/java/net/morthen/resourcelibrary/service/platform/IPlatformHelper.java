@@ -12,6 +12,8 @@ public interface IPlatformHelper {
 
     boolean isModLoaded(String modId);
 
+    boolean isDev();
+
     enum Platforms {
         FABRIC, FORGE, NEOFORGE, NO_LOADER
     }

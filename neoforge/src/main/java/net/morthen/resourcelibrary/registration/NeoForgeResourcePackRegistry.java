@@ -5,11 +5,11 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.morthen.resourcelibrary.LibConstants;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
-import net.morthen.resourcelibrary.LibConstants;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
