@@ -28,3 +28,4 @@ run
 !/common/runs/server/eula.txt
 /common/runs/gametest/*
 /common/runs/gametestserver/*
+/common/runs/data/*

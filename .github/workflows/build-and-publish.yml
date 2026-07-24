@@ -1,0 +1,150 @@
+name: Build and Publish Mod
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+concurrency:
+  group: publish-mod
+  cancel-in-progress: false
+
+env:
+  ENVIRONMENT: both
+  FABRIC_DEPENDENCIES: |
+    fabric-api(required)
+    mod-menu(required)
+  FORGE_DEPENDENCIES: |
+  NEOFORGE_DEPENDENCIES: |
+
+jobs:
+  # Read Mod properties
+  read_properties:
+    runs-on: ubuntu-latest
+    outputs:
+      java_version: ${{ steps.props.outputs.java_version }}
+      modrinth_id: ${{ steps.props.outputs.modrinth_id }}
+      curseforge_id: ${{ steps.props.outputs.curseforge_id }}
+      minecraft_version: ${{ steps.props.outputs.minecraft_version }}
+      mod_version: ${{ steps.props.outputs.mod_version }}
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v7
+      - name: Read Properties from gradle.properties
+        id: props
+        run: |
+          # Base variables
+          echo "java_version=$(grep '^java_version=' ./gradle.properties | cut -d'=' -f2)" >> "$GITHUB_OUTPUT"
+          echo "modrinth_id=$(grep '^modrinth_id=' ./gradle.properties | cut -d'=' -f2)" >> "$GITHUB_OUTPUT"
+          echo "curseforge_id=$(grep '^curseforge_id=' ./gradle.properties | cut -d'=' -f2)" >> "$GITHUB_OUTPUT"
+          echo "minecraft_version=$(grep '^minecraft_version=' ./gradle.properties | cut -d'=' -f2)" >> "$GITHUB_OUTPUT"
+          # Mod related
+          echo "mod_version=$(grep '^version=' ./gradle.properties | cut -d'=' -f2)" >> "$GITHUB_OUTPUT"
+
+  # 1. Test if the Code compiles successfully
+  # 2. Run all Gametests for each loader
+  testing:
+    runs-on: ubuntu-latest
+    needs: read_properties
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v7
+      - name: Setup Java Environment
+        uses: actions/setup-java@v5
+        with:
+          java-version: ${{ needs.read_properties.outputs.java_version }}
+          distribution: temurin
+      - name: Setup Gradle Environment
+        uses: gradle/actions/setup-gradle@v6
+        # 1. Test if the Code compiles successfully
+      - name: Test Compile all Projects
+        run: gradle compileJava --no-daemon
+        # 2. Run all Gametests for each loader
+      - name: Run Fabric Gametests
+        run: gradle :fabric:runGameTest
+      - name: Run Forge Gametests
+        run: gradle :forge:runGameTestServer
+      - name: Run Neoforge Gametests
+        run: gradle :neoforge:runGameTestServer
+
+  # After everything was tested and compiled successfully we can build and upload the mods
+  build_and_publish:
+    needs: [read_properties, testing]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v7
+      - name: Setup Java Environment
+        uses: actions/setup-java@v5
+        with:
+          java-version: ${{ needs.read_properties.outputs.java_version }}
+          distribution: temurin
+      - name: Setup Gradle Environment
+        uses: gradle/actions/setup-gradle@v6
+      - name: Build final Jars
+        run: gradle build
+      # Publish Fabric to Modrinth and Curseforge
+      - name: Publish Fabric build
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ needs.read_properties.outputs.modrinth_id }}
+          modrinth-token: ${{ secrets.MODRINTH_API }}
+          curseforge-id: ${{ needs.read_properties.outputs.curseforge_id }}
+          curseforge-token: ${{ secrets.CURSEFORGE_API }}
+          files: fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
+          version: "${{ needs.read_properties.outputs.minecraft_version }}-${{ needs.read_properties.outputs.mod_version }}"
+          version-type: release
+          changelog-file: 'CHANGELOG.md'
+          loaders: fabric, quilt
+          game-versions: ${{ needs.read_properties.outputs.minecraft_version }}
+          java: ${{ needs.read_properties.outputs.java_version }}
+          dependencies: ${{ env.FABRIC_DEPENDENCIES }}
+          environment: ${{ env.ENVIRONMENT }}
+          retry-attempts: 2
+          retry-delay: 10000
+      # Publish Forge to Modrinth and Curseforge
+      - name: Publish Forge build
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ needs.read_properties.outputs.modrinth_id }}
+          modrinth-token: ${{ secrets.MODRINTH_API }}
+          curseforge-id: ${{ needs.read_properties.outputs.curseforge_id }}
+          curseforge-token: ${{ secrets.CURSEFORGE_API }}
+          files: forge/build/libs/!(*-@(dev|sources|javadoc)).jar
+          version: "${{ needs.read_properties.outputs.minecraft_version }}-${{ needs.read_properties.outputs.mod_version }}"
+          version-type: release
+          changelog-file: 'CHANGELOG.md'
+          loaders: forge
+          game-versions: ${{ needs.read_properties.outputs.minecraft_version }}
+          java: ${{ needs.read_properties.outputs.java_version }}
+          dependencies: ${{ env.FORGE_DEPENDENCIES }}
+          environment: ${{ env.ENVIRONMENT }}
+          retry-attempts: 2
+          retry-delay: 10000
+      # Publish Neoforge to Modrinth and Curseforge
+      - name: Publish Neoforge build
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ needs.read_properties.outputs.modrinth_id }}
+          modrinth-token: ${{ secrets.MODRINTH_API }}
+          curseforge-id: ${{ needs.read_properties.outputs.curseforge_id }}
+          curseforge-token: ${{ secrets.CURSEFORGE_API }}
+          files: neoforge/build/libs/!(*-@(dev|sources|javadoc)).jar
+          version: "${{ needs.read_properties.outputs.minecraft_version }}-${{ needs.read_properties.outputs.mod_version }}"
+          version-type: release
+          changelog-file: 'CHANGELOG.md'
+          loaders: neoforge
+          game-versions: ${{ needs.read_properties.outputs.minecraft_version }}
+          java: ${{ needs.read_properties.outputs.java_version }}
+          dependencies: ${{ env.NEOFORGE_DEPENDENCIES }}
+          environment: ${{ env.ENVIRONMENT }}
+          retry-attempts: 2
+          retry-delay: 10000
+       # Publish Mod to Maven Repo
+       # If the Mod shouldn't be published to the Maven repo, simply delete this step or remove the publish task from the gradle setup
+      - name: Upload to Maven Repo
+        env:
+          MAVEN_URL: "https://maven.sbvl.de/releases"
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USER }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+        run: gradle publish --no-daemon
