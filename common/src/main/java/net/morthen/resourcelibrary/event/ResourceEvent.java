@@ -24,4 +24,8 @@ public final class ResourceEvent<T> {
         Objects.requireNonNull(listener, "Tries to register null Listener!");
         this.handler.addLast(listener);
     }
+
+    public void clearEvent() {
+        this.handler.clear();
+    }
 }
