@@ -31,12 +31,20 @@ public interface LootTableModifier {
         addItem(item.get(), minAmount, maxAmount, chance, lootTables);
     }
 
-    default void addBlocks(RegistryObject<Block> block, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+    default void addBlock(RegistryObject<Block> block, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         addItem(block.get(), amount, chance, lootTables);
     }
 
-    default void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+    default void addBlock(RegistryObject<Block> block, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         addItem(block.get(), minAmount, maxAmount, chance, lootTables);
+    }
+
+    default void addBlock(Block block, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+        addItem(block, minAmount, maxAmount, chance, lootTables);
+    }
+
+    default void addBlock(Block block, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+        addItem(block, amount, amount, chance, lootTables);
     }
 
     default void addItem(ItemLike item, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
@@ -47,7 +55,7 @@ public interface LootTableModifier {
     static LootPool.Builder lootPool(ItemLike item, float chance, float amount) {
         return LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1f))
-                .when(LootItemRandomChanceCondition.randomChance(value(chance)))
+                .when(LootItemRandomChanceCondition.randomChance(Math.clamp(chance, 0.0f, 1.0f)))
                 .add(LootItem.lootTableItem(item))
                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(amount)));
     }
@@ -55,12 +63,8 @@ public interface LootTableModifier {
     static LootPool.Builder lootPool(ItemLike item, float chance, float minAmount, float maxAmount) {
         return LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1f))
-                .when(LootItemRandomChanceCondition.randomChance(value(chance)))
+                .when(LootItemRandomChanceCondition.randomChance(Math.clamp(chance, 0.0f, 1.0f)))
                 .add(LootItem.lootTableItem(item))
                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(minAmount, maxAmount)));
-    }
-
-    static float value(float chance) {
-        return Math.min(1.0f, Math.max(0.0f, chance));
     }
 }

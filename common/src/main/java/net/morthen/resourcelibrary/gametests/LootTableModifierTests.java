@@ -16,9 +16,9 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.morthen.resourcelibrary.event.LootTableModifierCallback;
 import net.morthen.resourcelibrary.modifier.LootTableModifier;
-import net.morthen.resourcelibrary.modifier.loot_tables.ChestLootTables;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -35,8 +35,8 @@ public class LootTableModifierTests {
     public static void setupLootModifications() {
         LootTableModifier modifier = LootTableModifier.getInstance();
         modifier.addItem(Items.DIAMOND, 1f, () -> 1f, List.of(EntityType.CHICKEN.getDefaultLootTable().get()));
-        modifier.addItem(Items.DIAMOND_BLOCK, 1f, () -> 1f, List.of(ChestLootTables.SPAWN_BONUS_CHEST));
-        modifier.addItem(Items.NETHERITE_SWORD, 1f, () -> 1f, List.of(ChestLootTables.IGLOO_CHEST));
+        modifier.addBlock(Blocks.DIAMOND_BLOCK, 1f, () -> 1f, List.of(BuiltInLootTables.SPAWN_BONUS_CHEST));
+        modifier.addItem(Items.NETHERITE_SWORD, 1f, () -> 1f, List.of(BuiltInLootTables.IGLOO_CHEST));
     }
 
     public static void modifyMobLoot(GameTestHelper helper) {
@@ -53,7 +53,7 @@ public class LootTableModifierTests {
         helper.setBlock(BlockPos.ZERO, Blocks.CHEST);
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         ChestBlockEntity chest = helper.getBlockEntity(BlockPos.ZERO, ChestBlockEntity.class);
-        chest.setLootTable(ChestLootTables.SPAWN_BONUS_CHEST);
+        chest.setLootTable(BuiltInLootTables.SPAWN_BONUS_CHEST);
 
         helper.useBlock(BlockPos.ZERO, player);
         helper.assertContainerContains(BlockPos.ZERO, Items.DIAMOND_BLOCK);
@@ -71,7 +71,7 @@ public class LootTableModifierTests {
 
         helper.setBlock(BlockPos.ZERO, Blocks.CHEST);
         ChestBlockEntity chest = helper.getBlockEntity(BlockPos.ZERO, ChestBlockEntity.class);
-        chest.setLootTable(ChestLootTables.IGLOO_CHEST);
+        chest.setLootTable(BuiltInLootTables.IGLOO_CHEST);
 
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         helper.useBlock(BlockPos.ZERO, player);
