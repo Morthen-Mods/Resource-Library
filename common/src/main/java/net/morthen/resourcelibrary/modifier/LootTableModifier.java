@@ -23,14 +23,26 @@ public interface LootTableModifier {
         return CoreServices.load(LootTableModifier.class);
     }
 
-    void addItems(RegistryObject<Item> item, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
-    void addItems(RegistryObject<Item> item, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
+    default void addItem(RegistryObject<Item> item, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+        addItem(item.get(), amount, chance, lootTables);
+    }
 
-    void addBlocks(RegistryObject<Block> block, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
-    void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
+    default void addItem(RegistryObject<Item> item, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+        addItem(item.get(), minAmount, maxAmount, chance, lootTables);
+    }
 
-    void addItems(ItemLike item, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
-    void addItems(ItemLike item, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
+    default void addBlocks(RegistryObject<Block> block, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+        addItem(block.get(), amount, chance, lootTables);
+    }
+
+    default void addBlocks(RegistryObject<Block> block, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+        addItem(block.get(), minAmount, maxAmount, chance, lootTables);
+    }
+
+    default void addItem(ItemLike item, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+        addItem(item, amount, amount, chance, lootTables);
+    }
+    void addItem(ItemLike item, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
 
     static LootPool.Builder lootPool(ItemLike item, float chance, float amount) {
         return LootPool.lootPool()
