@@ -29,6 +29,7 @@ public class LootModifierTests {
 
         consumer.accept("modify_mob_drop", LootModifierTests::modifyMobDrop);
         consumer.accept("modify_chest_item", LootModifierTests::modifyChestItem);
+        consumer.accept("modify_chest_item_amount", LootModifierTests::modifyChestItemAmount);
     }
 
     //
@@ -38,6 +39,7 @@ public class LootModifierTests {
         modifier.addItem(Items.IRON_INGOT, 1f, () -> 1f, List.of(EntityType.CHICKEN.getDefaultLootTable().get()));
         modifier.addBlock(Blocks.DIAMOND_BLOCK, 1f, () -> 1f, List.of(BuiltInLootTables.SPAWN_BONUS_CHEST));
         modifier.addItem(Items.END_CRYSTAL, 1f, () -> 1f, List.of(BuiltInLootTables.IGLOO_CHEST));
+        modifier.addItem(Items.END_PORTAL_FRAME, 1f, () -> 1f, List.of(BuiltInLootTables.VILLAGE_ARMORER));
 
         LootDropModifier dropModifier = LootDropModifier.getInstance();
         dropModifier.modifyItemDrop(EntityType.CHICKEN.getDefaultLootTable().get(), stack -> {
@@ -49,6 +51,12 @@ public class LootModifierTests {
         dropModifier.modifyItemDrop(BuiltInLootTables.IGLOO_CHEST, stack -> {
             if (stack.getItem() == Items.END_CRYSTAL) {
                 stack.set(DataComponents.CUSTOM_NAME, Component.literal("custom_name"));
+            }
+        });
+
+        dropModifier.modifyItemDrop(BuiltInLootTables.VILLAGE_ARMORER, stack -> {
+            if (stack.getItem() == Items.END_PORTAL_FRAME) {
+                stack.setCount(10);
             }
         });
     }
@@ -105,5 +113,19 @@ public class LootModifierTests {
                  helper.succeed();
              }
          }
+     }
+
+     public static void modifyChestItemAmount(GameTestHelper helper) {
+         helper.setBlock(BlockPos.ZERO, Blocks.CHEST);
+         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+         ChestBlockEntity chest = helper.getBlockEntity(BlockPos.ZERO, ChestBlockEntity.class);
+         chest.setLootTable(BuiltInLootTables.VILLAGE_ARMORER);
+
+         helper.useBlock(BlockPos.ZERO, player);
+         helper.assertContainerContains(BlockPos.ZERO, Items.END_PORTAL_FRAME);
+
+         int amount = chest.countItem(Items.END_PORTAL_FRAME);
+
+         if (amount == 10) helper.succeed();
      }
 }

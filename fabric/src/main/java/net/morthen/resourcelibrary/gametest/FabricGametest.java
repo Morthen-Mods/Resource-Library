@@ -28,4 +28,10 @@ public class FabricGametest {
 
         LootModifierTests.modifyChestItem(helper);
     }
+
+    @GameTest
+    public void modifyChestItemAmount(GameTestHelper helper) {
+
+        LootModifierTests.modifyChestItemAmount(helper);
+    }
 }
