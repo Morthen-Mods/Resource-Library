@@ -1,4 +1,4 @@
-package net.morthen.resourcelibrary.gametests;
+package net.morthen.resourcelibrary.gametests.utils;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
