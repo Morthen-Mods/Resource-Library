@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "resourcelibrary:modify_chest_item",
+  "structure": "minecraft:empty",
+  "max_ticks": 400,
+  "setup_ticks": 50,
+  "required": true
+}
