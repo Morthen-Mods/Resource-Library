@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = LibConstants.MOD_ID)
-public class NeoForgeLootTableModifier implements LootTableModifier {
+public class NeoforgeLootTableModifier implements LootTableModifier {
     private record Modifier(ItemLike item, ResourceKey<LootTable> table, Supplier<Float> chance, float minAmount, float maxAmount) {}
     private static final List<Modifier> modifiers = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class NeoForgeLootTableModifier implements LootTableModifier {
     @SubscribeEvent
     public static void loadTables(LootTableLoadEvent event) {
         modifiers.forEach(modifier -> {
-            if (event.getName().equals(modifier.table().identifier()) && event.getTable() != null) {
+            if (event.getName().equals(modifier.table().identifier())) {
                 LootPool pool = LootTableModifier.lootPool(modifier.item(), modifier.chance().get(), modifier.minAmount(), modifier.maxAmount()).build();
                 event.getTable().addPool(pool);
             }

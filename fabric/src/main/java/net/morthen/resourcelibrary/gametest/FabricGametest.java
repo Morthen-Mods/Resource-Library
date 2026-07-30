@@ -2,21 +2,30 @@ package net.morthen.resourcelibrary.gametest;
 
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.morthen.resourcelibrary.gametests.LootTableModifierTests;
+import net.morthen.resourcelibrary.gametests.LootModifierTests;
 
 public class FabricGametest {
     @GameTest
     public void modifyMobLoot(GameTestHelper helper) {
-        LootTableModifierTests.modifyMobLoot(helper);
+
+        LootModifierTests.modifyMobLoot(helper);
     }
 
     @GameTest
     public void modifyChestLoot(GameTestHelper helper) {
-        LootTableModifierTests.modifyChestLoot(helper);
+
+        LootModifierTests.modifyChestLoot(helper);
+    }
+
+    @GameTest
+    public void modifyMobDrop(GameTestHelper helper) {
+
+        LootModifierTests.modifyMobDrop(helper);
     }
 
     @GameTest
     public void modifyChestItem(GameTestHelper helper) {
-        LootTableModifierTests.modifyChestItem(helper);
+
+        LootModifierTests.modifyChestItem(helper);
     }
 }
