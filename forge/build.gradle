@@ -22,7 +22,7 @@ minecraft {
     runs {
         configureEach {
             workingDir.convention layout.projectDirectory.dir("../common/runs/${it.name.toLowerCase()}")
-            args("--mixin.config=${mod_id}.mixins.json")
+            args("--mixin.config=${mod_id}.forge.mixins.json")
         }
 
         register('client') {}
@@ -38,7 +38,7 @@ minecraft {
 tasks.named('jar', Jar) {
     manifest {
         attributes([
-                "MixinConfigs": "${mod_id}.mixins.json, ${mod_id}.forge.mixins.json",
+                "MixinConfigs": "${mod_id}.forge.mixins.json",
         ])
     }
 }
