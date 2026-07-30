@@ -23,6 +23,12 @@ tasks.named('javadoc', Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
 }
 
+tasks.register("runGameTests") {
+    group = "verification"
+    description = "Runs game tests for all loader"
+    dependsOn(":fabric:runGameTest", ":forge:runGameTestServer", ":neoforge:runGameTestServer")
+}
+
 jar {
     manifest {
         attributes([
@@ -77,11 +83,10 @@ publishing {
             from components.java
         }
     }
-    repositories {
-        maven {
-            def mavenURL = System.getenv('MAVEN_URL')
-            if(mavenURL && project.name != 'datagen') {
-                url = uri(System.getenv('MAVEN_URL'))
+    if (project.name != 'datagen') {
+        repositories {
+            maven {
+                url = uri('https://maven.sbvl.de/releases')
                 credentials {
                     username = System.getenv('MAVEN_USERNAME')
                     password = System.getenv('MAVEN_PASSWORD')

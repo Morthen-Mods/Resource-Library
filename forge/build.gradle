@@ -22,10 +22,11 @@ minecraft {
     runs {
         configureEach {
             workingDir.convention layout.projectDirectory.dir("../common/runs/${it.name.toLowerCase()}")
-            args("--mixin.config=${mod_id}.mixins.json", "--mixin.config=${mod_id}.forge.mixins.json")
+            args("--mixin.config=${mod_id}.mixins.json")
         }
 
         register('client') {}
+        register('server') {}
 
         register('gameTestServer') {
             systemProperty 'forge.enableGameTest', 'true'

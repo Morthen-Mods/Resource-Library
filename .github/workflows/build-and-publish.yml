@@ -58,14 +58,12 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
         # 1. Test if the Code compiles successfully
       - name: Test Compile all Projects
-        run: gradle compileJava --no-daemon
+        run: |
+          chmod +x gradlew
+          ./gradlew compileJava --no-daemon
         # 2. Run all Gametests for each loader
-      - name: Run Fabric Gametests
-        run: gradle :fabric:runGameTest
-      - name: Run Forge Gametests
-        run: gradle :forge:runGameTestServer
-      - name: Run Neoforge Gametests
-        run: gradle :neoforge:runGameTestServer
+      - name: Run Gametests
+        run: ./gradlew runGameTests
 
   # After everything was tested and compiled successfully we can build and upload the mods
   build_and_publish:
@@ -82,7 +80,9 @@ jobs:
       - name: Setup Gradle Environment
         uses: gradle/actions/setup-gradle@v6
       - name: Build final Jars
-        run: gradle build
+        run: |
+          chmod +x gradlew
+          ./gradlew build
       # Publish Fabric to Modrinth and Curseforge
       - name: Publish Fabric build
         uses: Kir-Antipov/mc-publish@v3.3
@@ -144,7 +144,8 @@ jobs:
        # If the Mod shouldn't be published to the Maven repo, simply delete this step or remove the publish task from the gradle setup
       - name: Upload to Maven Repo
         env:
-          MAVEN_URL: "https://maven.sbvl.de/releases"
           MAVEN_USERNAME: ${{ secrets.MAVEN_USER }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-        run: gradle publish --no-daemon
+        run: |
+          chmod +x gradlew
+          ./gradlew publish --no-daemon
