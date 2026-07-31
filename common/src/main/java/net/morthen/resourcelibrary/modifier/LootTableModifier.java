@@ -18,9 +18,10 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public interface LootTableModifier {
+    LootTableModifier INSTANCE = CoreServices.load(LootTableModifier.class);
 
     static LootTableModifier getInstance() {
-        return CoreServices.load(LootTableModifier.class);
+        return INSTANCE;
     }
 
     default void addItem(RegistryObject<Item> item, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
@@ -47,11 +48,17 @@ public interface LootTableModifier {
         addItem(block, amount, amount, chance, lootTables);
     }
 
-    default void addItem(ItemLike item, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
-        addItem(item, amount, amount, chance, lootTables);
-    }
+    void addItem(ItemLike item, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
 
     void addItem(ItemLike item, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
+
+    static LootPool.Builder lootPool(ItemLike item, float chance, float amount) {
+        return LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1f))
+                .when(LootItemRandomChanceCondition.randomChance(Math.clamp(chance, 0.0f, 1.0f)))
+                .add(LootItem.lootTableItem(item))
+                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(amount)));
+    }
 
     static LootPool.Builder lootPool(ItemLike item, float chance, float minAmount, float maxAmount) {
         return LootPool.lootPool()

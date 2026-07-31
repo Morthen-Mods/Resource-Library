@@ -6,7 +6,9 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.morthen.resourcelibrary.service.CoreServices;
 
 public interface LootDropModifier {
-    static LootDropModifier getInstance() { return CoreServices.load(LootDropModifier.class); }
+    LootDropModifier INSTANCE = CoreServices.load(LootDropModifier.class);
+
+    static LootDropModifier getInstance() { return INSTANCE; }
 
     interface Modifier {
         void modify(ItemStack stack);
