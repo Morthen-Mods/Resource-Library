@@ -14,7 +14,6 @@ env:
   FABRIC_DEPENDENCIES: |
     fabric-api(required)
     mod-menu(required)
-  FORGE_DEPENDENCIES: |
   NEOFORGE_DEPENDENCIES: |
 
 jobs:
@@ -99,25 +98,6 @@ jobs:
           game-versions: ${{ needs.read_properties.outputs.minecraft_version }}
           java: ${{ needs.read_properties.outputs.java_version }}
           dependencies: ${{ env.FABRIC_DEPENDENCIES }}
-          environment: ${{ env.ENVIRONMENT }}
-          retry-attempts: 2
-          retry-delay: 10000
-      # Publish Forge to Modrinth and Curseforge
-      - name: Publish Forge build
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          modrinth-id: ${{ needs.read_properties.outputs.modrinth_id }}
-          modrinth-token: ${{ secrets.MODRINTH_API }}
-          curseforge-id: ${{ needs.read_properties.outputs.curseforge_id }}
-          curseforge-token: ${{ secrets.CURSEFORGE_API }}
-          files: forge/build/libs/!(*-@(dev|sources|javadoc)).jar
-          version: "${{ needs.read_properties.outputs.minecraft_version }}-${{ needs.read_properties.outputs.mod_version }}"
-          version-type: release
-          changelog-file: 'CHANGELOG.md'
-          loaders: forge
-          game-versions: ${{ needs.read_properties.outputs.minecraft_version }}
-          java: ${{ needs.read_properties.outputs.java_version }}
-          dependencies: ${{ env.FORGE_DEPENDENCIES }}
           environment: ${{ env.ENVIRONMENT }}
           retry-attempts: 2
           retry-delay: 10000
