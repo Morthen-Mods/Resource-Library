@@ -26,7 +26,7 @@ tasks.named('javadoc', Javadoc) {
 tasks.register("runGameTests") {
     group = "verification"
     description = "Runs game tests for all loader"
-    dependsOn(":fabric:runGameTest", ":forge:runGameTestServer", ":neoforge:runGameTestServer")
+    dependsOn(":fabric:runGameTest", ":neoforge:runGameTestServer")
 }
 
 jar {
