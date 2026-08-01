@@ -4,6 +4,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.morthen.resourcelibrary.gametest.NeoforgeGametest;
 import net.morthen.resourcelibrary.gametests.LootModifierTests;
+import net.morthen.resourcelibrary.gametests.RecipeRemainderTest;
 import net.morthen.resourcelibrary.gametests.RegistryTests;
 import net.morthen.resourcelibrary.service.LibServices;
 import net.neoforged.bus.api.IEventBus;
@@ -25,9 +26,11 @@ public class ResourceLibrary {
             // Test Setups, only needed when events are involved
             RegistryTests.setupRegistry();
             LootModifierTests.setupModifier();
+            RecipeRemainderTest.setupRemainder();
 
             RegistryTests.init(NeoforgeGametest::registerTest);
             LootModifierTests.init(NeoforgeGametest::registerTest);
+            RecipeRemainderTest.init(NeoforgeGametest::registerTest);
             eventBus.addListener(NeoforgeGametest::registerTests);
         }
     }

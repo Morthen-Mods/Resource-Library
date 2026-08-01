@@ -5,6 +5,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.registries.DeferredRegister;
 import net.morthen.resourcelibrary.LibConstants;
 import net.morthen.resourcelibrary.gametests.LootModifierTests;
+import net.morthen.resourcelibrary.gametests.RecipeRemainderTest;
 import net.morthen.resourcelibrary.gametests.RegistryTests;
 
 import java.util.function.Consumer;
@@ -19,5 +20,6 @@ public class ForgeGametests {
     static {
         LootModifierTests.init(ForgeGametests::registerTest);
         RegistryTests.init(ForgeGametests::registerTest);
+        RecipeRemainderTest.init(ForgeGametests::registerTest);
     }
 }

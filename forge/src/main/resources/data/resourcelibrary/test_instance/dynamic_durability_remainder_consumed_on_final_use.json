@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "resourcelibrary:dynamic_durability_remainder_consumed_on_final_use",
+  "structure": "minecraft:empty",
+  "max_ticks": 400,
+  "setup_ticks": 50,
+  "required": true
+}

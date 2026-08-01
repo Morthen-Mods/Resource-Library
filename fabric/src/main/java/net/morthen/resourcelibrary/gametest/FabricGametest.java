@@ -3,9 +3,36 @@ package net.morthen.resourcelibrary.gametest;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.morthen.resourcelibrary.gametests.LootModifierTests;
+import net.morthen.resourcelibrary.gametests.RecipeRemainderTest;
 import net.morthen.resourcelibrary.gametests.RegistryTests;
 
 public class FabricGametest {
+
+    /////////////////////////////////////////////////
+    ///           RecipeRemainder - FixedDurability ///
+    /////////////////////////////////////////////////
+    @GameTest
+    public void fixedDurabilityRemainderIncrementsDamageOnUse(GameTestHelper helper) {
+        RecipeRemainderTest.fixedDurabilityRemainderIncrementsDamageOnUse(helper);
+    }
+
+    @GameTest
+    public void fixedDurabilityRemainderConsumedOnFinalUse(GameTestHelper helper) {
+        RecipeRemainderTest.fixedDurabilityRemainderConsumedOnFinalUse(helper);
+    }
+
+    /////////////////////////////////////////////////
+    ///          RecipeRemainder - DynamicDurability///
+    /////////////////////////////////////////////////
+    @GameTest
+    public void dynamicDurabilityAppliesDurabilityOnFirstUse(GameTestHelper helper) {
+        RecipeRemainderTest.dynamicDurabilityAppliesDurabilityOnFirstUse(helper);
+    }
+
+    @GameTest
+    public void dynamicDurabilityRemainderConsumedOnFinalUse(GameTestHelper helper) {
+        RecipeRemainderTest.dynamicDurabilityRemainderConsumedOnFinalUse(helper);
+    }
 
     /////////////////////////////////////////////////
     ///              Registration basics           ///
