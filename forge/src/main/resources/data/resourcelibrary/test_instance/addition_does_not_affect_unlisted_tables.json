@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:function",
-  "environment": "minecraft:default",
-  "function": "resourcelibrary:addition_does_not_affect_unlisted_tables",
-  "structure": "minecraft:empty",
-  "max_ticks": 400,
-  "setup_ticks": 50,
-  "required": true
-}

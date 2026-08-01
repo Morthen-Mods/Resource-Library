@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:function",
-  "environment": "minecraft:default",
-  "function": "resourcelibrary:registry_object_equals_underlying_registry_entry",
-  "structure": "minecraft:empty",
-  "max_ticks": 400,
-  "setup_ticks": 50,
-  "required": true
-}

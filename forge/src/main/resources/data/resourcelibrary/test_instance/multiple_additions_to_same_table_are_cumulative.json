@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:function",
-  "environment": "minecraft:default",
-  "function": "resourcelibrary:multiple_additions_to_same_table_are_cumulative",
-  "structure": "minecraft:empty",
-  "max_ticks": 400,
-  "setup_ticks": 50,
-  "required": true
-}

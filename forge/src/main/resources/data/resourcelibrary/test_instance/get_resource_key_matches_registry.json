@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:function",
-  "environment": "minecraft:default",
-  "function": "resourcelibrary:get_resource_key_matches_registry",
-  "structure": "minecraft:empty",
-  "max_ticks": 400,
-  "setup_ticks": 50,
-  "required": true
-}

@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:function",
-  "environment": "minecraft:default",
-  "function": "resourcelibrary:add_item_on_block_loot_table",
-  "structure": "minecraft:empty",
-  "max_ticks": 400,
-  "setup_ticks": 50,
-  "required": true
-}
