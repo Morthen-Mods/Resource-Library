@@ -1,7 +1,7 @@
 package net.morthen.resourcelibrary.registration;
 
 import net.minecraft.core.Registry;
-import net.morthen.resourcelibrary.service.CoreServices;
+import net.morthen.resourcelibrary.service.LibServices;
 
 import java.util.Collection;
 import java.util.function.Supplier;
@@ -19,7 +19,7 @@ public interface RegistryProvider<T> {
     String getModId();
 
     interface Factory {
-        Factory INSTANCE = CoreServices.load(Factory.class);
+        Factory INSTANCE = LibServices.load(Factory.class);
 
         <T> RegistryProvider<T> create(String modId, Registry<T> registry);
     }

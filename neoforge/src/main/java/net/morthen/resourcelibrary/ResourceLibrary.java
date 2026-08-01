@@ -5,7 +5,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.morthen.resourcelibrary.gametest.NeoforgeGametest;
 import net.morthen.resourcelibrary.gametests.LootModifierTests;
 import net.morthen.resourcelibrary.gametests.RegistryTests;
-import net.morthen.resourcelibrary.service.CoreServices;
+import net.morthen.resourcelibrary.service.LibServices;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -19,7 +19,7 @@ public class ResourceLibrary {
     public ResourceLibrary(IEventBus eventBus) {
 
         // loads the gametests only in dev environment
-        if (CoreServices.PLATFORM.isDev()) {
+        if (LibServices.PLATFORM.isDev()) {
             GAMETEST.register(eventBus);
 
             // Test Setups, only needed when events are involved

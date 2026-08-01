@@ -12,13 +12,13 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCon
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.morthen.resourcelibrary.registration.RegistryObject;
-import net.morthen.resourcelibrary.service.CoreServices;
+import net.morthen.resourcelibrary.service.LibServices;
 
 import java.util.List;
 import java.util.function.Supplier;
 
 public interface LootTableModifier {
-    LootTableModifier INSTANCE = CoreServices.load(LootTableModifier.class);
+    LootTableModifier INSTANCE = LibServices.load(LootTableModifier.class);
 
     static LootTableModifier getInstance() {
         return INSTANCE;

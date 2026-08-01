@@ -1,13 +1,13 @@
 package net.morthen.resourcelibrary.registration;
 
 import net.minecraft.resources.Identifier;
-import net.morthen.resourcelibrary.service.CoreServices;
+import net.morthen.resourcelibrary.service.LibServices;
 import org.jetbrains.annotations.NotNull;
 
 public interface ResourcePackRegistry {
 
     static ResourcePackRegistry getInstance(String modId) {
-        return CoreServices.load(ResourcePackRegistry.class).setModId(modId);
+        return LibServices.load(ResourcePackRegistry.class).setModId(modId);
     }
 
     ResourcePackRegistry setModId(String modId);

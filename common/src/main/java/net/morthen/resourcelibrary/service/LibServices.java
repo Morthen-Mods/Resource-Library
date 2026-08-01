@@ -5,7 +5,7 @@ import net.morthen.resourcelibrary.service.platform.IPlatformHelper;
 
 import java.util.ServiceLoader;
 
-public class CoreServices {
+public class LibServices {
 
     public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
 

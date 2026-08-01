@@ -5,14 +5,14 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.morthen.resourcelibrary.gametest.ForgeGametests;
 import net.morthen.resourcelibrary.gametests.LootModifierTests;
 import net.morthen.resourcelibrary.gametests.RegistryTests;
-import net.morthen.resourcelibrary.service.CoreServices;
+import net.morthen.resourcelibrary.service.LibServices;
 
 @Mod(LibConstants.MOD_ID)
 public class ResourceLibrary {
 
     public ResourceLibrary(FMLJavaModLoadingContext context) {
 
-        if (CoreServices.PLATFORM.isDev()) {
+        if (LibServices.PLATFORM.isDev()) {
             RegistryTests.setupRegistry();
             LootModifierTests.setupModifier();
 
