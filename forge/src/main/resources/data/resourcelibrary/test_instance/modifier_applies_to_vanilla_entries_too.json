@@ -1,7 +1,7 @@
 {
   "type": "minecraft:function",
   "environment": "minecraft:default",
-  "function": "resourcelibrary:modify_chest_item",
+  "function": "resourcelibrary:modifier_applies_to_vanilla_entries_too",
   "structure": "minecraft:empty",
   "max_ticks": 400,
   "setup_ticks": 50,

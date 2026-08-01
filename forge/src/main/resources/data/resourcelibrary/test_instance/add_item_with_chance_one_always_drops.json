@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "resourcelibrary:add_item_with_chance_one_always_drops",
+  "structure": "minecraft:empty",
+  "max_ticks": 400,
+  "setup_ticks": 50,
+  "required": true
+}

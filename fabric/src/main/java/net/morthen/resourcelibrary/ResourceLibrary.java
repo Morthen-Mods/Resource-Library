@@ -11,8 +11,8 @@ public class ResourceLibrary implements ModInitializer {
     public void onInitialize() {
         if (CoreServices.PLATFORM.isDev()) {
             // Test Setups, only needed when events are involved
-            RegistryTests.setupRegistrySystem();
-            LootModifierTests.setupLootModifications();
+            RegistryTests.setupRegistry();
+            LootModifierTests.setupModifier();
         }
     }
 }

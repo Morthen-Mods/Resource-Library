@@ -23,8 +23,8 @@ public class ResourceLibrary {
             GAMETEST.register(eventBus);
 
             // Test Setups, only needed when events are involved
-            RegistryTests.setupRegistrySystem();
-            LootModifierTests.setupLootModifications();
+            RegistryTests.setupRegistry();
+            LootModifierTests.setupModifier();
 
             RegistryTests.init(NeoforgeGametest::registerTest);
             LootModifierTests.init(NeoforgeGametest::registerTest);

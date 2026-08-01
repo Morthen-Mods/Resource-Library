@@ -11,6 +11,7 @@ import net.minecraft.world.entity.animal.chicken.Chicken;
 import net.minecraft.world.entity.animal.pig.Pig;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.morthen.resourcelibrary.gametests.utils.GametestUtils;
 import net.morthen.resourcelibrary.modifier.LootDropModifier;
 import net.morthen.resourcelibrary.modifier.LootTableModifier;
+import net.morthen.resourcelibrary.registration.RegistryObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,241 +30,295 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class LootModifierTests {
-    private static Logger logger = LoggerFactory.getLogger("LootModifierTests");
-
     public static void init(BiConsumer<String, Consumer<GameTestHelper>> consumer) {
-        consumer.accept("add_mob_loot", LootModifierTests::addMobLoot);
-        consumer.accept("add_mob_loot_with_range", LootModifierTests::addMobLootWithRange);
-        consumer.accept("add_loot_to_multiple_mobs", LootModifierTests::addLootToMultipleMobs);
-        consumer.accept("add_mob_loot_with_chance", LootModifierTests::addMobLootWithChance);
-        consumer.accept("add_mob_loot_with_no_chance", LootModifierTests::addMobLootWithNoChance);
-        consumer.accept("modify_mob_drop", LootModifierTests::modifyMobDrop);
+        consumer.accept("add_item_with_chance_zero_never_drops", LootModifierTests::addItemWithChanceZeroNeverDrops);
+        consumer.accept("add_item_with_chance_one_always_drops", LootModifierTests::addItemWithChanceOneAlwaysDrops);
+        consumer.accept("add_item_single_amount_overload", LootModifierTests::addItemSingleAmountOverload);
+        consumer.accept("add_block_uses_item_form_of_block", LootModifierTests::addBlockUsesItemFormOfBlock);
 
-        consumer.accept("add_item_to_block_drops",  LootModifierTests::addItemToBlockDrops);
-        consumer.accept("modify_block_drops_amount",  LootModifierTests::modifyBlockDropsAmount);
+        consumer.accept("addition_applies_to_all_listed_tables", LootModifierTests::additionAppliesToAllListedTables);
+        consumer.accept("addition_does_not_affect_unlisted_tables", LootModifierTests::additionDoesNotAffectUnlistedTables);
+        consumer.accept("multiple_additions_to_same_table_are_cumulative", LootModifierTests::multipleAdditionsToSameTableAreCumulative);
+        consumer.accept("additions_do_not_remove_vanilla_loot", LootModifierTests::additionsDoNotRemoveVanillaLoot);
+        consumer.accept("add_item_on_block_loot_table", LootModifierTests::addItemOnBlockLootTable);
 
-        consumer.accept("modify_chest_loot", LootModifierTests::addChestLoot);
-        consumer.accept("modify_chest_item", LootModifierTests::modifyChestItem);
-        consumer.accept("modify_chest_item_amount", LootModifierTests::modifyChestItemAmount);
+        consumer.accept("modifier_ignores_non_matching_stacks", LootModifierTests::modifierIgnoresNonMatchingStacks);
+        consumer.accept("modifier_applies_to_vanilla_entries_too", LootModifierTests::modifierAppliesToVanillaEntriesToo);
+        consumer.accept("modifier_applies_to_loot_table_modifier_additions", LootModifierTests::modifierAppliesToLootTableModifierAdditions);
+        consumer.accept("multiple_modifiers_on_same_table_all_run", LootModifierTests::multipleModifiersOnSameTableAllRun);
+        consumer.accept("modifier_does_not_run_for_unlisted_table", LootModifierTests::modifierDoesNotRunForUnlistedTable);
+        consumer.accept("modifier_runs_once_per_stack_not_per_roll", LootModifierTests::modifierRunsOncePerStackNotPerRoll);
     }
 
-    /**
-     * Base function that needs to be called in the main class
-     */
-    public static void setupLootModifications() {
-        LootTableModifier modifier = LootTableModifier.getInstance();
-        // Mobs
-        modifier.addItem(Items.DIAMOND, 1f, () -> 1f, List.of(EntityType.CHICKEN.getDefaultLootTable().get()));
-        modifier.addItem(Items.IRON_INGOT, 1f, () -> 1f, List.of(EntityType.CHICKEN.getDefaultLootTable().get()));
-        modifier.addItem(Items.GLOWSTONE_DUST, 1f, 5f, () -> 1f, List.of(EntityType.PIG.getDefaultLootTable().get()));
-        modifier.addItem(Items.ACACIA_DOOR, 1f, () -> 1f, List.of(EntityType.DROWNED.getDefaultLootTable().get(), EntityType.ZOMBIE.getDefaultLootTable().get()));
-        modifier.addItem(Items.BAMBOO_BUTTON, 1f, () -> 0.5f, List.of(EntityType.BEE.getDefaultLootTable().get()));
-        modifier.addItem(Items.NETHERITE_SWORD, 1f, () -> 0f, List.of(EntityType.BEE.getDefaultLootTable().get()));
+    public static void setupModifier() {
+        LootTableModifier tableMod = LootTableModifier.getInstance();
+        LootDropModifier dropMod = LootDropModifier.getInstance();
 
-        // Blocks
-        modifier.addItem(Items.DIAMOND, 1f, () -> 1f, List.of(Blocks.COAL_ORE.getLootTable().get()));
+        // addItemWithChanceZeroNeverDrops
+        tableMod.addItem(Items.NETHER_STAR, 1f, () -> 0f, List.of(EntityType.COW.getDefaultLootTable().get()));
 
-        // Chests
-        modifier.addBlock(Blocks.DIAMOND_BLOCK, 1f, () -> 1f, List.of(BuiltInLootTables.SPAWN_BONUS_CHEST));
-        modifier.addItem(Items.END_CRYSTAL, 1f, () -> 1f, List.of(BuiltInLootTables.IGLOO_CHEST));
-        modifier.addItem(Items.END_PORTAL_FRAME, 1f, () -> 1f, List.of(BuiltInLootTables.VILLAGE_ARMORER));
+        // addItemWithChanceOneAlwaysDrops
+        tableMod.addItem(Items.EMERALD, 1f, () -> 1f, List.of(EntityType.SHEEP.getDefaultLootTable().get()));
 
-        LootDropModifier dropModifier = LootDropModifier.getInstance();
-        // Mobs
-        dropModifier.modifyItemDrop(EntityType.CHICKEN.getDefaultLootTable().get(), stack -> {
-            if (stack.getItem() == Items.IRON_INGOT) stack.setCount(10);
+        // addItemSingleAmountOverload
+        tableMod.addItem(Items.QUARTZ, 3f, () -> 1f, List.of(EntityType.RABBIT.getDefaultLootTable().get()));
+
+        // addBlockUsesItemFormOfBlock
+        tableMod.addBlock(Blocks.EMERALD_BLOCK, 1f, () -> 1f, List.of(EntityType.WOLF.getDefaultLootTable().get()));
+
+        // additionAppliesToAllListedTables
+        tableMod.addItem(Items.LAPIS_LAZULI, 1f, () -> 1f,
+                List.of(EntityType.OCELOT.getDefaultLootTable().get(), EntityType.CAT.getDefaultLootTable().get()));
+
+        // additionDoesNotAffectUnlistedTables
+        tableMod.addItem(Items.NETHERITE_INGOT, 1f, () -> 1f, List.of(EntityType.PANDA.getDefaultLootTable().get()));
+
+        //multipleAdditionsToSameTableAreCumulative
+        tableMod.addItem(Items.PRISMARINE_SHARD, 1f, () -> 1f, List.of(EntityType.LLAMA.getDefaultLootTable().get()));
+        tableMod.addItem(Items.PRISMARINE_CRYSTALS, 1f, () -> 1f, List.of(EntityType.LLAMA.getDefaultLootTable().get()));
+
+        // additionsDoNotRemoveVanillaLoot
+        tableMod.addItem(Items.STICK, 1f, () -> 1f, List.of(Blocks.COAL_ORE.getLootTable().get()));
+
+        // addItemOnBlockLootTable
+        tableMod.addItem(Items.APPLE, 1f, () -> 1f, List.of(Blocks.IRON_ORE.getLootTable().get()));
+
+        // modifierIgnoresNonMatchingStacks
+        dropMod.modifyItemDrop(Blocks.GOLD_ORE.getLootTable().get(), stack -> {
+            if (stack.getItem() == Items.DIAMOND) stack.setCount(99);
         });
 
-        // Block
-        dropModifier.modifyItemDrop(Blocks.COAL_ORE.getLootTable().get(), stack -> {
-            if (stack.getItem() == Items.COAL_BLOCK) stack.setCount(10);
+        // modifierAppliesToVanillaEntriesToo
+        dropMod.modifyItemDrop(Blocks.EMERALD_ORE.getLootTable().get(), stack -> {
+            if (stack.getItem() == Items.EMERALD) stack.setCount(7);
         });
 
-        // Chests
-        dropModifier.modifyItemDrop(BuiltInLootTables.IGLOO_CHEST, stack -> {
-            if (stack.getItem() == Items.END_CRYSTAL) {
-                stack.set(DataComponents.CUSTOM_NAME, Component.literal("custom_name"));
-            }
+        // modifierAppliesToLootTableModifierAdditions
+        tableMod.addItem(Items.GOLDEN_APPLE, 1f, () -> 1f, List.of(Blocks.COPPER_ORE.getLootTable().get()));
+        dropMod.modifyItemDrop(Blocks.COPPER_ORE.getLootTable().get(), stack -> {
+            if (stack.getItem() == Items.GOLDEN_APPLE) stack.setCount(5);
         });
 
-        dropModifier.modifyItemDrop(BuiltInLootTables.VILLAGE_ARMORER, stack -> {
-            if (stack.getItem() == Items.END_PORTAL_FRAME) stack.setCount(10);
+        // multipleModifiersOnSameTableAllRun
+        dropMod.modifyItemDrop(Blocks.REDSTONE_ORE.getLootTable().get(), stack -> {
+            if (stack.getItem() == Items.REDSTONE) stack.setCount(20);
+        });
+        dropMod.modifyItemDrop(Blocks.REDSTONE_ORE.getLootTable().get(), stack -> {
+            if (stack.getItem() == Items.REDSTONE) stack.set(DataComponents.CUSTOM_NAME, Component.literal("generated_test_redstone"));
+        });
+
+        // modifierDoesNotRunForUnlistedTable
+        dropMod.modifyItemDrop(Blocks.LAPIS_ORE.getLootTable().get(), stack -> {
+            if (stack.getItem() == Items.DIAMOND) stack.setCount(99);
+        });
+
+        // modifierRunsOncePerStackNotPerRoll
+        dropMod.modifyItemDrop(Blocks.DIAMOND_ORE.getLootTable().get(), stack -> {
+            if (stack.getItem() == Items.DIAMOND) stack.setCount(stack.getCount() + 1);
         });
     }
 
     /////////////////////////////////////////////////
-    ///         Mob Loot Modifications            ///
+    ///     LootTableModifier - addItem/addBlock  ///
     /////////////////////////////////////////////////
-    public static void addMobLoot(GameTestHelper helper) {
+
+    public static void addItemWithChanceZeroNeverDrops(GameTestHelper helper) {
         DamageSources sources = new DamageSources(helper.getLevel().registryAccess());
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        Chicken chicken = helper.spawn(EntityType.CHICKEN, BlockPos.ZERO);
-
-        helper.hurt(chicken, sources.playerAttack(player), 100);
-        helper.assertItemEntityPresent(Items.DIAMOND);
+        for (int i = 0; i < 20; i++) {
+            Entity cow = helper.spawn(EntityType.COW, BlockPos.ZERO);
+            helper.hurt(cow, sources.playerAttack(player), 100);
+        }
+        helper.assertItemEntityNotPresent(Items.NETHER_STAR);
         helper.succeed();
     }
 
-    public static void modifyMobDrop(GameTestHelper helper) {
+    public static void addItemWithChanceOneAlwaysDrops(GameTestHelper helper) {
         DamageSources sources = new DamageSources(helper.getLevel().registryAccess());
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        Chicken chicken = helper.spawn(EntityType.CHICKEN, BlockPos.ZERO);
-
-        helper.hurt(chicken, sources.playerAttack(player), 100);
-        List<ItemEntity> entities = helper.getEntities(EntityType.ITEM, BlockPos.ZERO, 0);
-
-        for (ItemEntity entity : entities) {
-            if (entity.getItem().getItem() == Items.IRON_INGOT && entity.getItem().getCount() == 10) {
-                helper.succeed();
-            }
-        }
-    }
-
-    public static void addMobLootWithRange(GameTestHelper helper) {
-        DamageSources sources = new DamageSources(helper.getLevel().registryAccess());
-        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        Pig pig =  helper.spawn(EntityType.PIG, BlockPos.ZERO);
-
-        helper.hurt(pig, sources.playerAttack(player), 100);
-        helper.assertItemEntityPresent(Items.GLOWSTONE_DUST);
-
-        List<ItemEntity> entities = helper.getEntities(EntityType.ITEM, BlockPos.ZERO, 0);
-        for (ItemEntity entity : entities) {
-            if (entity.getItem().getItem() == Items.GLOWSTONE_DUST) {
-                int count = entity.getItem().getCount();
-                if (count >= 1f &&  count <= 5f) {
-                    helper.succeed();
-                }
-            }
-        }
-    }
-
-    public static void addLootToMultipleMobs(GameTestHelper helper) {
-        DamageSources sources = new DamageSources(helper.getLevel().registryAccess());
-        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        Entity drowned = helper.spawn(EntityType.DROWNED, BlockPos.ZERO);
-        Entity zombie = helper.spawn(EntityType.ZOMBIE, BlockPos.ZERO);
-
-        helper.hurt(drowned, sources.playerAttack(player), 100);
-        helper.assertItemEntityPresent(Items.ACACIA_DOOR);
-        helper.despawnItem(BlockPos.ZERO, 2);
-
-        helper.hurt(zombie, sources.playerAttack(player), 100);
-        helper.assertItemEntityPresent(Items.ACACIA_DOOR);
-        helper.succeed();
-    }
-
-    public static void addMobLootWithChance(GameTestHelper helper) {
-        DamageSources sources = new DamageSources(helper.getLevel().registryAccess());
-        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-
-        double count = 0;
-        double runs = 500;
-        for (int i = 0; i < runs; i++) {
-            Entity bee = helper.spawn(EntityType.BEE, BlockPos.ZERO);
-            helper.hurt(bee, sources.playerAttack(player), 100);
-            List<ItemEntity> entities = helper.getEntities(EntityType.ITEM, BlockPos.ZERO, 0);
-            if (!entities.isEmpty()) count++;
+        for (int i = 0; i < 20; i++) {
+            Entity sheep = helper.spawn(EntityType.SHEEP, BlockPos.ZERO);
+            helper.hurt(sheep, sources.playerAttack(player), 100);
+            helper.assertItemEntityPresent(Items.EMERALD);
             helper.despawnItem(BlockPos.ZERO, 2);
         }
-        double rate = (count / runs) * 100;
-        logger.info("Reached drop rate '{}%' with {} drops", rate, count);
-        if (rate >= 45.0 && rate <= 55.0) {
-            helper.succeed();
-        } else {
-            helper.fail("Item doesn't meet the expected drop rate");
-        }
+        helper.succeed();
     }
 
-    public static void addMobLootWithNoChance(GameTestHelper helper) {
+    public static void addItemSingleAmountOverload(GameTestHelper helper) {
+        DamageSources sources = new DamageSources(helper.getLevel().registryAccess());
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        Entity rabbit = helper.spawn(EntityType.RABBIT, BlockPos.ZERO);
+        helper.hurt(rabbit, sources.playerAttack(player), 100);
+
+        for (ItemEntity entity : helper.getEntities(EntityType.ITEM)) {
+            if (entity.getItem().getItem() == Items.QUARTZ && entity.getItem().getCount() == 3) {
+                helper.succeed();
+                return;
+            }
+        }
+        helper.fail("Single-amount overload did not produce an exact count of 3");
+    }
+
+    public static void addBlockUsesItemFormOfBlock(GameTestHelper helper) {
+        DamageSources sources = new DamageSources(helper.getLevel().registryAccess());
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        Entity wolf = helper.spawn(EntityType.WOLF, BlockPos.ZERO);
+        helper.hurt(wolf, sources.playerAttack(player), 100);
+
+        helper.assertItemEntityPresent(Items.EMERALD_BLOCK);
+        helper.succeed();
+    }
+
+    /////////////////////////////////////////////////
+    ///     LootTableModifier - table targeting   ///
+    /////////////////////////////////////////////////
+
+    public static void additionAppliesToAllListedTables(GameTestHelper helper) {
         DamageSources sources = new DamageSources(helper.getLevel().registryAccess());
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
 
-        double count = 0;
-        for (int i = 0; i < 10; i++) {
-            Entity bee = helper.spawn(EntityType.BEE, BlockPos.ZERO);
-            helper.hurt(bee, sources.playerAttack(player), 100);
-            List<ItemEntity> entities = helper.getEntities(EntityType.ITEM, BlockPos.ZERO, 0);
-            for (ItemEntity entity : entities) {
-                if (entity.getItem().getItem() == Items.NETHERITE_SWORD) count++;
+        Entity ocelot = helper.spawn(EntityType.OCELOT, BlockPos.ZERO);
+        helper.hurt(ocelot, sources.playerAttack(player), 100);
+        helper.assertItemEntityPresent(Items.LAPIS_LAZULI);
+        helper.despawnItem(BlockPos.ZERO, 2);
+
+        Entity cat = helper.spawn(EntityType.CAT, BlockPos.ZERO);
+        helper.hurt(cat, sources.playerAttack(player), 100);
+        helper.assertItemEntityPresent(Items.LAPIS_LAZULI);
+        helper.succeed();
+    }
+
+    public static void additionDoesNotAffectUnlistedTables(GameTestHelper helper) {
+        DamageSources sources = new DamageSources(helper.getLevel().registryAccess());
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        Entity fox = helper.spawn(EntityType.FOX, BlockPos.ZERO);
+        helper.hurt(fox, sources.playerAttack(player), 100);
+
+        helper.assertItemEntityNotPresent(Items.NETHERITE_INGOT);
+        helper.succeed();
+    }
+
+    public static void multipleAdditionsToSameTableAreCumulative(GameTestHelper helper) {
+        DamageSources sources = new DamageSources(helper.getLevel().registryAccess());
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        Entity llama = helper.spawn(EntityType.LLAMA, BlockPos.ZERO);
+        helper.hurt(llama, sources.playerAttack(player), 100);
+
+        helper.assertItemEntityPresent(Items.PRISMARINE_SHARD);
+        helper.assertItemEntityPresent(Items.PRISMARINE_CRYSTALS);
+        helper.succeed();
+    }
+
+    public static void additionsDoNotRemoveVanillaLoot(GameTestHelper helper) {
+        helper.setBlock(BlockPos.ZERO, Blocks.COAL_ORE);
+        helper.getLevel().destroyBlock(helper.absolutePos(BlockPos.ZERO), true);
+
+        helper.assertItemEntityPresent(Items.COAL);
+        helper.assertItemEntityPresent(Items.STICK);
+        helper.succeed();
+    }
+
+    public static void addItemOnBlockLootTable(GameTestHelper helper) {
+        helper.setBlock(BlockPos.ZERO, Blocks.IRON_ORE);
+        helper.getLevel().destroyBlock(helper.absolutePos(BlockPos.ZERO), true);
+
+        helper.assertItemEntityPresent(Items.APPLE);
+        helper.succeed();
+    }
+
+    /////////////////////////////////////////////////
+    ///       LootDropModifier - basics            ///
+    /////////////////////////////////////////////////
+
+    public static void modifierIgnoresNonMatchingStacks(GameTestHelper helper) {
+        helper.setBlock(BlockPos.ZERO, Blocks.GOLD_ORE);
+        helper.getLevel().destroyBlock(helper.absolutePos(BlockPos.ZERO), true);
+
+        for (ItemEntity entity : helper.getEntities(EntityType.ITEM)) {
+            if (entity.getItem().getItem() == Items.RAW_GOLD && entity.getItem().getCount() != 99) {
+                helper.succeed();
+                return;
             }
         }
-
-        if (count == 0) {
-            helper.succeed();
-        } else {
-            helper.fail("Item doesn't meet the expected drop rate");
-        }
+        helper.fail("Modifier appears to have mutated a stack it should have ignored");
     }
 
-    /////////////////////////////////////////////////
-    ///         Block Loot Modifications          ///
-    /////////////////////////////////////////////////
-    public static void addItemToBlockDrops(GameTestHelper helper) {
-        // Place block
-        helper.setBlock(BlockPos.ZERO, Blocks.COAL_ORE);
-        helper.assertBlockPresent(Blocks.COAL_ORE, BlockPos.ZERO);
-        // Destroy block
+    public static void modifierAppliesToVanillaEntriesToo(GameTestHelper helper) {
+        helper.setBlock(BlockPos.ZERO, Blocks.EMERALD_ORE);
         helper.getLevel().destroyBlock(helper.absolutePos(BlockPos.ZERO), true);
-        helper.assertBlockNotPresent(Blocks.COAL_ORE,  BlockPos.ZERO);
-        // Check for ItemEntity
-        helper.assertItemEntityPresent(Items.DIAMOND);
-        helper.succeed();
-    }
 
-    public static void modifyBlockDropsAmount(GameTestHelper helper) {
-        helper.setBlock(BlockPos.ZERO, Blocks.COAL_ORE);
-        helper.getLevel().destroyBlock(helper.absolutePos(BlockPos.ZERO), true);
-        List<ItemEntity> entities = helper.getEntities(EntityType.ITEM, BlockPos.ZERO, 0);
-        entities.forEach(entity -> {
-            if (entity.getItem().getItem() == Items.COAL && entity.getItem().getCount() == 10) {}
+        for (ItemEntity entity : helper.getEntities(EntityType.ITEM)) {
+            if (entity.getItem().getItem() == Items.EMERALD && entity.getItem().getCount() == 7) {
                 helper.succeed();
-        });
+                return;
+            }
+        }
+        helper.fail("Modifier did not mutate the loot table's own vanilla entry");
     }
 
-    /////////////////////////////////////////////////
-    ///         Chest Loot Modifications          ///
-    /////////////////////////////////////////////////
-    public static void addChestLoot(GameTestHelper helper) {
-        helper.setBlock(BlockPos.ZERO, Blocks.CHEST);
-        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        ChestBlockEntity chest = helper.getBlockEntity(BlockPos.ZERO, ChestBlockEntity.class);
-        chest.setLootTable(BuiltInLootTables.SPAWN_BONUS_CHEST);
+    public static void modifierAppliesToLootTableModifierAdditions(GameTestHelper helper) {
+        helper.setBlock(BlockPos.ZERO, Blocks.COPPER_ORE);
+        helper.getLevel().destroyBlock(helper.absolutePos(BlockPos.ZERO), true);
 
-        helper.useBlock(BlockPos.ZERO, player);
-        helper.assertContainerContains(BlockPos.ZERO, Items.DIAMOND_BLOCK);
+        for (ItemEntity entity : helper.getEntities(EntityType.ITEM)) {
+            if (entity.getItem().getItem() == Items.GOLDEN_APPLE && entity.getItem().getCount() == 5) {
+                helper.succeed();
+                return;
+            }
+        }
+        helper.fail("Modifier did not see the item added by LootTableModifier for the same table");
+    }
+
+    public static void multipleModifiersOnSameTableAllRun(GameTestHelper helper) {
+        helper.setBlock(BlockPos.ZERO, Blocks.REDSTONE_ORE);
+        helper.getLevel().destroyBlock(helper.absolutePos(BlockPos.ZERO), true);
+
+        for (ItemEntity entity : helper.getEntities(EntityType.ITEM)) {
+            ItemStack stack = entity.getItem();
+            if (stack.getItem() == Items.REDSTONE && stack.getCount() == 20 && stack.has(DataComponents.CUSTOM_NAME)
+                    && stack.get(DataComponents.CUSTOM_NAME).getString().equals("generated_test_redstone")) {
+                helper.succeed();
+                return;
+            }
+        }
+        helper.fail("Not all registered modifiers were applied to the same drop pass");
+    }
+
+    public static void modifierDoesNotRunForUnlistedTable(GameTestHelper helper) {
+        helper.setBlock(BlockPos.ZERO, Blocks.DEEPSLATE_DIAMOND_ORE);
+        helper.getLevel().destroyBlock(helper.absolutePos(BlockPos.ZERO), true);
+
+        for (ItemEntity entity : helper.getEntities(EntityType.ITEM)) {
+            if (entity.getItem().getItem() == Items.DIAMOND && entity.getItem().getCount() != 99) {
+                helper.succeed();
+                return;
+            }
+        }
+        helper.fail("A modifier registered for a different loot table leaked into this one");
+    }
+
+    public static void modifierRunsOncePerStackNotPerRoll(GameTestHelper helper) {
+        for (int i = 0; i < 3; i++) {
+            helper.setBlock(BlockPos.ZERO, Blocks.DIAMOND_ORE);
+            helper.getLevel().destroyBlock(helper.absolutePos(BlockPos.ZERO), true);
+
+            boolean found = false;
+            for (ItemEntity entity : helper.getEntities(EntityType.ITEM)) {
+                if (entity.getItem().getItem() == Items.DIAMOND) {
+                    found = true;
+                    if (entity.getItem().getCount() != 2) {
+                        helper.fail("Modifier compounded across rolls instead of applying fresh to each stack");
+                        return;
+                    }
+                }
+            }
+            if (!found) {
+                helper.fail("Expected a diamond drop on roll " + i);
+                return;
+            }
+            helper.despawnItem(BlockPos.ZERO, 2);
+        }
         helper.succeed();
     }
-
-     public static void modifyChestItem(GameTestHelper helper) {
-         helper.setBlock(BlockPos.ZERO, Blocks.CHEST);
-         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-         ChestBlockEntity chest = helper.getBlockEntity(BlockPos.ZERO, ChestBlockEntity.class);
-         chest.setLootTable(BuiltInLootTables.IGLOO_CHEST);
-
-         helper.useBlock(BlockPos.ZERO, player);
-         helper.assertContainerContains(BlockPos.ZERO, Items.END_CRYSTAL);
-
-         ItemStack stack = GametestUtils.findItem(chest, Items.END_CRYSTAL);
-         if (stack.has(DataComponents.CUSTOM_NAME)) {
-             Component component = stack.get(DataComponents.CUSTOM_NAME);
-             if (component.getString().equals("custom_name")) {
-                 helper.succeed();
-             }
-         }
-     }
-
-     public static void modifyChestItemAmount(GameTestHelper helper) {
-         helper.setBlock(BlockPos.ZERO, Blocks.CHEST);
-         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-         ChestBlockEntity chest = helper.getBlockEntity(BlockPos.ZERO, ChestBlockEntity.class);
-         chest.setLootTable(BuiltInLootTables.VILLAGE_ARMORER);
-
-         helper.useBlock(BlockPos.ZERO, player);
-         helper.assertContainerContains(BlockPos.ZERO, Items.END_PORTAL_FRAME);
-
-         int amount = chest.countItem(Items.END_PORTAL_FRAME);
-
-         if (amount == 10) helper.succeed();
-     }
 }

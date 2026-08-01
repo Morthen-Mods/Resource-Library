@@ -1,7 +1,7 @@
 {
   "type": "minecraft:function",
   "environment": "minecraft:default",
-  "function": "resourcelibrary:modify_chest_loot",
+  "function": "resourcelibrary:addition_applies_to_all_listed_tables",
   "structure": "minecraft:empty",
   "max_ticks": 400,
   "setup_ticks": 50,

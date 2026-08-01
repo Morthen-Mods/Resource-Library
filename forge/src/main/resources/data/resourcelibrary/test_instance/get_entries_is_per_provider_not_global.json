@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "resourcelibrary:get_entries_is_per_provider_not_global",
+  "structure": "minecraft:empty",
+  "max_ticks": 400,
+  "setup_ticks": 50,
+  "required": true
+}

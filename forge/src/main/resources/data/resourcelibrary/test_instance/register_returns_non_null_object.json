@@ -1,7 +1,7 @@
 {
   "type": "minecraft:function",
   "environment": "minecraft:default",
-  "function": "resourcelibrary:modify_mob_loot",
+  "function": "resourcelibrary:register_returns_non_null_object",
   "structure": "minecraft:empty",
   "max_ticks": 400,
   "setup_ticks": 50,

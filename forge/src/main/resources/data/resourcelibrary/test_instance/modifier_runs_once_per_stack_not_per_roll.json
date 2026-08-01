@@ -1,7 +1,7 @@
 {
   "type": "minecraft:function",
   "environment": "minecraft:default",
-  "function": "resourcelibrary:modify_mob_drop",
+  "function": "resourcelibrary:modifier_runs_once_per_stack_not_per_roll",
   "structure": "minecraft:empty",
   "max_ticks": 400,
   "setup_ticks": 50,
