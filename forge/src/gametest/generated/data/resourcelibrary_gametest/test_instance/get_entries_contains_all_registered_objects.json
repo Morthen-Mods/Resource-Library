@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "resourcelibrary_gametest:get_entries_contains_all_registered_objects",
+  "max_ticks": 400,
+  "required": true,
+  "setup_ticks": 50,
+  "structure": "minecraft:empty"
+}

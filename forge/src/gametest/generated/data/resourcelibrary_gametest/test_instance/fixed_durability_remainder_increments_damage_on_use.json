@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "resourcelibrary_gametest:fixed_durability_remainder_increments_damage_on_use",
+  "max_ticks": 400,
+  "required": true,
+  "setup_ticks": 50,
+  "structure": "minecraft:empty"
+}

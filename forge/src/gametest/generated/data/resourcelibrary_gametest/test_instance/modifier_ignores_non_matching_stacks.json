@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "resourcelibrary_gametest:modifier_ignores_non_matching_stacks",
+  "max_ticks": 400,
+  "required": true,
+  "setup_ticks": 50,
+  "structure": "minecraft:empty"
+}

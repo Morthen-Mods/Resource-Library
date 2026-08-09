@@ -3,32 +3,30 @@
     "id": "${mod_id}",
     "version": "${version}",
     "name": "${mod_name}",
-    "description": "${description}",
-    "authors": [
-        "${mod_author}"
-    ],
+    "description": "${mod_description}",
+    "authors": [ "${mod_author}" ],
     "contact": {
-        "homepage": "https://github.com/Stein-N/Resource-Library",
-        "sources": "https://github.com/Stein-N/Resource-Library",
-        "issues": "https://github.com/Stein-N/Resource-Library/issues"
+        "homepage": "${sources_url}",
+        "sources": "${sources_url}",
+        "issues": "${issues_url}"
     },
-    "license": "${license}",
-    "icon": "icon_fabric.png",
+    "license": "${mod_license}",
+    "icon": "${mod_id}.png",
     "environment": "*",
     "entrypoints": {
-        "main": [ "net.morthen.resourcelibrary.ResourceLibrary" ],
-        "fabric-gametest": [
-            "net.morthen.resourcelibrary.gametest.FabricGametest"
-        ]
+        "main": [ "net.morthen.resourcelibrary.ResourceLibrary" ]
     },
     "mixins": [
         "${mod_id}.mixins.json"
     ],
     "depends": {
-        "fabric-api": ">=${fabric_version}",
-        "fabricloader": ">=${fabric_loader_version}",
+        "fabricloader": ">=${fabric_loader}",
+        "fabric-api": ">=${fabric_api}",
         "minecraft": "${minecraft_version}",
         "java": ">=${java_version}"
+    },
+    "suggests": {
+        "mod-menu": "*"
     },
     "custom": {
         "modmenu": {
