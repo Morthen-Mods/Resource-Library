@@ -1,3 +1,6 @@
+### v4.0.1
+  - logo/banner file fix for all loader
+
 ### v4.0.0
   - internal rework
   - update to 26.1 and 26.2
