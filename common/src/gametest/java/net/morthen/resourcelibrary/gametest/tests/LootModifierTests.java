@@ -55,7 +55,7 @@ public class LootModifierTests {
         tableMod.addItem(Items.QUARTZ, 3f, () -> 1f, List.of(EntityTypes.RABBIT.getDefaultLootTable().get()));
 
         // addBlockUsesItemFormOfBlock
-        tableMod.addBlock(Blocks.EMERALD_BLOCK, 1f, () -> 1f, List.of(EntityTypes.WOLF.getDefaultLootTable().get()));
+        tableMod.addItem(Blocks.EMERALD_BLOCK, 1f, () -> 1f, List.of(EntityTypes.WOLF.getDefaultLootTable().get()));
 
         // additionAppliesToAllListedTables
         tableMod.addItem(Items.LAPIS_LAZULI, 1f, () -> 1f,
