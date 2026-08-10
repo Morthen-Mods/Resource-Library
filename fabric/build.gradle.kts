@@ -9,6 +9,11 @@ multiloader {
     fabricLoaderVersion = providers.gradleProperty("fabric_loader")
 
     withGametest()
+    withModPublish {
+        required = listOf(
+            "fabric-api"
+        )
+    }
 
     applyMetadataReplacements(listOf("pack.mcmeta", "*.mixins.json", "fabric.mod.json"), mapOf(
         "fabric_api" to fabricApiVersion.get(),

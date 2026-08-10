@@ -12,6 +12,7 @@ multiloader {
     )
 
     withGametest()
+    withModPublish()
 
     applyMetadataReplacements(listOf("pack.mcmeta", "META-INF/mods.toml"), mapOf(
         "forge_version" to forgeVersion.get(),
