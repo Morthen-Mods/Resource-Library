@@ -5,7 +5,7 @@ plugins {
 multiloader {
     loader = "forge"
 
-    forgeVersion = "65.1.0"
+    forgeVersion = providers.gradleProperty("forge")
     forgeMixins = listOf(
         "${ modId.get() }.mixins.json",
         "${ modId.get() }.forge.mixins.json"

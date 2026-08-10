@@ -3,7 +3,7 @@ plugins {
 }
 
 multiloader {
-    neoFormVersion = "26.2-2"
+    neoFormVersion = providers.gradleProperty("neoform")
 
     withGametest()
 }

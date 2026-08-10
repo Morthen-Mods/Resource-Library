@@ -3,8 +3,8 @@ plugins {
 }
 
 multiloader {
-    neoForgeVersion = "26.2.0.54-beta"
     loader = "neoforge"
+    neoForgeVersion = providers.gradleProperty("neoforge")
 
     withGametest()
 
