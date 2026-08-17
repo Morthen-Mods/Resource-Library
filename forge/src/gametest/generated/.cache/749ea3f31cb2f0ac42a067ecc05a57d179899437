@@ -1,4 +1,4 @@
-// 26.2	2026-08-09T12:08:17.1305714	Gametest Instance Provider
+// 26.1.2	2026-08-17T17:11:00.1465893	Gametest Instance Provider
 665a43d796528953937cbba7a2580c1cd302809d data/resourcelibrary_gametest/test_instance/additions_do_not_remove_vanilla_loot.json
 c6d3e39b9c0968942f8b6aeef7f6c37f7ae96efa data/resourcelibrary_gametest/test_instance/addition_applies_to_all_listed_tables.json
 026e16e8ba64d71fff5e7a608461232fcb6ec1d5 data/resourcelibrary_gametest/test_instance/addition_does_not_affect_unlisted_tables.json
