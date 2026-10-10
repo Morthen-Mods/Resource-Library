@@ -1,2 +1,2 @@
-### v4.0.2
-  - fix race condition inside LootTableModifier for Neo-/Forge
+### v4.2.0
+  - update to 26.3
