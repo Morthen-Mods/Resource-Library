@@ -7,8 +7,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.morthen.resourcelibrary.registration.RegistryObject;
 import net.morthen.resourcelibrary.service.LibServices;
 
@@ -24,34 +23,34 @@ public interface LootTableModifier {
         return INSTANCE;
     }
 
-    default void addItem(RegistryObject<? extends ItemLike> item, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+    default void addItem(RegistryObject<? extends ItemLike> item, int amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         addItem(item, amount, amount, chance, lootTables);
     }
-    void addItem(RegistryObject<? extends ItemLike> item, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
+    void addItem(RegistryObject<? extends ItemLike> item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
 
-    default void addItem(ItemLike item, float amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+    default void addItem(ItemLike item, int amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         addItem(item, amount, amount, chance, lootTables);
     }
-    void addItem(ItemLike item, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
+    void addItem(ItemLike item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
 
 
-    static LootPool.Builder lootPool(ItemLike item, float chance, float amount) {
+    static LootPool.Builder lootPool(ItemLike item, float chance, int amount) {
         return LootPool.lootPool()
-                .setRolls(ConstantValue.exactly(1f))
+                .setRolls(ContextIntProviders.exactly(1))
                 .when(LootItemRandomChanceCondition.randomChance(Math.clamp(chance, 0.0f, 1.0f)))
                 .add(LootItem.lootTableItem(item))
-                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(amount)));
+                .apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(amount)));
     }
 
-    static LootPool.Builder lootPool(ItemLike item, float chance, float minAmount, float maxAmount) {
+    static LootPool.Builder lootPool(ItemLike item, float chance, int minAmount, int maxAmount) {
         return LootPool.lootPool()
-                .setRolls(ConstantValue.exactly(1f))
+                .setRolls(ContextIntProviders.exactly(1))
                 .when(LootItemRandomChanceCondition.randomChance(Math.clamp(chance, 0.0f, 1.0f)))
                 .add(LootItem.lootTableItem(item))
-                .apply(SetItemCountFunction.setCount(UniformGenerator.between(minAmount, maxAmount)));
+                .apply(SetItemCountFunction.setCount(ContextIntProviders.between(minAmount, maxAmount)));
     }
 
-    record Modifier(ResourceKey<LootTable> lootTable, RegistryObject<? extends ItemLike> objectItem, ItemLike item, float minAmount, float maxAmount, Supplier<Float> chance) {
+    record Modifier(ResourceKey<LootTable> lootTable, RegistryObject<? extends ItemLike> objectItem, ItemLike item, int minAmount, int maxAmount, Supplier<Float> chance) {
         private ItemLike getItem() {
             if (objectItem != null) return objectItem.get();
             if (item != null) return item;

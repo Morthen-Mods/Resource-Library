@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 public class FabricLootTableModifier implements LootTableModifier {
     @Override
-    public void addItem(RegistryObject<? extends ItemLike> item, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+    public void addItem(RegistryObject<? extends ItemLike> item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         LootTableEvents.MODIFY.register((key, tableBuilder, _, _) -> {
             for (ResourceKey<LootTable> table : lootTables) {
                 if (key.equals(table)) {
@@ -22,7 +22,7 @@ public class FabricLootTableModifier implements LootTableModifier {
     }
 
     @Override
-    public void addItem(ItemLike item, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+    public void addItem(ItemLike item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         LootTableEvents.MODIFY.register((key, tableBuilder, _, _) -> {
             for (ResourceKey<LootTable> table : lootTables) {
                 if (key.equals(table)) {

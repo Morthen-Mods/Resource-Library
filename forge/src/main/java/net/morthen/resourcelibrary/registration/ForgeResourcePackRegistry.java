@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(modid = LibConstants.MOD_ID, value = Dist.CLIENT)
 public class ForgeResourcePackRegistry implements ResourcePackRegistry {
@@ -68,6 +69,16 @@ public class ForgeResourcePackRegistry implements ResourcePackRegistry {
     }
     public static Pack.ResourcesSupplier fromName(final Function<PackLocationInfo, PackResources> onName) {
         return new Pack.ResourcesSupplier() {
+            @Override
+            public PackMetadataResources openMetadata(PackLocationInfo location) {
+                return null;
+            }
+
+            @Override
+            public Stream<PackResources> openResources(PackLocationInfo location, Pack.Metadata metadata) {
+                return Stream.empty();
+            }
+
             public PackResources openPrimary(PackLocationInfo packLocationInfo) {
                 return onName.apply(packLocationInfo);
             }

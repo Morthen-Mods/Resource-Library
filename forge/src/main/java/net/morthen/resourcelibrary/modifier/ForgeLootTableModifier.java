@@ -16,14 +16,14 @@ import java.util.function.Supplier;
 public class ForgeLootTableModifier implements LootTableModifier {
 
     @Override
-    public void addItem(RegistryObject<? extends ItemLike> item, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+    public void addItem(RegistryObject<? extends ItemLike> item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         lootTables.forEach(lootTable -> {
             modifiers.add(new Modifier(lootTable, item, null, minAmount, maxAmount, chance));
         });
     }
 
     @Override
-    public void addItem(ItemLike item, float minAmount, float maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+    public void addItem(ItemLike item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         lootTables.forEach(lootTable -> {
             modifiers.add(new Modifier(lootTable, null, item, minAmount, maxAmount, chance));
         });

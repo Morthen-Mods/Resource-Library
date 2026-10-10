@@ -46,33 +46,33 @@ public class LootModifierTests {
         LootDropModifier dropMod = LootDropModifier.getInstance();
 
         // addItemWithChanceZeroNeverDrops
-        tableMod.addItem(Items.NETHER_STAR, 1f, () -> 0f, List.of(EntityTypes.COW.getDefaultLootTable().get()));
+        tableMod.addItem(Items.NETHER_STAR, 1, () -> 0f, List.of(EntityTypes.COW.getDefaultLootTable().get()));
 
         // addItemWithChanceOneAlwaysDrops
-        tableMod.addItem(Items.EMERALD, 1f, () -> 1f, List.of(EntityTypes.SHEEP.getDefaultLootTable().get()));
+        tableMod.addItem(Items.EMERALD, 1, () -> 1f, List.of(EntityTypes.SHEEP.getDefaultLootTable().get()));
 
         // addItemSingleAmountOverload
-        tableMod.addItem(Items.QUARTZ, 3f, () -> 1f, List.of(EntityTypes.RABBIT.getDefaultLootTable().get()));
+        tableMod.addItem(Items.QUARTZ, 3, () -> 1f, List.of(EntityTypes.RABBIT.getDefaultLootTable().get()));
 
         // addBlockUsesItemFormOfBlock
-        tableMod.addItem(Blocks.EMERALD_BLOCK, 1f, () -> 1f, List.of(EntityTypes.WOLF.getDefaultLootTable().get()));
+        tableMod.addItem(Blocks.EMERALD_BLOCK, 1, () -> 1f, List.of(EntityTypes.WOLF.getDefaultLootTable().get()));
 
         // additionAppliesToAllListedTables
-        tableMod.addItem(Items.LAPIS_LAZULI, 1f, () -> 1f,
+        tableMod.addItem(Items.LAPIS_LAZULI, 1, () -> 1f,
                 List.of(EntityTypes.OCELOT.getDefaultLootTable().get(), EntityTypes.CAT.getDefaultLootTable().get()));
 
         // additionDoesNotAffectUnlistedTables
-        tableMod.addItem(Items.NETHERITE_INGOT, 1f, () -> 1f, List.of(EntityTypes.PANDA.getDefaultLootTable().get()));
+        tableMod.addItem(Items.NETHERITE_INGOT, 1, () -> 1f, List.of(EntityTypes.PANDA.getDefaultLootTable().get()));
 
         //multipleAdditionsToSameTableAreCumulative
-        tableMod.addItem(Items.PRISMARINE_SHARD, 1f, () -> 1f, List.of(EntityTypes.LLAMA.getDefaultLootTable().get()));
-        tableMod.addItem(Items.PRISMARINE_CRYSTALS, 1f, () -> 1f, List.of(EntityTypes.LLAMA.getDefaultLootTable().get()));
+        tableMod.addItem(Items.PRISMARINE_SHARD, 1, () -> 1f, List.of(EntityTypes.LLAMA.getDefaultLootTable().get()));
+        tableMod.addItem(Items.PRISMARINE_CRYSTALS, 1, () -> 1f, List.of(EntityTypes.LLAMA.getDefaultLootTable().get()));
 
         // additionsDoNotRemoveVanillaLoot
-        tableMod.addItem(Items.STICK, 1f, () -> 1f, List.of(Blocks.COAL_ORE.getLootTable().get()));
+        tableMod.addItem(Items.STICK, 1, () -> 1f, List.of(Blocks.COAL_ORE.getLootTable().get()));
 
         // addItemOnBlockLootTable
-        tableMod.addItem(Items.APPLE, 1f, () -> 1f, List.of(Blocks.IRON_ORE.getLootTable().get()));
+        tableMod.addItem(Items.APPLE, 1, () -> 1f, List.of(Blocks.IRON_ORE.getLootTable().get()));
 
         // modifierIgnoresNonMatchingStacks
         dropMod.modifyItemDrop(Blocks.GOLD_ORE.getLootTable().get(), stack -> {
@@ -85,7 +85,7 @@ public class LootModifierTests {
         });
 
         // modifierAppliesToLootTableModifierAdditions
-        tableMod.addItem(Items.GOLDEN_APPLE, 1f, () -> 1f, List.of(Blocks.COPPER_ORE.getLootTable().get()));
+        tableMod.addItem(Items.GOLDEN_APPLE, 1, () -> 1f, List.of(Blocks.COPPER_ORE.getLootTable().get()));
         dropMod.modifyItemDrop(Blocks.COPPER_ORE.getLootTable().get(), stack -> {
             if (stack.getItem() == Items.GOLDEN_APPLE) stack.setCount(5);
         });
