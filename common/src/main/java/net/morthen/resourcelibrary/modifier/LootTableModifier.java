@@ -11,27 +11,68 @@ import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntPr
 import net.morthen.resourcelibrary.registration.RegistryObject;
 import net.morthen.resourcelibrary.service.LibServices;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+/**
+ * Adds extra loot pools to existing loot tables.
+ * <p>
+ * Modifiers must be registered before the first loot table is loaded, i.e. during mod initialization. Either call
+ * {@code addItem(...)} from your mod constructor / initializer, or pass a callback to {@link #register(Consumer)},
+ * which the library runs at the right time on every loader. Registering after loot tables started loading throws an
+ * {@link IllegalStateException}.
+ */
 public interface LootTableModifier {
     LootTableModifier INSTANCE = LibServices.load(LootTableModifier.class);
-    List<Modifier> modifiers = new ArrayList<>();
 
     static LootTableModifier getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Registers a callback that adds loot table modifiers. The library calls it during common setup
+     * (NeoForge/Forge: {@code FMLCommonSetupEvent}, Fabric: after all mods were initialized). Callbacks registered
+     * after that point run immediately.
+     *
+     * @throws IllegalStateException if loot tables have already been loaded
+     */
+    static void register(Consumer<LootTableModifier> callback) {
+        LootTableModifierRegistry.register(callback);
+    }
+
+    /**
+     * @return an unmodifiable view of all registered modifiers
+     */
+    static List<Modifier> getModifiers() {
+        return LootTableModifierRegistry.modifiers();
+    }
+
     default void addItem(RegistryObject<? extends ItemLike> item, int amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         addItem(item, amount, amount, chance, lootTables);
     }
-    void addItem(RegistryObject<? extends ItemLike> item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
+
+    /**
+     * @throws IllegalStateException if loot tables have already been loaded
+     */
+    default void addItem(RegistryObject<? extends ItemLike> item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+        LootTableModifierRegistry.add(lootTables.stream()
+                .map(lootTable -> new Modifier(lootTable, item, null, minAmount, maxAmount, chance))
+                .toList());
+    }
 
     default void addItem(ItemLike item, int amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         addItem(item, amount, amount, chance, lootTables);
     }
-    void addItem(ItemLike item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables);
+
+    /**
+     * @throws IllegalStateException if loot tables have already been loaded
+     */
+    default void addItem(ItemLike item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+        LootTableModifierRegistry.add(lootTables.stream()
+                .map(lootTable -> new Modifier(lootTable, null, item, minAmount, maxAmount, chance))
+                .toList());
+    }
 
 
     static LootPool.Builder lootPool(ItemLike item, float chance, int amount) {

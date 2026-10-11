@@ -14,7 +14,9 @@
     "icon": "${mod_id}.png",
     "environment": "*",
     "entrypoints": {
-        "main": [ "net.morthen.resourcelibrary.ResourceLibrary" ]
+        "main": [ "net.morthen.resourcelibrary.ResourceLibrary" ],
+        "client": [ "net.morthen.resourcelibrary.ResourceLibrary" ],
+        "server": [ "net.morthen.resourcelibrary.ResourceLibrary" ]
     },
     "mixins": [
         "${mod_id}.mixins.json"

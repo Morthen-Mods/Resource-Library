@@ -162,6 +162,19 @@ public class Gametests {
     }
 
     /////////////////////////////////////////////////
+    ///     LootTableModifier - registration window ///
+    /////////////////////////////////////////////////
+    @GameTest
+    public void addItemAfterLoadThrows(GameTestHelper helper) {
+        LootModifierTests.addItemAfterLoadThrows(helper);
+    }
+
+    @GameTest
+    public void registerAfterLoadThrows(GameTestHelper helper) {
+        LootModifierTests.registerAfterLoadThrows(helper);
+    }
+
+    /////////////////////////////////////////////////
     ///       LootDropModifier - basics            ///
     /////////////////////////////////////////////////
     @GameTest

@@ -1,40 +1,27 @@
 package net.morthen.resourcelibrary.modifier;
 
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.morthen.resourcelibrary.LibConstants;
-import net.morthen.resourcelibrary.registration.RegistryObject;
-
-import java.util.List;
-import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = LibConstants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeLootTableModifier implements LootTableModifier {
 
-    @Override
-    public void addItem(RegistryObject<? extends ItemLike> item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
-        lootTables.forEach(lootTable -> {
-            modifiers.add(new Modifier(lootTable, item, null, minAmount, maxAmount, chance));
-        });
+    // Registered on the mod bus in ResourceLibrary
+    public static void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(LootTableModifierRegistry::runCallbacks);
     }
 
-    @Override
-    public void addItem(ItemLike item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
-        lootTables.forEach(lootTable -> {
-            modifiers.add(new Modifier(lootTable, null, item, minAmount, maxAmount, chance));
-        });
-    }
-
+    // Fired in parallel on worker threads since 26.3
     @SubscribeEvent
     public static void loadTables(LootTableLoadEvent event) {
-        modifiers.forEach(modifier -> {
+        LootTableModifierRegistry.freeze();
+        for (Modifier modifier : LootTableModifierRegistry.modifiers()) {
             if (event.getName().equals(modifier.lootTable().identifier())) {
                 event.getTable().addPool(modifier.lootPool());
             }
-        });
+        }
     }
 }

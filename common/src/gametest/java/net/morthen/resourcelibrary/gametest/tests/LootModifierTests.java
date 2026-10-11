@@ -33,6 +33,9 @@ public class LootModifierTests {
         consumer.accept("additions_do_not_remove_vanilla_loot", LootModifierTests::additionsDoNotRemoveVanillaLoot);
         consumer.accept("add_item_on_block_loot_table", LootModifierTests::addItemOnBlockLootTable);
 
+        consumer.accept("add_item_after_load_throws", LootModifierTests::addItemAfterLoadThrows);
+        consumer.accept("register_after_load_throws", LootModifierTests::registerAfterLoadThrows);
+
         consumer.accept("modifier_ignores_non_matching_stacks", LootModifierTests::modifierIgnoresNonMatchingStacks);
         consumer.accept("modifier_applies_to_vanilla_entries_too", LootModifierTests::modifierAppliesToVanillaEntriesToo);
         consumer.accept("modifier_applies_to_loot_table_modifier_additions", LootModifierTests::modifierAppliesToLootTableModifierAdditions);
@@ -64,15 +67,17 @@ public class LootModifierTests {
         // additionDoesNotAffectUnlistedTables
         tableMod.addItem(Items.NETHERITE_INGOT, 1, () -> 1f, List.of(EntityTypes.PANDA.getDefaultLootTable().get()));
 
-        //multipleAdditionsToSameTableAreCumulative
+        //multipleAdditionsToSameTableAreCumulative (one direct, one through the setup callback)
         tableMod.addItem(Items.PRISMARINE_SHARD, 1, () -> 1f, List.of(EntityTypes.LLAMA.getDefaultLootTable().get()));
-        tableMod.addItem(Items.PRISMARINE_CRYSTALS, 1, () -> 1f, List.of(EntityTypes.LLAMA.getDefaultLootTable().get()));
+        LootTableModifier.register(modifier ->
+                modifier.addItem(Items.PRISMARINE_CRYSTALS, 1, () -> 1f, List.of(EntityTypes.LLAMA.getDefaultLootTable().get())));
 
         // additionsDoNotRemoveVanillaLoot
         tableMod.addItem(Items.STICK, 1, () -> 1f, List.of(Blocks.COAL_ORE.getLootTable().get()));
 
         // addItemOnBlockLootTable
-        tableMod.addItem(Items.APPLE, 1, () -> 1f, List.of(Blocks.IRON_ORE.getLootTable().get()));
+        LootTableModifier.register(modifier ->
+                modifier.addItem(Items.APPLE, 1, () -> 1f, List.of(Blocks.IRON_ORE.getLootTable().get())));
 
         // modifierIgnoresNonMatchingStacks
         dropMod.modifyItemDrop(Blocks.GOLD_ORE.getLootTable().get(), stack -> {
@@ -216,6 +221,30 @@ public class LootModifierTests {
 
         helper.assertItemEntityPresent(Items.APPLE);
         helper.succeed();
+    }
+
+    /////////////////////////////////////////////////
+    ///     LootTableModifier - registration window ///
+    /////////////////////////////////////////////////
+
+    public static void addItemAfterLoadThrows(GameTestHelper helper) {
+        try {
+            LootTableModifier.getInstance().addItem(Items.DIRT, 1, () -> 1f, List.of(EntityTypes.COW.getDefaultLootTable().get()));
+        } catch (IllegalStateException e) {
+            helper.succeed();
+            return;
+        }
+        helper.fail("addItem after loot tables were loaded did not throw an IllegalStateException");
+    }
+
+    public static void registerAfterLoadThrows(GameTestHelper helper) {
+        try {
+            LootTableModifier.register(_ -> {});
+        } catch (IllegalStateException e) {
+            helper.succeed();
+            return;
+        }
+        helper.fail("register after loot tables were loaded did not throw an IllegalStateException");
     }
 
     /////////////////////////////////////////////////
