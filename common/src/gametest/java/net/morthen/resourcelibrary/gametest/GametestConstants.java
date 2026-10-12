@@ -1,11 +1,7 @@
 package net.morthen.resourcelibrary.gametest;
 
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.morthen.resourcelibrary.gametest.tests.EntityDataTests;
-import net.morthen.resourcelibrary.gametest.tests.ItemTooltipTests;
-import net.morthen.resourcelibrary.gametest.tests.LootModifierTests;
-import net.morthen.resourcelibrary.gametest.tests.RecipeRemainderTest;
-import net.morthen.resourcelibrary.gametest.tests.RegistryTests;
+import net.morthen.resourcelibrary.gametest.tests.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

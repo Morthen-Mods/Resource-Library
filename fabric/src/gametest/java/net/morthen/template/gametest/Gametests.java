@@ -2,11 +2,7 @@ package net.morthen.template.gametest;
 
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.morthen.resourcelibrary.gametest.tests.EntityDataTests;
-import net.morthen.resourcelibrary.gametest.tests.ItemTooltipTests;
-import net.morthen.resourcelibrary.gametest.tests.LootModifierTests;
-import net.morthen.resourcelibrary.gametest.tests.RecipeRemainderTest;
-import net.morthen.resourcelibrary.gametest.tests.RegistryTests;
+import net.morthen.resourcelibrary.gametest.tests.*;
 
 @SuppressWarnings("unused")
 public class Gametests {

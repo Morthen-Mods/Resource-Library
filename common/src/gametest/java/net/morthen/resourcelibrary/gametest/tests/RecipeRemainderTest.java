@@ -12,8 +12,8 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.morthen.resourcelibrary.gametest.tests.objects.TestRecipeRemainderItem;
 import net.morthen.resourcelibrary.LibConstants;
+import net.morthen.resourcelibrary.gametest.tests.objects.TestRecipeRemainderItem;
 import net.morthen.resourcelibrary.registration.RegistryObject;
 import net.morthen.resourcelibrary.registration.RegistryProvider;
 

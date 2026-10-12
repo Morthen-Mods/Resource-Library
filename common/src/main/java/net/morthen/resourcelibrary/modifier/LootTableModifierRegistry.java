@@ -2,11 +2,7 @@ package net.morthen.resourcelibrary.modifier;
 
 import net.morthen.resourcelibrary.LibConstants;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 

@@ -9,9 +9,9 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.morthen.resourcelibrary.LibConstants;
 import net.morthen.resourcelibrary.gametest.tests.objects.TestBlock;
 import net.morthen.resourcelibrary.gametest.tests.objects.TestItem;
-import net.morthen.resourcelibrary.LibConstants;
 import net.morthen.resourcelibrary.registration.RegistryObject;
 import net.morthen.resourcelibrary.registration.RegistryProvider;
 
