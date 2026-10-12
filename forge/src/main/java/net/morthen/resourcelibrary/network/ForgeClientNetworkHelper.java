@@ -8,8 +8,6 @@ import net.minecraft.world.entity.player.Player;
  */
 final class ForgeClientNetworkHelper {
 
-    private ForgeClientNetworkHelper() {}
-
     static Player player() {
         return Minecraft.getInstance().player;
     }

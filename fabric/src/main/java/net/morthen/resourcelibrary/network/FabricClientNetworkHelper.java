@@ -8,8 +8,6 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
  */
 final class FabricClientNetworkHelper {
 
-    private FabricClientNetworkHelper() {}
-
     static <T extends CustomPacketPayload> void registerReceiver(PayloadRegistry.Registration<T> registration) {
         ClientPlayNetworking.registerGlobalReceiver(registration.type(), (payload, context) ->
                 registration.handleOnClient(payload, PayloadContext.of(context.player(), true)));

@@ -28,8 +28,6 @@ final class PayloadRegistry {
     // guarded by LOCK
     private static boolean frozen = false;
 
-    private PayloadRegistry() {}
-
     static <T extends CustomPacketPayload> void add(Registration<T> registration) {
         synchronized (LOCK) {
             if (frozen) {

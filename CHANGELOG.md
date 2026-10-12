@@ -13,6 +13,8 @@
   - the loader hooks are `final`, `getRemainingItem(ItemStack)` is the only method to implement
   - on NeoForge, `getRemainingItem` is now also used when the remainder is requested for an `ItemStackTemplate`
 - **breaking:** `ResourceTooltipComponent` and `ResourceBaseComponent` were removed, use `LibDataComponents.TOOLTIP` instead
+- **breaking:** `IPlatformHelper` and `LibServices.PLATFORM` were removed
+  - `LibServices.load(...)` throws an `IllegalStateException` instead of a `NullPointerException` when no service was found
 - adding the data component `resourcelibrary:tooltip` (`LibDataComponents.TOOLTIP` / `ItemTooltip`)
   - tooltip lines for items, shown directly after the lore on all loaders
   - lines without an own color are gray, can be hidden through `minecraft:tooltip_display`

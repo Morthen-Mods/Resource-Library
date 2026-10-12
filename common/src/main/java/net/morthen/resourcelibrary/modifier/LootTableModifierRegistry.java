@@ -30,8 +30,6 @@ final class LootTableModifierRegistry {
 
     private static volatile boolean frozen = false;
 
-    private LootTableModifierRegistry() {}
-
     static List<LootTableModifier.Modifier> modifiers() {
         return MODIFIERS_VIEW;
     }

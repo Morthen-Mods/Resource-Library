@@ -39,8 +39,6 @@ import org.jetbrains.annotations.Nullable;
 public final class Networking {
     private static final NetworkHelper HELPER = LibServices.load(NetworkHelper.class);
 
-    private Networking() {}
-
     /**
      * Registers a payload sent from the server to the client.
      *
