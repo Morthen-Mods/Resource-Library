@@ -20,3 +20,8 @@
   - lines without an own color are gray, can be hidden through `minecraft:tooltip_display`
   - saved and synced like vanilla components, so it also works with `/give` and datapacks
 - adding common networking (`Networking`): payloads are registered once in common code for all loaders
+- adding entity data (`EntityDataRegistry` / `EntityDataType`): immutable values attached to entities from common code
+  - saved together with the entity through a `Codec`
+  - optionally synced to clients through a `StreamCodec`, to the tracking players and/or the player itself
+  - optionally kept when a player dies, always kept when returning from the End
+  - uses the data attachments of Fabric and NeoForge, Forge has its own implementation

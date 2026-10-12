@@ -2,6 +2,7 @@ package net.morthen.template.gametest;
 
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.morthen.resourcelibrary.gametest.tests.EntityDataTests;
 import net.morthen.resourcelibrary.gametest.tests.ItemTooltipTests;
 import net.morthen.resourcelibrary.gametest.tests.LootModifierTests;
 import net.morthen.resourcelibrary.gametest.tests.RecipeRemainderTest;
@@ -265,5 +266,53 @@ public class Gametests {
     @GameTest
     public void itemTooltipCodecRoundTrip(GameTestHelper helper) {
         ItemTooltipTests.itemTooltipCodecRoundTrip(helper);
+    }
+
+    /////////////////////////////////////////////////
+    ///                 EntityData                 ///
+    /////////////////////////////////////////////////
+    @GameTest
+    public void entityDataGetReturnsDefaultWhenUnset(GameTestHelper helper) {
+        EntityDataTests.getReturnsDefaultWhenUnset(helper);
+    }
+
+    @GameTest
+    public void entityDataSetAndGet(GameTestHelper helper) {
+        EntityDataTests.setAndGet(helper);
+    }
+
+    @GameTest
+    public void entityDataRemoveRestoresDefault(GameTestHelper helper) {
+        EntityDataTests.removeRestoresDefault(helper);
+    }
+
+    @GameTest
+    public void entityDataUpdateReturnsNewValue(GameTestHelper helper) {
+        EntityDataTests.updateReturnsNewValue(helper);
+    }
+
+    @GameTest
+    public void entityDataIsPerEntity(GameTestHelper helper) {
+        EntityDataTests.isPerEntity(helper);
+    }
+
+    @GameTest
+    public void entityDataIsSavedAndLoaded(GameTestHelper helper) {
+        EntityDataTests.isSavedAndLoaded(helper);
+    }
+
+    @GameTest
+    public void entityDataUnsetIsNotLoaded(GameTestHelper helper) {
+        EntityDataTests.unsetIsNotLoaded(helper);
+    }
+
+    @GameTest
+    public void entityDataBuilderSettings(GameTestHelper helper) {
+        EntityDataTests.builderSettings(helper);
+    }
+
+    @GameTest
+    public void entityDataRegisterDuplicateIdThrows(GameTestHelper helper) {
+        EntityDataTests.registerDuplicateIdThrows(helper);
     }
 }

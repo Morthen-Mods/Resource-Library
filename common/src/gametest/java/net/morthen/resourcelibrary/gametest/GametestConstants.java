@@ -1,6 +1,7 @@
 package net.morthen.resourcelibrary.gametest;
 
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.morthen.resourcelibrary.gametest.tests.EntityDataTests;
 import net.morthen.resourcelibrary.gametest.tests.ItemTooltipTests;
 import net.morthen.resourcelibrary.gametest.tests.LootModifierTests;
 import net.morthen.resourcelibrary.gametest.tests.RecipeRemainderTest;
@@ -21,6 +22,7 @@ public class GametestConstants {
         RecipeRemainderTest.setupRemainder();
         RegistryTests.setupRegistry();
         ItemTooltipTests.setupTooltip();
+        EntityDataTests.setupEntityData();
     }
 
     public static void initTests(BiConsumer<String, Consumer<GameTestHelper>> consumer) {
@@ -28,5 +30,6 @@ public class GametestConstants {
         RecipeRemainderTest.init(consumer);
         RegistryTests.init(consumer);
         ItemTooltipTests.init(consumer);
+        EntityDataTests.init(consumer);
     }
 }
