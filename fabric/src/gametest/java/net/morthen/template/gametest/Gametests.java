@@ -61,6 +61,11 @@ public class Gametests {
         RegistryTests.registryObjectUsableImmediatelyAfterRegister(helper);
     }
 
+    @GameTest
+    public void registerWithKeyFactoryReceivesRegistryKey(GameTestHelper helper) {
+        RegistryTests.registerWithKeyFactoryReceivesRegistryKey(helper);
+    }
+
     /////////////////////////////////////////////////
     ///          Identity / metadata correctness   ///
     /////////////////////////////////////////////////
@@ -84,6 +89,21 @@ public class Gametests {
         RegistryTests.registryObjectEqualsUnderlyingRegistryEntry(helper);
     }
 
+    @GameTest
+    public void getHolderResolvesRegisteredObject(GameTestHelper helper) {
+        RegistryTests.getHolderResolvesRegisteredObject(helper);
+    }
+
+    @GameTest
+    public void isBoundAfterRegistration(GameTestHelper helper) {
+        RegistryTests.isBoundAfterRegistration(helper);
+    }
+
+    @GameTest
+    public void registryObjectToStringContainsId(GameTestHelper helper) {
+        RegistryTests.registryObjectToStringContainsId(helper);
+    }
+
     /////////////////////////////////////////////////
     ///            Collection / bookkeeping        ///
     /////////////////////////////////////////////////
@@ -95,6 +115,11 @@ public class Gametests {
     @GameTest
     public void getEntriesIsPerProviderNotGlobal(GameTestHelper helper) {
         RegistryTests.getEntriesIsPerProviderNotGlobal(helper);
+    }
+
+    @GameTest
+    public void getEntriesIsUnmodifiable(GameTestHelper helper) {
+        RegistryTests.getEntriesIsUnmodifiable(helper);
     }
 
     /////////////////////////////////////////////////

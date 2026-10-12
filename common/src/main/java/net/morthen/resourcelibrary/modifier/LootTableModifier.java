@@ -8,7 +8,6 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
-import net.morthen.resourcelibrary.registration.RegistryObject;
 import net.morthen.resourcelibrary.service.LibServices;
 
 import java.util.List;
@@ -48,19 +47,29 @@ public interface LootTableModifier {
         return LootTableModifierRegistry.modifiers();
     }
 
-    default void addItem(RegistryObject<? extends ItemLike> item, int amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+    /**
+     * @param item the item to add, e.g. a {@link net.morthen.resourcelibrary.registration.RegistryObject}. It is only
+     *             resolved when a loot table is loaded, so it does not need to be registered yet.
+     * @throws IllegalStateException if loot tables have already been loaded
+     */
+    default void addItem(Supplier<? extends ItemLike> item, int amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         addItem(item, amount, amount, chance, lootTables);
+    }
+
+    /**
+     * @param item the item to add, e.g. a {@link net.morthen.resourcelibrary.registration.RegistryObject}. It is only
+     *             resolved when a loot table is loaded, so it does not need to be registered yet.
+     * @throws IllegalStateException if loot tables have already been loaded
+     */
+    default void addItem(Supplier<? extends ItemLike> item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
+        LootTableModifierRegistry.add(lootTables.stream()
+                .map(lootTable -> new Modifier(lootTable, item, minAmount, maxAmount, chance))
+                .toList());
     }
 
     /**
      * @throws IllegalStateException if loot tables have already been loaded
      */
-    default void addItem(RegistryObject<? extends ItemLike> item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
-        LootTableModifierRegistry.add(lootTables.stream()
-                .map(lootTable -> new Modifier(lootTable, item, null, minAmount, maxAmount, chance))
-                .toList());
-    }
-
     default void addItem(ItemLike item, int amount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
         addItem(item, amount, amount, chance, lootTables);
     }
@@ -69,11 +78,8 @@ public interface LootTableModifier {
      * @throws IllegalStateException if loot tables have already been loaded
      */
     default void addItem(ItemLike item, int minAmount, int maxAmount, Supplier<Float> chance, List<ResourceKey<LootTable>> lootTables) {
-        LootTableModifierRegistry.add(lootTables.stream()
-                .map(lootTable -> new Modifier(lootTable, null, item, minAmount, maxAmount, chance))
-                .toList());
+        addItem(() -> item, minAmount, maxAmount, chance, lootTables);
     }
-
 
     static LootPool.Builder lootPool(ItemLike item, float chance, int amount) {
         return LootPool.lootPool()
@@ -91,18 +97,11 @@ public interface LootTableModifier {
                 .apply(SetItemCountFunction.setCount(ContextIntProviders.between(minAmount, maxAmount)));
     }
 
-    record Modifier(ResourceKey<LootTable> lootTable, RegistryObject<? extends ItemLike> objectItem, ItemLike item, int minAmount, int maxAmount, Supplier<Float> chance) {
-        private ItemLike getItem() {
-            if (objectItem != null) return objectItem.get();
-            if (item != null) return item;
-            throw new IllegalArgumentException("No ItemLike provided for LootTable Modification!");
-        }
-
+    record Modifier(ResourceKey<LootTable> lootTable, Supplier<? extends ItemLike> item, int minAmount, int maxAmount, Supplier<Float> chance) {
         public LootPool lootPool() {
-            LootPool pool;
-            if (minAmount() == maxAmount()) pool = LootTableModifier.lootPool(getItem(), chance().get(), minAmount()).build();
-            else pool = LootTableModifier.lootPool(getItem(), chance().get(), minAmount(), maxAmount()).build();
-            return pool;
+            ItemLike item = item().get();
+            if (minAmount() == maxAmount()) return LootTableModifier.lootPool(item, chance().get(), minAmount()).build();
+            return LootTableModifier.lootPool(item, chance().get(), minAmount(), maxAmount()).build();
         }
     }
 }

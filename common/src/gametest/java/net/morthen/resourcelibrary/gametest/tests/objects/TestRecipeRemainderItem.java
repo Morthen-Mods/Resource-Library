@@ -1,21 +1,18 @@
 package net.morthen.resourcelibrary.gametest.tests.objects;
 
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
-import net.morthen.resourcelibrary.LibConstants;
 import net.morthen.resourcelibrary.item.ResourceCraftingRemainder;
 
 public class TestRecipeRemainderItem {
 
     public static class FixedDurability extends ResourceCraftingRemainder {
 
-        public FixedDurability(String id, int durability) {
-            super(new Properties().durability(durability)
-                    .setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(LibConstants.MOD_ID, id))));
+        public FixedDurability(ResourceKey<Item> key, int durability) {
+            super(new Properties().durability(durability).setId(key));
         }
 
         @Override
@@ -33,8 +30,8 @@ public class TestRecipeRemainderItem {
     public static class DynamicDurability extends ResourceCraftingRemainder {
         private final int durability;
 
-        public DynamicDurability(String id, int durability) {
-            super(new Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(LibConstants.MOD_ID, id))));
+        public DynamicDurability(ResourceKey<Item> key, int durability) {
+            super(new Properties().setId(key));
             this.durability = durability;
         }
 

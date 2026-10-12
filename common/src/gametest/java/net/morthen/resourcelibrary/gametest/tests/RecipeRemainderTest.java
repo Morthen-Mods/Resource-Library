@@ -2,7 +2,7 @@ package net.morthen.resourcelibrary.gametest.tests;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
@@ -26,10 +26,10 @@ public class RecipeRemainderTest {
     private static final int FIXED_DURABILITY = 3;
     private static final int DYNAMIC_DURABILITY = 4;
 
-    private static final RegistryProvider<Item> ITEMS = RegistryProvider.get(LibConstants.MOD_ID, BuiltInRegistries.ITEM);
+    private static final RegistryProvider<Item> ITEMS = RegistryProvider.create(LibConstants.MOD_ID, Registries.ITEM);
 
-    private static RegistryObject<TestRecipeRemainderItem.FixedDurability> fixedDurabilityItem;
-    private static RegistryObject<TestRecipeRemainderItem.DynamicDurability> dynamicDurabilityItem;
+    private static RegistryObject<Item, TestRecipeRemainderItem.FixedDurability> fixedDurabilityItem;
+    private static RegistryObject<Item, TestRecipeRemainderItem.DynamicDurability> dynamicDurabilityItem;
 
     public static void init(BiConsumer<String, Consumer<GameTestHelper>> consumer) {
         consumer.accept("fixed_durability_remainder_increments_damage_on_use", RecipeRemainderTest::fixedDurabilityRemainderIncrementsDamageOnUse);
@@ -41,9 +41,9 @@ public class RecipeRemainderTest {
 
     public static void setupRemainder() {
         fixedDurabilityItem = ITEMS.register("test_remainder_fixed",
-                () -> new TestRecipeRemainderItem.FixedDurability("test_remainder_fixed", FIXED_DURABILITY));
+                key -> new TestRecipeRemainderItem.FixedDurability(key, FIXED_DURABILITY));
         dynamicDurabilityItem = ITEMS.register("test_remainder_dynamic",
-                () -> new TestRecipeRemainderItem.DynamicDurability("test_remainder_dynamic", DYNAMIC_DURABILITY));
+                key -> new TestRecipeRemainderItem.DynamicDurability(key, DYNAMIC_DURABILITY));
     }
 
     // Runs the matching data-driven recipe (see data/resourcelibrary/recipe/) for a 2-wide crafting grid of
@@ -59,7 +59,7 @@ public class RecipeRemainderTest {
     }
 
     /////////////////////////////////////////////////
-    ///                FixedDurability             ///
+    ///                FixedDurability            ///
     /////////////////////////////////////////////////
 
     public static void fixedDurabilityRemainderIncrementsDamageOnUse(GameTestHelper helper) {
