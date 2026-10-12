@@ -315,4 +315,19 @@ public class Gametests {
     public void entityDataRegisterDuplicateIdThrows(GameTestHelper helper) {
         EntityDataTests.registerDuplicateIdThrows(helper);
     }
+
+    @GameTest
+    public void entityDataCopyOnDeath(GameTestHelper helper) {
+        EntityDataTests.copyOnDeath(helper);
+    }
+
+    @GameTest
+    public void entityDataCopyOnDeathConditionNotMet(GameTestHelper helper) {
+        EntityDataTests.copyOnDeathConditionNotMet(helper);
+    }
+
+    @GameTest
+    public void entityDataEndReturnKeepsEverything(GameTestHelper helper) {
+        EntityDataTests.endReturnKeepsEverything(helper);
+    }
 }

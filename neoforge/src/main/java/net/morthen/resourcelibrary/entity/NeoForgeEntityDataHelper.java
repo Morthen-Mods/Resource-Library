@@ -2,8 +2,10 @@ package net.morthen.resourcelibrary.entity;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +27,23 @@ public class NeoForgeEntityDataHelper implements EntityDataHelper {
         });
     }
 
+    // Registered on the game bus in ResourceLibrary. NeoForge only knows unconditional copyOnDeath, so values with a
+    // condition are copied here.
+    public static void copyOnDeathWithCondition(PlayerEvent.Clone event) {
+        if (!event.isWasDeath() || !(event.getOriginal() instanceof ServerPlayer oldPlayer)) return;
+
+        ATTACHMENTS.keySet().forEach(type -> {
+            if (type.hasCopyOnDeathCondition() && type.shouldCopyOnDeath(oldPlayer)) {
+                copy(type, oldPlayer, event.getEntity());
+            }
+        });
+    }
+
+    private static <T> void copy(EntityDataType<T> type, Entity from, Entity to) {
+        T value = from.getExistingDataOrNull(attachment(type));
+        if (value != null) to.setData(attachment(type), value);
+    }
+
     @Override
     public <T> void register(EntityDataType<T> type) {
         if (registered) {
@@ -38,7 +57,7 @@ public class NeoForgeEntityDataHelper implements EntityDataHelper {
         if (streamCodec != null) {
             builder.sync((holder, player) -> holder instanceof Entity entity && type.syncTarget().test(entity, player), streamCodec);
         }
-        if (type.copyOnDeath()) builder.copyOnDeath();
+        if (type.alwaysCopyOnDeath()) builder.copyOnDeath();
         ATTACHMENTS.put(type, builder.build());
     }
 

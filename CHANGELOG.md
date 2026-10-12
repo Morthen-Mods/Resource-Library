@@ -23,5 +23,5 @@
 - adding entity data (`EntityDataRegistry` / `EntityDataType`): immutable values attached to entities from common code
   - saved together with the entity through a `Codec`
   - optionally synced to clients through a `StreamCodec`, to the tracking players and/or the player itself
-  - optionally kept when a player dies, always kept when returning from the End
+  - optionally kept when a player dies, also only under a condition like `keepInventory`, always kept when returning from the End
   - uses the data attachments of Fabric and NeoForge, Forge has its own implementation

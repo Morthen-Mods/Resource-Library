@@ -142,7 +142,7 @@ public class ForgeEntityDataHelper implements EntityDataHelper {
 
         // Like on Fabric and NeoForge everything is kept when returning from the End, but only some data on death
         oldData.forEach((type, value) -> {
-            if (!event.isWasDeath() || type.copyOnDeath()) {
+            if (!event.isWasDeath() || (event.getOriginal() instanceof ServerPlayer oldPlayer && type.shouldCopyOnDeath(oldPlayer))) {
                 holder(event.getEntity()).resourcelibrary$getOrCreateEntityData().put(type, value);
             }
         });

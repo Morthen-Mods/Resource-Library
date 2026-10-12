@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 /**
@@ -31,12 +32,14 @@ import java.util.function.UnaryOperator;
  */
 @SuppressWarnings("unused")
 public final class EntityDataType<T> {
+    private static final Predicate<ServerPlayer> ALWAYS = player -> true;
+
     private final Identifier id;
     private final Codec<T> codec;
     private final T defaultValue;
     private final @Nullable StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec;
     private final SyncTarget syncTarget;
-    private final boolean copyOnDeath;
+    private final @Nullable Predicate<ServerPlayer> copyOnDeath;
 
     private EntityDataType(Identifier id, Builder<T> builder) {
         this.id = id;
@@ -119,8 +122,22 @@ public final class EntityDataType<T> {
         return syncTarget;
     }
 
-    public boolean copyOnDeath() {
-        return copyOnDeath;
+    /**
+     * @param player the player that died
+     * @return {@code true} if the value of {@code player} is kept when it respawns
+     */
+    public boolean shouldCopyOnDeath(ServerPlayer player) {
+        return copyOnDeath != null && copyOnDeath.test(player);
+    }
+
+    // The loaders can copy these values on death themselves
+    boolean alwaysCopyOnDeath() {
+        return copyOnDeath == ALWAYS;
+    }
+
+    // The library has to check the condition and copy these values on death
+    boolean hasCopyOnDeathCondition() {
+        return copyOnDeath != null && copyOnDeath != ALWAYS;
     }
 
     @Override
@@ -163,7 +180,7 @@ public final class EntityDataType<T> {
         private final T defaultValue;
         private @Nullable StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec;
         private SyncTarget syncTarget = SyncTarget.TRACKING_AND_SELF;
-        private boolean copyOnDeath = false;
+        private @Nullable Predicate<ServerPlayer> copyOnDeath;
 
         private Builder(Codec<T> codec, T defaultValue) {
             this.codec = Objects.requireNonNull(codec, "codec");
@@ -188,7 +205,21 @@ public final class EntityDataType<T> {
          * from the End.
          */
         public Builder<T> copyOnDeath() {
-            this.copyOnDeath = true;
+            this.copyOnDeath = ALWAYS;
+            return this;
+        }
+
+        /**
+         * Keeps the value when a player dies and respawns, but only if {@code condition} is true for the player that
+         * died. Without it the value is only kept when a player returns from the End.
+         *
+         * <pre>{@code
+         * .copyOnDeath(player -> player.level().getGameRules().get(GameRules.KEEP_INVENTORY))
+         * .copyOnDeath(player -> MyConfig.keepManaOnDeath)
+         * }</pre>
+         */
+        public Builder<T> copyOnDeath(Predicate<ServerPlayer> condition) {
+            this.copyOnDeath = Objects.requireNonNull(condition, "condition");
             return this;
         }
 

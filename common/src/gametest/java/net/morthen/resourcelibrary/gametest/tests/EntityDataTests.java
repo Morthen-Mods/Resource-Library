@@ -5,6 +5,8 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityTypes;
@@ -24,6 +26,10 @@ public class EntityDataTests {
 
     private static EntityDataType<Integer> counter;
     private static EntityDataType<String> syncedName;
+    private static EntityDataType<Integer> keptWithCondition;
+
+    // Players with this tag keep keptWithCondition on death
+    private static final String KEEP_TAG = "resourcelibrary_gametest_keep";
 
     public static void init(BiConsumer<String, Consumer<GameTestHelper>> consumer) {
         consumer.accept("entity_data_get_returns_default_when_unset", EntityDataTests::getReturnsDefaultWhenUnset);
@@ -35,6 +41,9 @@ public class EntityDataTests {
         consumer.accept("entity_data_unset_is_not_loaded", EntityDataTests::unsetIsNotLoaded);
         consumer.accept("entity_data_builder_settings", EntityDataTests::builderSettings);
         consumer.accept("entity_data_register_duplicate_id_throws", EntityDataTests::registerDuplicateIdThrows);
+        consumer.accept("entity_data_copy_on_death", EntityDataTests::copyOnDeath);
+        consumer.accept("entity_data_copy_on_death_condition_not_met", EntityDataTests::copyOnDeathConditionNotMet);
+        consumer.accept("entity_data_end_return_keeps_everything", EntityDataTests::endReturnKeepsEverything);
     }
 
     public static void setupEntityData() {
@@ -42,6 +51,8 @@ public class EntityDataTests {
         syncedName = ENTITY_DATA.register("synced_name", EntityDataType.builder(Codec.STRING, "")
                 .sync(ByteBufCodecs.STRING_UTF8, EntityDataType.SyncTarget.SELF)
                 .copyOnDeath());
+        keptWithCondition = ENTITY_DATA.register("kept_with_condition", EntityDataType.builder(Codec.INT, 0)
+                .copyOnDeath(player -> player.entityTags().contains(KEEP_TAG)));
     }
 
     private static Pig spawnPig(GameTestHelper helper) {
@@ -132,11 +143,9 @@ public class EntityDataTests {
     public static void builderSettings(GameTestHelper helper) {
         helper.assertValueEqual(counter.id(), Identifier.fromNamespaceAndPath(GametestConstants.MOD_ID, "counter"), "id of counter");
         helper.assertFalse(counter.isSynced(), "counter is synced");
-        helper.assertFalse(counter.copyOnDeath(), "counter is copied on death");
         helper.assertTrue(syncedName.isSynced(), "synced name is not synced");
         helper.assertValueEqual(syncedName.syncTarget(), EntityDataType.SyncTarget.SELF, "sync target of synced name");
-        helper.assertTrue(syncedName.copyOnDeath(), "synced name is not copied on death");
-        helper.assertValueEqual(List.copyOf(ENTITY_DATA.getEntries()), List.of(counter, syncedName), "entries of the registry");
+        helper.assertValueEqual(List.copyOf(ENTITY_DATA.getEntries()), List.of(counter, syncedName, keptWithCondition), "entries of the registry");
         helper.succeed();
     }
 
@@ -148,5 +157,52 @@ public class EntityDataTests {
             return;
         }
         helper.fail("registering an id twice did not throw");
+    }
+
+    private static ServerPlayer respawn(GameTestHelper helper, ServerPlayer player, boolean returnFromEnd) {
+        Entity.RemovalReason reason = returnFromEnd ? Entity.RemovalReason.CHANGED_DIMENSION : Entity.RemovalReason.KILLED;
+        return helper.getLevel().getServer().getPlayerList().respawn(player, returnFromEnd, reason);
+    }
+
+    private static void disconnect(GameTestHelper helper, ServerPlayer player) {
+        helper.getLevel().getServer().getPlayerList().remove(player);
+    }
+
+    private static ServerPlayer playerWithAllData(GameTestHelper helper, boolean keepTag) {
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        if (keepTag) player.addTag(KEEP_TAG);
+        counter.set(player, 1);
+        syncedName.set(player, "Steve");
+        keptWithCondition.set(player, 3);
+        return player;
+    }
+
+    public static void copyOnDeath(GameTestHelper helper) {
+        ServerPlayer respawned = respawn(helper, playerWithAllData(helper, true), false);
+
+        helper.assertFalse(counter.has(respawned), "data without copyOnDeath was kept on death");
+        helper.assertValueEqual(syncedName.get(respawned), "Steve", "data with copyOnDeath after death");
+        helper.assertValueEqual(keptWithCondition.get(respawned), 3, "data with a met copyOnDeath condition after death");
+        disconnect(helper, respawned);
+        helper.succeed();
+    }
+
+    public static void copyOnDeathConditionNotMet(GameTestHelper helper) {
+        ServerPlayer respawned = respawn(helper, playerWithAllData(helper, false), false);
+
+        helper.assertFalse(keptWithCondition.has(respawned), "data with a copyOnDeath condition that is not met was kept on death");
+        helper.assertValueEqual(syncedName.get(respawned), "Steve", "data with copyOnDeath after death");
+        disconnect(helper, respawned);
+        helper.succeed();
+    }
+
+    public static void endReturnKeepsEverything(GameTestHelper helper) {
+        ServerPlayer respawned = respawn(helper, playerWithAllData(helper, false), true);
+
+        helper.assertValueEqual(counter.get(respawned), 1, "data without copyOnDeath after returning from the End");
+        helper.assertValueEqual(syncedName.get(respawned), "Steve", "data with copyOnDeath after returning from the End");
+        helper.assertValueEqual(keptWithCondition.get(respawned), 3, "data with a copyOnDeath condition after returning from the End");
+        disconnect(helper, respawned);
+        helper.succeed();
     }
 }

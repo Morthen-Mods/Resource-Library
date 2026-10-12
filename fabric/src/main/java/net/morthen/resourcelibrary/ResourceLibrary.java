@@ -6,6 +6,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
 import net.minecraft.core.component.DataComponents;
 import net.morthen.resourcelibrary.components.LibDataComponents;
+import net.morthen.resourcelibrary.entity.FabricEntityDataHelper;
 import net.morthen.resourcelibrary.modifier.FabricLootTableModifier;
 import net.morthen.resourcelibrary.network.FabricNetworkHelper;
 
@@ -17,6 +18,7 @@ public class ResourceLibrary implements ModInitializer, ClientModInitializer, De
         ItemComponentTooltipProviderRegistry.addAfter(DataComponents.LORE, LibDataComponents.TOOLTIP);
 
         FabricLootTableModifier.init();
+        FabricEntityDataHelper.registerEvents();
     }
 
     // Client/server entrypoints run after the main entrypoints of all mods, so this is Fabric's "common setup"
