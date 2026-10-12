@@ -5,11 +5,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
-import net.morthen.resourcelibrary.item.ResourceCraftingRemainder;
+import net.morthen.resourcelibrary.item.CraftingRemainderItem;
 
 public class TestRecipeRemainderItem {
 
-    public static class FixedDurability extends ResourceCraftingRemainder {
+    public static class FixedDurability extends CraftingRemainderItem {
 
         public FixedDurability(ResourceKey<Item> key, int durability) {
             super(new Properties().durability(durability).setId(key));
@@ -27,7 +27,7 @@ public class TestRecipeRemainderItem {
         }
     }
 
-    public static class DynamicDurability extends ResourceCraftingRemainder {
+    public static class DynamicDurability extends CraftingRemainderItem {
         private final int durability;
 
         public DynamicDurability(ResourceKey<Item> key, int durability) {
