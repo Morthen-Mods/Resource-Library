@@ -35,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
  * Networking.sendToPlayer(player, new SyncPayload(42));
  * }</pre>
  */
+@SuppressWarnings("unused")
 public final class Networking {
     private static final NetworkHelper HELPER = LibServices.load(NetworkHelper.class);
 

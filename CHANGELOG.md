@@ -12,4 +12,9 @@
   - `IResourceCraftingRemainder` was removed
   - the loader hooks are `final`, `getRemainingItem(ItemStack)` is the only method to implement
   - on NeoForge, `getRemainingItem` is now also used when the remainder is requested for an `ItemStackTemplate`
+- **breaking:** `ResourceTooltipComponent` and `ResourceBaseComponent` were removed, use `LibDataComponents.TOOLTIP` instead
+- adding the data component `resourcelibrary:tooltip` (`LibDataComponents.TOOLTIP` / `ItemTooltip`)
+  - tooltip lines for items, shown directly after the lore on all loaders
+  - lines without an own color are gray, can be hidden through `minecraft:tooltip_display`
+  - saved and synced like vanilla components, so it also works with `/give` and datapacks
 - adding common networking (`Networking`): payloads are registered once in common code for all loaders

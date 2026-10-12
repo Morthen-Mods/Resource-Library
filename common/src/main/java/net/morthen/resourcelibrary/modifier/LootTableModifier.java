@@ -22,6 +22,7 @@ import java.util.function.Supplier;
  * which the library runs at the right time on every loader. Registering after loot tables started loading throws an
  * {@link IllegalStateException}.
  */
+@SuppressWarnings("unused")
 public interface LootTableModifier {
     LootTableModifier INSTANCE = LibServices.load(LootTableModifier.class);
 

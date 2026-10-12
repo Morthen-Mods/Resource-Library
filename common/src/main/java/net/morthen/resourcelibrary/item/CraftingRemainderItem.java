@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
  * {@link #getRemainingItem(ItemStack)}. Items that need a different base class can't use this class; they have to
  * declare both bridge methods below themselves.
  */
+@SuppressWarnings("unused")
 public abstract class CraftingRemainderItem extends Item {
 
     public CraftingRemainderItem(Properties properties) {

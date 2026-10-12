@@ -2,10 +2,12 @@ package net.morthen.template.gametest;
 
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.morthen.resourcelibrary.gametest.tests.ItemTooltipTests;
 import net.morthen.resourcelibrary.gametest.tests.LootModifierTests;
 import net.morthen.resourcelibrary.gametest.tests.RecipeRemainderTest;
 import net.morthen.resourcelibrary.gametest.tests.RegistryTests;
 
+@SuppressWarnings("unused")
 public class Gametests {
     /////////////////////////////////////////////////
     ///           RecipeRemainder - FixedDurability ///
@@ -230,5 +232,38 @@ public class Gametests {
     @GameTest
     public void modifierRunsOncePerStackNotPerRoll(GameTestHelper helper) {
         LootModifierTests.modifierRunsOncePerStackNotPerRoll(helper);
+    }
+
+    /////////////////////////////////////////////////
+    ///                 ItemTooltip                ///
+    /////////////////////////////////////////////////
+    @GameTest
+    public void itemTooltipComponentIsRegistered(GameTestHelper helper) {
+        ItemTooltipTests.itemTooltipComponentIsRegistered(helper);
+    }
+
+    @GameTest
+    public void itemTooltipIsShown(GameTestHelper helper) {
+        ItemTooltipTests.itemTooltipIsShown(helper);
+    }
+
+    @GameTest
+    public void itemTooltipDefaultStyleKeepsOwnColor(GameTestHelper helper) {
+        ItemTooltipTests.itemTooltipDefaultStyleKeepsOwnColor(helper);
+    }
+
+    @GameTest
+    public void itemTooltipIsShownAfterLore(GameTestHelper helper) {
+        ItemTooltipTests.itemTooltipIsShownAfterLore(helper);
+    }
+
+    @GameTest
+    public void itemTooltipHiddenByTooltipDisplay(GameTestHelper helper) {
+        ItemTooltipTests.itemTooltipHiddenByTooltipDisplay(helper);
+    }
+
+    @GameTest
+    public void itemTooltipCodecRoundTrip(GameTestHelper helper) {
+        ItemTooltipTests.itemTooltipCodecRoundTrip(helper);
     }
 }
