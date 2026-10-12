@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.morthen.resourcelibrary.modifier.FabricLootTableModifier;
+import net.morthen.resourcelibrary.network.FabricNetworkHelper;
 
 public class ResourceLibrary implements ModInitializer, ClientModInitializer, DedicatedServerModInitializer {
 
@@ -16,10 +17,12 @@ public class ResourceLibrary implements ModInitializer, ClientModInitializer, De
     @Override
     public void onInitializeClient() {
         FabricLootTableModifier.postInit();
+        FabricNetworkHelper.postInit();
     }
 
     @Override
     public void onInitializeServer() {
         FabricLootTableModifier.postInit();
+        FabricNetworkHelper.postInit();
     }
 }
