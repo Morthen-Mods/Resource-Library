@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.morthen.resourcelibrary.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "entity.EntityMixin",
+    "item.ItemStackMixin",
+    "loot.LootTableMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
