@@ -25,6 +25,6 @@ license = "${mod_license}"
 [[dependencies.${mod_id}]]
     modId = "minecraft"
     type="required"
-    versionRange = "[${minecraft_version},${minecraft_version_max}]"
+    versionRange = "[${minecraft_version}, 26.2)"
     ordering = "NONE"
     side = "BOTH"
