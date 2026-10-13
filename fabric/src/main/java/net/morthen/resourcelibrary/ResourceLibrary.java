@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
 import net.minecraft.core.component.DataComponents;
 import net.morthen.resourcelibrary.components.LibDataComponents;
 import net.morthen.resourcelibrary.entity.FabricEntityDataHelper;
+import net.morthen.resourcelibrary.keymapping.FabricKeyMappingHelper;
 import net.morthen.resourcelibrary.modifier.FabricLootTableModifier;
 import net.morthen.resourcelibrary.network.FabricNetworkHelper;
 
@@ -26,6 +27,7 @@ public class ResourceLibrary implements ModInitializer, ClientModInitializer, De
     public void onInitializeClient() {
         FabricLootTableModifier.postInit();
         FabricNetworkHelper.postInit();
+        FabricKeyMappingHelper.registerEvents();
     }
 
     @Override

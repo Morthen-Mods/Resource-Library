@@ -25,3 +25,6 @@
   - optionally synced to clients through a `StreamCodec`, to the tracking players and/or the player itself
   - optionally kept when a player dies, also only under a condition like `keepInventory`, always kept when returning from the End
   - uses the data attachments of Fabric and NeoForge, Forge has its own implementation
+- adding key mappings (`KeyMappingRegistry`): client key mappings registered once from common code for all loaders
+  - one category per registry, registered with the loader so it is sorted correctly in the controls screen
+  - optional handler that runs on the client thread for every press of the key
