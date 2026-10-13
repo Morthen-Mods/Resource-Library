@@ -18,11 +18,12 @@ multiloader {
     applyMetadataReplacements(listOf("pack.mcmeta", "*.mixins.json", "fabric.mod.json"), mapOf(
         "fabric_api" to fabricApiVersion.get(),
         "fabric_loader" to fabricLoaderVersion.get(),
+        "minecraft_version_max" to providers.gradleProperty("supported_minecraft_versions").map { it.split(",").last().trim() },
         "sources_url" to providers.gradleProperty("sources_url").get(),
         "issues_url" to providers.gradleProperty("issues_url").get()
     ))
 }
 
 dependencies {
-    implementation("com.terraformersmc:modmenu:20.0.1")
+    implementation("com.terraformersmc:modmenu:18.0.2")
 }

@@ -7,7 +7,8 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.morthen.resourcelibrary.service.LibServices;
 
 import java.util.List;
@@ -84,18 +85,18 @@ public interface LootTableModifier {
 
     static LootPool.Builder lootPool(ItemLike item, float chance, int amount) {
         return LootPool.lootPool()
-                .setRolls(ContextIntProviders.exactly(1))
+                .setRolls(ConstantValue.exactly(1f))
                 .when(LootItemRandomChanceCondition.randomChance(Math.clamp(chance, 0.0f, 1.0f)))
                 .add(LootItem.lootTableItem(item))
-                .apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(amount)));
+                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(amount)));
     }
 
     static LootPool.Builder lootPool(ItemLike item, float chance, int minAmount, int maxAmount) {
         return LootPool.lootPool()
-                .setRolls(ContextIntProviders.exactly(1))
+                .setRolls(ConstantValue.exactly(1f))
                 .when(LootItemRandomChanceCondition.randomChance(Math.clamp(chance, 0.0f, 1.0f)))
                 .add(LootItem.lootTableItem(item))
-                .apply(SetItemCountFunction.setCount(ContextIntProviders.between(minAmount, maxAmount)));
+                .apply(SetItemCountFunction.setCount(UniformGenerator.between(minAmount, maxAmount)));
     }
 
     record Modifier(ResourceKey<LootTable> lootTable, Supplier<? extends ItemLike> item, int minAmount, int maxAmount, Supplier<Float> chance) {

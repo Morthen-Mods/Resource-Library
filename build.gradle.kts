@@ -1,3 +1,7 @@
+import me.modmuss50.mpp.ModPublishExtension
+import me.modmuss50.mpp.platforms.curseforge.Curseforge
+import me.modmuss50.mpp.platforms.modrinth.Modrinth
+
 plugins {
     id("java")
     id("idea")
@@ -13,4 +17,18 @@ plugins {
 subprojects {
     pluginManager.apply("idea")
     idea.module.isDownloadSources = true
+
+    // The multiloader plugin only publishes for minecraft_version, the jars also run on the other supported versions
+    pluginManager.withPlugin("me.modmuss50.mod-publish-plugin") {
+        val minecraftVersion = providers.gradleProperty("minecraft_version").get()
+        val otherVersions = providers.gradleProperty("supported_minecraft_versions").get()
+            .split(",").map { it.trim() }.filter { it != minecraftVersion }
+
+        the<ModPublishExtension>().platforms.configureEach {
+            when (this) {
+                is Modrinth -> minecraftVersions.addAll(otherVersions)
+                is Curseforge -> minecraftVersions.addAll(otherVersions)
+            }
+        }
+    }
 }

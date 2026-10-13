@@ -4,6 +4,7 @@
   "package": "net.morthen.resourcelibrary.mixins",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+    "item.ItemStackMixin",
     "loot.LootTableMixin"
   ],
   "client": [],

@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.pig.Pig;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
@@ -56,7 +56,7 @@ public class EntityDataTests {
     }
 
     private static Pig spawnPig(GameTestHelper helper) {
-        return helper.spawn(EntityTypes.PIG, 1, 2, 1);
+        return helper.spawn(EntityType.PIG, 1, 2, 1);
     }
 
     public static void getReturnsDefaultWhenUnset(GameTestHelper helper) {
@@ -134,7 +134,7 @@ public class EntityDataTests {
         pig.saveWithoutId(output);
         CompoundTag tag = output.buildResult();
 
-        Pig loaded = EntityTypes.PIG.create(helper.getLevel(), EntitySpawnReason.LOAD);
+        Pig loaded = EntityType.PIG.create(helper.getLevel(), EntitySpawnReason.LOAD);
         helper.assertTrue(loaded != null, "could not create a pig");
         loaded.load(TagValueInput.create(ProblemReporter.DISCARDING, helper.getLevel().registryAccess(), tag));
         return loaded;
